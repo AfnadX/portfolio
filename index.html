@@ -36,370 +36,149 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://js.puter.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
 
-    <!-- Google Fonts (Loaded Asynchronously) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"></noscript>
     
-    <!-- Font Awesome for Icons (Loaded Asynchronously) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     
-    <!-- Prism.js CSS (Loaded Asynchronously) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"></noscript>
 
+    <!-- CSS for smooth loading animation -->
     <style>
-        /* Enhanced CSS Variables for Professional Color Palette */
-        :root {
-            /* Primary Colors - Enhanced Blue Palette */
-            --color-primary: #2563eb;
-            --color-primary-hover: #1d4ed8;
-            --color-primary-light: #3b82f6;
-            --color-primary-dark: #1e40af;
-            
-            /* Secondary Colors - Complementary Warm Tones */
-            --color-secondary: #f59e0b;
-            --color-secondary-hover: #d97706;
-            --color-accent: #10b981;
-            --color-accent-hover: #059669;
-            
-            /* Background Colors - Sophisticated Neutrals */
-            --color-bg: #fafafa;
-            --color-bg-secondary: #f8fafc;
-            --color-card-bg: #ffffff;
-            --color-card-bg-hover: #f1f5f9;
-            
-            /* Text Colors - High Contrast */
-            --color-text: #1e293b;
-            --color-text-secondary: #64748b;
-            --color-text-muted: #94a3b8;
-            
-            /* Border Colors */
-            --color-border: #e2e8f0;
-            --color-border-light: #f1f5f9;
-            
-            /* Shadow Colors */
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            
-            /* Spacing System */
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --spacing-3xl: 4rem;
-            
-            /* Typography */
-            --font-size-xs: 0.75rem;
-            --font-size-sm: 0.875rem;
-            --font-size-base: 1rem;
-            --font-size-lg: 1.125rem;
-            --font-size-xl: 1.25rem;
-            --font-size-2xl: 1.5rem;
-            --font-size-3xl: 1.875rem;
-            --font-size-4xl: 2.25rem;
-            --font-size-5xl: 3rem;
-            
-            /* Line Heights */
-            --line-height-tight: 1.25;
-            --line-height-normal: 1.5;
-            --line-height-relaxed: 1.75;
-            
-            /* Border Radius */
-            --radius-sm: 0.25rem;
-            --radius-base: 0.5rem;
-            --radius-md: 0.75rem;
-            --radius-lg: 1rem;
-            --radius-xl: 1.5rem;
-            
-            /* Transitions */
-            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Dark Mode Variables */
-        .dark {
-            --color-primary: #3b82f6;
-            --color-primary-hover: #2563eb;
-            --color-primary-light: #60a5fa;
-            --color-primary-dark: #1d4ed8;
-            
-            --color-secondary: #fbbf24;
-            --color-secondary-hover: #f59e0b;
-            --color-accent: #34d399;
-            --color-accent-hover: #10b981;
-            
-            --color-bg: #0f172a;
-            --color-bg-secondary: #1e293b;
-            --color-card-bg: #161b22; /* Adjusted to match 1.html dark card */
-            --color-card-bg-hover: #475569;
-            
-            --color-text: #f1f5f9;
-            --color-text-secondary: #cbd5e1;
-            --color-text-muted: #94a3b8;
-            
-            --color-border: #30363d; /* Adjusted to match 1.html dark border */
-            --color-border-light: #64748b;
-            
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-            --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
-        }
-
-        /* Enhanced Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            line-height: var(--line-height-normal);
-            font-size: var(--font-size-base);
-            transition: background-color var(--transition-base), color var(--transition-base);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
         }
-
-        /* Enhanced Glass Header */
-        .glass-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--color-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all var(--transition-base);
-            will-change: background, border-color, box-shadow;
+        body.loaded {
+            opacity: 1;
         }
+    </style>
 
-        .dark .glass-header {
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    <style>
+        /* --- NEW: HIGH-CONTRAST LIGHT MODE COLOR PALETTE --- */
+        :root {
+            --color-primary: #2563eb; --color-primary-hover: #1d4ed8; --color-primary-light: #3b82f6; --color-primary-dark: #1e40af;
+            --color-secondary: #f59e0b; --color-secondary-hover: #d97706; --color-accent: #10b981; --color-accent-hover: #059669;
+            /* Crisp white backgrounds with subtle gray for sections */
+            --color-bg: #ffffff;
+            --color-bg-secondary: #f8fafc; /* Gray 50 */
+            --color-card-bg: #ffffff;
+            --color-card-bg-hover: #f8fafc; /* Gray 50 */
+            /* Darker text for maximum readability */
+            --color-text: #111827; /* Gray 900 */
+            --color-text-secondary: #374151; /* Gray 700 */
+            --color-text-muted: #6b7280; /* Gray 500 */
+            /* Clean, defined borders */
+            --color-border: #e5e7eb; /* Gray 200 */
+            --color-border-light: #f3f4f6; /* Gray 100 */
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --spacing-xs: 0.25rem; --spacing-sm: 0.5rem; --spacing-md: 1rem; --spacing-lg: 1.5rem; --spacing-xl: 2rem; --spacing-2xl: 3rem; --spacing-3xl: 4rem;
+            --font-size-xs: 0.75rem; --font-size-sm: 0.875rem; --font-size-base: 1rem; --font-size-lg: 1.125rem; --font-size-xl: 1.25rem; --font-size-2xl: 1.5rem; --font-size-3xl: 1.875rem; --font-size-4xl: 2.25rem; --font-size-5xl: 3rem;
+            --line-height-tight: 1.25; --line-height-normal: 1.5; --line-height-relaxed: 1.75;
+            --radius-sm: 0.25rem; --radius-base: 0.5rem; --radius-md: 0.75rem; --radius-lg: 1rem; --radius-xl: 1.5rem;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1); --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1); --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* Enhanced Button Styles */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
-            font-weight: 500;
-            font-size: var(--font-size-sm);
-            cursor: pointer;
-            transition: all var(--transition-base);
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        /* --- ESTABLISHED DARK MODE PALETTE (UNCHANGED) --- */
+        .dark {
+            --color-primary: #3b82f6; --color-primary-hover: #2563eb; --color-primary-light: #60a5fa; --color-primary-dark: #1d4ed8;
+            --color-secondary: #fbbf24; --color-secondary-hover: #f59e0b; --color-accent: #34d399; --color-accent-hover: #10b981;
+            --color-bg: #0f172a; --color-bg-secondary: #1e293b; --color-card-bg: #161b22; --color-card-bg-hover: #475569;
+            --color-text: #f1f5f9; --color-text-secondary: #cbd5e1; --color-text-muted: #94a3b8;
+            --color-border: #30363d; --color-border-light: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3); --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4); --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
         }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left var(--transition-slow);
+        html {
+            scroll-padding-top: 100px; 
         }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            background: linear-gradient(135deg, var(--color-primary-hover), var(--color-primary));
-        }
-
-        .btn-secondary {
-            background: var(--color-card-bg);
-            color: var(--color-text);
-            border: 2px solid var(--color-border);
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
-            font-weight: 500;
-            font-size: var(--font-size-sm);
-            cursor: pointer;
-            transition: all var(--transition-base);
-            box-shadow: var(--shadow-sm);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-secondary:hover {
-            background: var(--color-card-bg-hover);
-            border-color: var(--color-primary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Enhanced Card Styles */
-        .card {
-            background: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-base);
-            transition: all var(--transition-base);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform var(--transition-base);
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--color-primary);
-            will-change: transform, box-shadow, border-color;
-        }
-
-        .card:hover::before {
-            transform: scaleX(1);
-        }
-
-        /* Enhanced Form Styles */
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-md);
-            background: var(--color-card-bg);
-            color: var(--color-text);
-            font-size: var(--font-size-base);
-            transition: all var(--transition-base);
-            outline: none;
-        }
-
-        .form-input:focus {
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        /* Animation Classes */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--color-bg); color: var(--color-text); line-height: var(--line-height-normal); font-size: var(--font-size-base); transition: background-color var(--transition-base), color var(--transition-base); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--color-border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); transition: all var(--transition-base); will-change: background, border-color, box-shadow; }
+        .dark .glass-header { background: rgba(15, 23, 42, 0.9); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 500; font-size: var(--font-size-sm); cursor: pointer; transition: all var(--transition-base); box-shadow: var(--shadow-md); position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); transition: left var(--transition-slow); }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); background: linear-gradient(135deg, var(--color-primary-hover), var(--color-primary)); }
+        .btn-secondary { background: var(--color-card-bg); color: var(--color-text); border: 2px solid var(--color-border); padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 500; font-size: var(--font-size-sm); cursor: pointer; transition: all var(--transition-base); box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; justify-content: center; }
+        .btn-secondary:hover { background: var(--color-card-bg-hover); border-color: var(--color-primary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .card { background: var(--color-card-bg); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--spacing-xl); box-shadow: var(--shadow-base); transition: all var(--transition-base); position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition-base); }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-primary); will-change: transform, box-shadow, border-color; }
+        .card:hover::before { transform: scaleX(1); }
+        .form-input { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-card-bg); color: var(--color-text); font-size: var(--font-size-base); transition: all var(--transition-base); outline: none; }
+        .form-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .form-textarea { min-height: 120px; resize: vertical; font-family: inherit; }
         .scroll-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
         .scroll-animate.visible { opacity: 1; transform: translateY(0); }
-        
-        /* Fluid Experience Slider: uses opacity and grid layout to prevent reflow */
         .experience-slider-card { display: grid; place-items: center; }
         .experience-slide { grid-column: 1 / -1; grid-row: 1 / -1; opacity: 0; visibility: hidden; transition: opacity 0.4s ease-in-out; }
         .experience-slide.active { opacity: 1; visibility: visible; }
-
         .loader { width: 20px; height: 20px; border: 3px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; display: inline-block; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Enhanced Modal Styles */
-        .modal {
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all var(--transition-base); }
+        .modal.show { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--color-card-bg); border-radius: var(--radius-xl); padding: var(--spacing-xl); max-width: 90vw; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-xl); transform: scale(0.95); transition: transform var(--transition-base); }
+        @media (min-width: 768px) { .modal-content { padding: var(--spacing-2xl); } }
+        .modal.show .modal-content { transform: scale(1); }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: var(--line-height-tight); }
+        h1 { font-size: var(--font-size-5xl); } h2 { font-size: var(--font-size-4xl); } h3 { font-size: var(--font-size-3xl); } h4 { font-size: var(--font-size-2xl); } p { line-height: var(--line-height-relaxed); }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--color-bg); } ::-webkit-scrollbar-thumb { background-color: var(--color-primary); border-radius: 10px; border: 2px solid var(--color-bg); }
+        .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .code-font { font-family: 'Roboto Mono', monospace; }
+        .nav-link.active { color: var(--color-primary); font-weight: 700; }
+        .ai-output-container { margin-top: 1rem; padding: 1rem; border-radius: 0.5rem; background-color: var(--color-bg); border: 1px solid var(--color-border); font-size: 0.9rem; line-height: 1.6; min-height: 50px; }
+        .prose-custom p, .prose-custom li { font-weight: 400; color: var(--color-text-secondary); }
+        .prose-custom strong { color: var(--color-text); font-weight: 600; }
+        .prose-custom a { color: var(--color-primary); text-decoration: underline; }
+        .prose-custom code { font-family: 'Roboto Mono', monospace; background-color: var(--color-border); color: #ec4899; padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.85em; }
+        .prose-custom pre > code { color: #f8f8f2; background-color: transparent; padding: 0; }
+        /* --- Loader Styles --- */
+        #loader-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+            z-index: 9999;
+            background-color: var(--color-bg);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            transition: opacity 0.75s, visibility 0.75s;
+            will-change: opacity, visibility;
+        }
+        .dark #loader-wrapper {
+            background-color: #0f172a; /* Match dark background */
+        }
+        #loader-wrapper.hidden {
             opacity: 0;
             visibility: hidden;
-            transition: all var(--transition-base);
         }
-
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--color-border);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
         }
-
-        .modal-content {
-            background: var(--color-card-bg);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            max-width: 90vw;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            transform: scale(0.95);
-            transition: transform var(--transition-base);
-        }
-        
-        @media (min-width: 768px) {
-            .modal-content {
-                padding: var(--spacing-2xl);
-            }
-        }
-        
-        .modal.show .modal-content {
-            transform: scale(1);
-        }
-
-        /* Enhanced Typography */
-        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: var(--line-height-tight); }
-        h1 { font-size: var(--font-size-5xl); }
-        h2 { font-size: var(--font-size-4xl); }
-        h3 { font-size: var(--font-size-3xl); }
-        h4 { font-size: var(--font-size-2xl); }
-        p { line-height: var(--line-height-relaxed); }
-
-        /* Custom styles from 1.html that need to be preserved/adapted */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { background-color: var(--color-primary); border-radius: 10px; border: 2px solid var(--color-bg); }
-        .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .code-font { font-family: 'Roboto Mono', monospace; }
-        .nav-link.active { color: var(--color-primary); font-weight: 700; }
-        .ai-output-container { margin-top: 1rem; padding: 1rem; border-radius: 0.5rem; background-color: var(--color-bg); border: 1px solid var(--color-border); font-size: 0.9rem; line-height: 1.6; min-height: 50px; }
-        .prose-custom p, .prose-custom li { font-weight: 400; color: var(--color-text-secondary); } /* Adjusted from 1.html for new theme */
-        .prose-custom strong { color: var(--color-text); font-weight: 600; }
-        .prose-custom a { color: var(--color-primary); text-decoration: underline; }
-        .prose-custom code { font-family: 'Roboto Mono', monospace; background-color: var(--color-border); color: #ec4899; padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.85em; }
-        .prose-custom pre > code { color: #f8f8f2; background-color: transparent; padding: 0; }
     </style>
 </head>
 <body class="bg-[var(--color-bg)] text-[var(--color-text)]">
+    
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div class="loader-spinner"></div>
+    </div>
 
     <canvas id="bg-canvas"></canvas>
 
@@ -452,15 +231,8 @@
 
         <section id="about" class="py-20 lg:py-32 px-4 bg-[var(--color-bg-secondary)] border-y border-[var(--color-border)]">
              <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
-                <div class="scroll-animate" style="transition-delay: 150ms;">
-                    <div class="max-w-md mx-auto p-4 bg-[var(--color-bg)] rounded-2xl shadow-inner">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <defs><linearGradient id="svg-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color: #8b5cf6; stop-opacity:1"></stop><stop offset="100%" style="stop-color: #3b82f6; stop-opacity:1"></stop></linearGradient></defs>
-                            <rect width="200" height="200" fill="transparent" rx="15"/><rect x="80" y="80" width="40" height="40" fill="none" stroke="url(#svg-grad)" stroke-width="3" rx="5"/><circle cx="100" cy="100" r="12" fill="var(--color-primary)"/>
-                            <path d="M100 80 V 40 H 160 V 80" fill="none" stroke="var(--color-text-secondary)" stroke-opacity="0.5" stroke-width="2"/><path d="M120 100 H 170 V 140" fill="none" stroke="var(--color-text-secondary)" stroke-opacity="0.5" stroke-width="2"/><path d="M100 120 V 160 H 40 V 120" fill="none" stroke="var(--color-text-secondary)" stroke-opacity="0.5" stroke-width="2"/><path d="M80 100 H 30 V 60" fill="none" stroke="var(--color-text-secondary)" stroke-opacity="0.5" stroke-width="2"/>
-                            <circle cx="160" cy="40" r="4" fill="url(#svg-grad)"/><circle cx="170" cy="140" r="4" fill="url(#svg-grad)"/><circle cx="40" cy="160" r="4" fill="url(#svg-grad)"/><circle cx="30" cy="60" r="4" fill="url(#svg-grad)"/>
-                        </svg>
-                    </div>
+                <div class="scroll-animate order-first md:order-last" style="transition-delay: 150ms;">
+                    <img src="about.png" alt="A photo of Afnad" class="w-full h-auto max-w-md mx-auto rounded-2xl shadow-lg object-cover aspect-square border-4 border-[var(--color-border)]">
                 </div>
                 <div class="scroll-animate">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 code-font">My Journey Into Technology</h2>
@@ -496,7 +268,7 @@
             <div class="container mx-auto">
                 <div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold scroll-animate code-font">Experience & Education</h2><p class="mt-4 text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">A timeline of my academic and practical learning journey in computer science.</p></div>
                 <div class="max-w-3xl mx-auto relative scroll-animate">
-                    <div class="card text-center min-h-[120px] !py-8 experience-slider-card">
+                    <div class="card text-center min-h-[160px] md:min-h-[120px] !py-8 experience-slider-card">
                         <div class="experience-slide active"><h3 class="text-2xl font-bold text-[var(--color-primary)]">B.Sc. in Computer Science & Engineering</h3><p class="mt-1 text-md text-[var(--color-text-secondary)]">East West University, Dhaka | Expected Graduation: 2027</p></div>
                         <div class="experience-slide"><h3 class="text-2xl font-bold text-[var(--color-primary)]">Dedicated Lab Hours</h3><p class="mt-1 text-md text-[var(--color-text-secondary)]">University Labs | 2023 - Present</p></div>
                         <div class="experience-slide"><h3 class="text-2xl font-bold text-[var(--color-primary)]">Project-Based Learning</h3><p class="mt-1 text-md text-[var(--color-text-secondary)]">Coursework & Personal Initiatives</p></div>
@@ -508,7 +280,6 @@
                         <div class="experience-slide"><h3 class="text-2xl font-bold text-[var(--color-primary)]">Course: Software Engineering Principles</h3><p class="mt-1 text-md text-[var(--color-text-secondary)]">EWU, Dept. of CSE</p></div>
                         <div class="experience-slide"><h3 class="text-2xl font-bold text-[var(--color-primary)]">Personal Project: AI-Powered Discord Bot</h3><p class="mt-1 text-md text-[var(--color-text-secondary)]">Developed a bot using modern AI APIs for server moderation.</p></div>
                     </div>
-                    <div class="text-center mt-6"><button class="slider-btn prev-slide btn-secondary !px-4 !py-2">❮</button><button class="slider-btn next-slide btn-secondary !px-4 !py-2 ml-2">❯</button></div>
                 </div>
             </div>
         </section>
@@ -576,7 +347,8 @@
     <div id="project-modal" class="modal hidden items-center justify-center p-4" role="dialog" aria-modal="true">
         <div class="modal-content w-full max-w-3xl">
             <button class="close-modal absolute top-4 right-4 text-2xl text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">×</button>
-            <h2 id="project-modal-title" class="text-3xl font-bold mb-4 code-font"></h2><img id="project-modal-image" src="" alt="Project Image" class="w-full rounded-lg mb-6 border border-[var(--color-border)]">
+            <h2 id="project-modal-title" class="text-3xl font-bold mb-4 code-font"></h2>
+            <img id="project-modal-image" src="" alt="Project Image" class="w-full rounded-lg mb-6 border border-[var(--color-border)]" loading="lazy" decoding="async">
             <div id="project-modal-description" class="prose-custom max-w-none text-[var(--color-text-secondary)]"></div>
             <div class="mt-6 p-4 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)]">
                 <h4 class="text-lg font-bold mb-2">AI Code Explanation</h4><button id="explain-code-btn" class="btn-primary"><span class="loader-text">Explain Code</span><i class="fas fa-wand-sparkles ml-2"></i></button>
@@ -595,7 +367,6 @@
 
     <a href="#home" id="back-to-top-btn" class="fixed bottom-[-100px] right-8 w-12 h-12 bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:bg-[var(--color-primary-hover)] transition-all duration-300 z-40"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Deferred scripts for non-blocking load -->
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://js.puter.com/v2/" defer></script>
@@ -628,7 +399,8 @@
             const card = document.createElement('div');
             card.className = 'card project-card flex flex-col scroll-animate';
             card.style.transitionDelay = `${index * 100}ms`;
-            card.innerHTML = `<img src="${project.img}" alt="${project.alt}" loading="lazy" decoding="async" class="w-full h-56 object-cover rounded-t-lg"><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold mb-2">${project.title}</h3><p class="text-[var(--color-text-secondary)] mb-4 flex-grow">${project.desc}</p><button class="project-preview-btn btn-secondary mt-auto w-full">View Details</button><div class="project-details-hidden hidden">${project.details}<div class="code-block-wrapper mt-4"><details><summary class="cursor-pointer font-semibold">View Code</summary><pre><code class="language-${project.codeLang}">${project.code.replace(/</g, "<").replace(/>/g, ">")}</code></pre></details></div></div></div>`;
+            const escapedCode = project.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            card.innerHTML = `<img src="${project.img}" alt="${project.alt}" loading="lazy" decoding="async" class="w-full h-56 object-cover rounded-t-lg"><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold mb-2">${project.title}</h3><p class="text-[var(--color-text-secondary)] mb-4 flex-grow">${project.desc}</p><button class="project-preview-btn btn-secondary mt-auto w-full">View Details</button><div class="project-details-hidden hidden">${project.details}<div class="code-block-wrapper mt-4"><details><summary class="cursor-pointer font-semibold">View Code</summary><pre><code class="language-${project.codeLang}">${escapedCode}</code></pre></details></div></div></div>`;
             projectsGrid.appendChild(card);
         });
         const blogGrid = document.querySelector('#blog .grid');
@@ -645,10 +417,11 @@
         const windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2;
         let mouseX = 0, mouseY = 0;
         function init3D() {
+            if (typeof THREE === 'undefined') { console.warn('Three.js not loaded, skipping 3D background.'); return; }
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
             camera.position.z = 1000;
-            const particleCount = 5000;
+            const particleCount = 2000;
             const particlesGeometry = new THREE.BufferGeometry();
             const posArray = new Float32Array(particleCount * 3);
             for (let i = 0; i < particleCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 2000; }
@@ -660,42 +433,84 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         }
-        function animate3D() { requestAnimationFrame(animate3D); const time = Date.now() * 0.00005; camera.position.x += (mouseX - camera.position.x) * 0.05; camera.position.y += (-mouseY - camera.position.y) * 0.05; camera.lookAt(scene.position); particles.rotation.x = time * 0.25; particles.rotation.y = time * 0.5; renderer.render(scene, camera); }
-        function onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); }
+        function animate3D() { if (!renderer) return; requestAnimationFrame(animate3D); const time = Date.now() * 0.00005; camera.position.x += (mouseX - camera.position.x) * 0.05; camera.position.y += (-mouseY - camera.position.y) * 0.05; camera.lookAt(scene.position); particles.rotation.x = time * 0.25; particles.rotation.y = time * 0.5; renderer.render(scene, camera); }
+        function onWindowResize() { if (!camera || !renderer) return; camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); }
         init3D(); animate3D();
         window.addEventListener('resize', onWindowResize, { passive: true });
-        document.addEventListener('mousemove', (e) => { mouseX = (e.clientX - windowHalfX) / 2; mouseY = (e.clientY - windowHalfY) / 2; }, { passive: true });
+        document.addEventListener('mousemove', (e) => { mouseX = (e.clientX - windowHalfX) / 10; mouseY = (e.clientY - windowHalfY) / 10; }, { passive: true });
 
         // --- THEME & UI ---
         const themeToggleBtn = document.getElementById('theme-toggle');
-        if (localStorage.getItem('theme') === 'light') { document.documentElement.classList.remove('dark'); }
-        else { document.documentElement.classList.add('dark'); }
-        themeToggleBtn.addEventListener('click', () => { const isDark = document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark ? 'dark' : 'light'); });
+        // The page starts with the 'dark' class on the HTML tag, so it loads dark by default.
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light'); // Still save for potential future use
+            themeToggleBtn.setAttribute('aria-pressed', isDark);
+        });
         
         const header = document.getElementById('main-header'), backToTopBtn = document.getElementById('back-to-top-btn');
         window.addEventListener('scroll', () => { header.classList.toggle('glass-header', window.scrollY > 50); backToTopBtn.classList.toggle('bottom-8', window.scrollY > 300); backToTopBtn.classList.toggle('bottom-[-100px]', window.scrollY <= 300); }, { passive: true });
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn'), mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') mobileMenu.classList.add('hidden'); });
+        
         const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+        // --- SCROLL TO CENTER LOGIC ---
+        const navLinksToSections = document.querySelectorAll('header a[href^="#"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        navLinksToSections.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+                // Close mobile menu if it's open and a link was clicked
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
         // --- DYNAMIC TEXT & SLIDER ---
         const typingElement = document.querySelector('.typing-animation');
         if (typingElement) { const words = ["curiosity.", "code.", "innovation.", "problem-solving."]; let wordIndex = 0, charIndex = 0, isDeleting = false; function type() { const currentWord = words[wordIndex]; typingElement.textContent = currentWord.substring(0, charIndex); if (!isDeleting && charIndex < currentWord.length) { charIndex++; setTimeout(type, 150); } else if (isDeleting && charIndex > 0) { charIndex--; setTimeout(type, 100); } else { isDeleting = !isDeleting; if (!isDeleting) wordIndex = (wordIndex + 1) % words.length; setTimeout(type, 1200); } } type(); }
         const sections = document.querySelectorAll('main > section'), navLinks = document.querySelectorAll('header .nav-link');
         if (sections.length && navLinks.length) { const navObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href').substring(1) === entry.target.id) { link.classList.add('active'); } }); } }); }, { rootMargin: '-40% 0px -60% 0px' }); sections.forEach(section => navObserver.observe(section)); }
+        
         const slides = document.querySelectorAll('.experience-slide');
-        if (slides.length > 0) { let currentSlide = 0; const showSlide = (n) => { slides.forEach((slide) => slide.classList.remove('active')); slides[n].classList.add('active'); }; document.querySelector('.next-slide')?.addEventListener('click', () => { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }); document.querySelector('.prev-slide')?.addEventListener('click', () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }); showSlide(0); }
+        if (slides.length > 0) {
+            let currentSlide = 0;
+            const showSlide = (n) => {
+                slides.forEach((slide) => slide.classList.remove('active'));
+                slides[n].classList.add('active');
+            };
+            const autoSlide = () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            };
+            showSlide(0);
+            setInterval(autoSlide, 5000); // Change slide every 5 seconds
+        }
         
         // --- MODAL & AI LOGIC ---
         let activeCodeToExplain = '';
         function setupModal(modalId, triggerSelector, contentSetupCallback) { const modal = document.getElementById(modalId); if (!modal) return; const closeBtns = modal.querySelectorAll('.close-modal'); const openModal = () => { modal.classList.remove('hidden'); modal.classList.add('show'); document.body.style.overflow = 'hidden'; }; const closeModal = () => { modal.classList.remove('show'); modal.classList.add('hidden'); document.body.style.overflow = ''; }; document.querySelectorAll(triggerSelector).forEach(trigger => { trigger.addEventListener('click', (e) => { e.preventDefault(); contentSetupCallback(trigger, modal); openModal(); }); }); closeBtns.forEach(btn => btn.addEventListener('click', closeModal)); modal.addEventListener('click', (e) => { if (e.currentTarget === e.target) closeModal(); }); }
-        setupModal('project-modal', '.project-preview-btn', (cardTrigger, modal) => { const card = cardTrigger.closest('.project-card'); modal.querySelector('#project-modal-title').textContent = card.querySelector('h3').textContent; modal.querySelector('#project-modal-image').src = card.querySelector('img').src; const descContainer = modal.querySelector('#project-modal-description'); descContainer.innerHTML = card.querySelector('.project-details-hidden').innerHTML; const codeEl = descContainer.querySelector('code'); if(codeEl) { activeCodeToExplain = codeEl.innerText || ''; Prism.highlightElement(codeEl); } modal.querySelector('#ai-explanation-output').style.display = 'none'; modal.querySelector('#ai-explanation-output').innerHTML = ''; });
+        setupModal('project-modal', '.project-preview-btn', (cardTrigger, modal) => { const card = cardTrigger.closest('.project-card'); modal.querySelector('#project-modal-title').textContent = card.querySelector('h3').textContent; modal.querySelector('#project-modal-image').src = card.querySelector('img').src; const descContainer = modal.querySelector('#project-modal-description'); descContainer.innerHTML = card.querySelector('.project-details-hidden').innerHTML; const codeEl = descContainer.querySelector('code'); if(codeEl) { activeCodeToExplain = codeEl.innerText || ''; if (typeof Prism !== 'undefined') Prism.highlightElement(codeEl); } modal.querySelector('#ai-explanation-output').style.display = 'none'; modal.querySelector('#ai-explanation-output').innerHTML = ''; });
         setupModal('blog-modal', '.blog-card', (cardTrigger, modal) => { modal.querySelector('#blog-modal-title').textContent = cardTrigger.querySelector('h3').textContent; modal.querySelector('#blog-modal-content').innerHTML = cardTrigger.querySelector('.blog-full-content').innerHTML; });
 
-        function markdownToHtml(text) { return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/```([\s\S]*?)```/gs, (match, p1) => `<pre><code class="language-none">${p1.trim().replace(/</g, "<").replace(/>/g, ">")}</code></pre>`).replace(/\n/g, '<br>'); }
+        function markdownToHtml(text) { return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/```([\s\S]*?)```/gs, (match, p1) => `<pre><code class="language-none">${p1.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`).replace(/\n/g, '<br>'); }
         async function callPuterAI(prompt, button, outputContainer) {
+            if (typeof puter === 'undefined' || typeof puter.ai === 'undefined') { console.error('Puter.js or its AI module not loaded.'); outputContainer.innerHTML = '<p class="text-red-500 font-semibold">AI feature is not available.</p>'; return null; }
             const originalButtonContent = button.innerHTML;
             const loaderText = button.querySelector('.loader-text')?.textContent || 'Generating';
             button.disabled = true;
@@ -705,12 +520,17 @@
                 const stream = await puter.ai.chat(prompt, { model: 'openrouter:meta-llama/llama-3.1-8b-instruct', stream: true });
                 let fullResponse = '';
                 for await (const part of stream) { if (part?.text) { fullResponse += part.text; outputContainer.innerHTML = markdownToHtml(fullResponse); } }
-                Prism.highlightAllUnder(outputContainer); return fullResponse;
+                if (typeof Prism !== 'undefined') Prism.highlightAllUnder(outputContainer); return fullResponse;
             } catch (error) { console.error('Puter AI call failed:', error); outputContainer.innerHTML = '<p class="text-red-500 font-semibold">Sorry, the AI feature is currently unavailable. Please try again later.</p>'; return null; } finally { button.disabled = false; button.innerHTML = originalButtonContent; }
         }
         document.getElementById('ai-chat-btn')?.addEventListener('click', (e) => { const input = document.getElementById('ai-chat-input'); const message = input.value.trim(); if(message) { callPuterAI(`You are a helpful AI assistant on a student's portfolio. Respond to: "${message}"`, e.currentTarget, document.getElementById('ai-chat-output')); input.value = ''; } });
         document.getElementById('explain-code-btn')?.addEventListener('click', (e) => { if (activeCodeToExplain) callPuterAI(`Explain this code snippet clearly for a student learning to code. Break down what each line or block does:\n\`\`\`\n${activeCodeToExplain}\n\`\`\``, e.currentTarget, document.getElementById('ai-explanation-output')); });
         document.getElementById('refine-message-btn')?.addEventListener('click', async (e) => { const textarea = document.getElementById('contact-message'); if (!textarea.value.trim()) return; const status = document.getElementById('form-status'); const refined = await callPuterAI(`Refine this message to be more professional, clear, and concise, while retaining the original friendly intent. Just provide the refined text, no preamble.\n\nOriginal: "${textarea.value}"`, e.currentTarget, status); if (refined) { textarea.value = refined.trim().replace(/^"|"$/g, ''); status.textContent = 'Message refined by AI ✨'; setTimeout(() => status.textContent = '', 4000); } else { status.textContent = 'AI refinement failed.'; } });
+        
+        // --- PAGE LOAD ANIMATION ---
+        const loader = document.getElementById('loader-wrapper');
+        document.body.classList.add('loaded'); // Fade in content
+        loader.classList.add('hidden'); // Fade out loader
     });
     </script>
 </body>
