@@ -11,7 +11,15 @@
     <!-- Social Media Meta Tags (Open Graph) -->
     <meta property="og:title" content="Afnad | CSE Student Portfolio">
     <meta property="og:description" content="A showcase of my journey as a computer science student, my skills, and my passion for technology.">
+    <meta property="og:image" content="https://afnad.netlify.app/about.png">
+    <meta property="og:image:alt" content="A photo of Afnad">
     <meta property="og:url" content="https://afnad.netlify.app/">
+
+    <!-- NEW: Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Afnad | CSE Student Portfolio">
+    <meta name="twitter:description" content="A showcase of my journey as a computer science student and AI enthusiast.">
+    <meta name="twitter:image" content="https://afnad.netlify.app/about.png">
 
     <!-- SEO Schema for Website -->
     <script type="application/ld+json">
@@ -20,9 +28,10 @@
       "@type": "WebSite",
       "name": "Afnad's Portfolio",
       "url": "https://afnad.netlify.app/",
+      "image": "https://afnad.netlify.app/about.png",
       "author": { "@type": "Person", "name": "Afnad" },
       "about": {
-        "@type": "Person", "name": "Afnad", "url": "https://afnad.netlify.app/", "image": "https://afnad.netlify.app/logo.png", "jobTitle": "CSE Student & AI Enthusiast",
+        "@type": "Person", "name": "Afnad", "url": "https://afnad.netlify.app/", "image": "https://afnad.netlify.app/about.png", "jobTitle": "CSE Student & AI Enthusiast",
         "worksFor": { "@type": "Organization", "name": "East West University" },
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "East West University", "sameAs": "https://www.ewubd.edu/" },
         "knowsAbout": ["Java", "Python", "C++", "JavaScript", "AI", "Machine Learning", "Software Development", "Web Development"]
@@ -399,7 +408,7 @@
             const card = document.createElement('div');
             card.className = 'card project-card flex flex-col scroll-animate';
             card.style.transitionDelay = `${index * 100}ms`;
-            const escapedCode = project.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const escapedCode = project.code.replace(/</g, "<").replace(/>/g, ">");
             card.innerHTML = `<img src="${project.img}" alt="${project.alt}" loading="lazy" decoding="async" class="w-full h-56 object-cover rounded-t-lg"><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold mb-2">${project.title}</h3><p class="text-[var(--color-text-secondary)] mb-4 flex-grow">${project.desc}</p><button class="project-preview-btn btn-secondary mt-auto w-full">View Details</button><div class="project-details-hidden hidden">${project.details}<div class="code-block-wrapper mt-4"><details><summary class="cursor-pointer font-semibold">View Code</summary><pre><code class="language-${project.codeLang}">${escapedCode}</code></pre></details></div></div></div>`;
             projectsGrid.appendChild(card);
         });
@@ -508,7 +517,7 @@
         setupModal('project-modal', '.project-preview-btn', (cardTrigger, modal) => { const card = cardTrigger.closest('.project-card'); modal.querySelector('#project-modal-title').textContent = card.querySelector('h3').textContent; modal.querySelector('#project-modal-image').src = card.querySelector('img').src; const descContainer = modal.querySelector('#project-modal-description'); descContainer.innerHTML = card.querySelector('.project-details-hidden').innerHTML; const codeEl = descContainer.querySelector('code'); if(codeEl) { activeCodeToExplain = codeEl.innerText || ''; if (typeof Prism !== 'undefined') Prism.highlightElement(codeEl); } modal.querySelector('#ai-explanation-output').style.display = 'none'; modal.querySelector('#ai-explanation-output').innerHTML = ''; });
         setupModal('blog-modal', '.blog-card', (cardTrigger, modal) => { modal.querySelector('#blog-modal-title').textContent = cardTrigger.querySelector('h3').textContent; modal.querySelector('#blog-modal-content').innerHTML = cardTrigger.querySelector('.blog-full-content').innerHTML; });
 
-        function markdownToHtml(text) { return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/```([\s\S]*?)```/gs, (match, p1) => `<pre><code class="language-none">${p1.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`).replace(/\n/g, '<br>'); }
+        function markdownToHtml(text) { return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/```([\s\S]*?)```/gs, (match, p1) => `<pre><code class="language-none">${p1.trim().replace(/</g, "<").replace(/>/g, ">")}</code></pre>`).replace(/\n/g, '<br>'); }
         async function callPuterAI(prompt, button, outputContainer) {
             if (typeof puter === 'undefined' || typeof puter.ai === 'undefined') { console.error('Puter.js or its AI module not loaded.'); outputContainer.innerHTML = '<p class="text-red-500 font-semibold">AI feature is not available.</p>'; return null; }
             const originalButtonContent = button.innerHTML;
