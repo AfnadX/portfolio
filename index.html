@@ -6,7 +6,7 @@
     
     <title>Afnad | CSE Student & AI Enthusiast</title>
     <meta name="description" content="Afnad is a CSE student from East West University with expertise in AI, web development, and software projects. Explore his journey, blog, and technical work.">
-    <meta name="keywords" content="Afnad, Portfolio, CSE Student, East West University, Java, C, Python, AI, Machine Learning, Developer, Llama 3.1, Gemini">
+    <meta name="keywords" content="Afnad, Portfolio, CSE Student, East West University, Java, C, Python, AI, Machine Learning, Developer, Llama 3.1, Gemini, Browser">
     
     <!-- Social Media Meta Tags (Open Graph) -->
     <meta property="og:title" content="Afnad | CSE Student Portfolio">
@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"></noscript>
 
-    <!-- ==== GREEN, BLUE, BLACK THEME STYLES START ==== -->
+    <!-- ==== THEME STYLES START ==== -->
     <style>
         :root {
             /* NEW FONT FAMILY */
@@ -137,7 +137,7 @@
         @media (min-width: 1024px) { main > section { padding: 8rem 1.5rem; } }
         
         #home { display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
-        #about, #experience, #blog, footer { background-color: var(--color-bg-secondary); border-top: 1px solid var(--color-border); }
+        #about, #experience, #blog, #browser, footer { background-color: var(--color-bg-secondary); border-top: 1px solid var(--color-border); }
         
         /* --- HEADER & REFINED MOBILE MENU --- */
         .glass-header {
@@ -174,6 +174,12 @@
             padding: 0.75rem 1rem;
             font-size: 1rem;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        #mobile-menu a .fa-fw {
+             text-align: center;
         }
 
         /* --- BUTTONS --- */
@@ -197,6 +203,73 @@
         }
         .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
 
+        /* --- BROWSER SECTION STYLES --- */
+        .browser-window {
+            background: var(--color-bg);
+            border-radius: var(--radius-base);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        .browser-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--color-bg-secondary);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .browser-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+        .browser-controls span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .browser-controls .dot-red { background-color: #ff5f56; }
+        .browser-controls .dot-yellow { background-color: #ffbd2e; }
+        .browser-controls .dot-green { background-color: #27c93f; }
+        .browser-address-bar {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .browser-address-bar input {
+            flex-grow: 1;
+            background: var(--color-bg);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border: 1px solid var(--color-border);
+            outline: none;
+        }
+        .browser-address-bar input:focus {
+            border-color: var(--color-primary);
+        }
+        .browser-content {
+            padding: 0;
+            height: 60vh; /* Set a viewport-based height */
+            max-height: 700px; /* Optional max height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .browser-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: white; /* Fallback background color */
+        }
+        
         /* --- FORMS --- */
         .form-input {
             width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-base); background: var(--color-bg); color: var(--color-text); font-size: 1rem; transition: all var(--transition-base); outline: none; appearance: none;
@@ -259,6 +332,7 @@
                 <a href="#experience" class="nav-link">Experience</a>
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#blog" class="nav-link">Articles</a>
+                <a href="#browser" class="nav-link">Browser</a>
                 <a href="#ai-playground" class="nav-link">AI</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -272,16 +346,17 @@
                 </button>
             </div>
         </nav>
-        <!-- REFINED MOBILE MENU -->
+        <!-- REFINED MOBILE MENU WITH LOGOS -->
         <div id="mobile-menu" role="menu">
             <div class="container mx-auto px-4 py-4 space-y-2">
-                <a href="#about" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">About</a>
-                <a href="#skills" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">Skills</a>
-                <a href="#experience" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">Experience</a>
-                <a href="#projects" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">Projects</a>
-                <a href="#blog" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">Articles</a>
-                <a href="#ai-playground" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">AI Playground</a>
-                <a href="#contact" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem">Contact</a>
+                <a href="#about" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-user-circle fa-fw w-6"></i><span>About</span></a>
+                <a href="#skills" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-cogs fa-fw w-6"></i><span>Skills</span></a>
+                <a href="#experience" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-briefcase fa-fw w-6"></i><span>Experience</span></a>
+                <a href="#projects" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-laptop-code fa-fw w-6"></i><span>Projects</span></a>
+                <a href="#blog" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-newspaper fa-fw w-6"></i><span>Articles</span></a>
+                <a href="#browser" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-window-maximize fa-fw w-6"></i><span>Browser</span></a>
+                <a href="#ai-playground" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-brain fa-fw w-6"></i><span>AI Playground</span></a>
+                <a href="#contact" class="block text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors rounded-md" role="menuitem"><i class="fas fa-envelope fa-fw w-6"></i><span>Contact</span></a>
             </div>
         </div>
     </header>
@@ -356,6 +431,35 @@
         <section id="projects"><div class="container mx-auto"><div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold scroll-animate code-font">Featured Projects</h2><p class="mt-4 text-lg !text-[var(--color-text-muted)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">A selection of projects that showcase my skills in problem-solving and software development.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
 
         <section id="blog"><div class="container mx-auto"><div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold scroll-animate code-font">My Perspective</h2><p class="mt-4 text-lg !text-[var(--color-text-muted)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">Thoughts on technology, learning, and the journey of a student developer.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
+
+        <!-- ==== BROWSER SECTION START (FUNCTIONAL) ==== -->
+        <section id="browser">
+            <div class="container mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold scroll-animate code-font">Browser</h2>
+                    <p class="mt-4 text-lg !text-[var(--color-text-muted)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">This embedded browser lets you explore web content directly from my portfolio. Enter a URL to get started.</p>
+                </div>
+                <div class="max-w-5xl mx-auto scroll-animate" style="transition-delay: 250ms;">
+                    <div class="browser-window">
+                        <div class="browser-header">
+                            <div class="browser-controls">
+                                <span class="dot-red"></span>
+                                <span class="dot-yellow"></span>
+                                <span class="dot-green"></span>
+                            </div>
+                            <div class="browser-address-bar">
+                                <input type="text" id="browser-input" placeholder="Enter URL and press Enter" value="https://www.google.com/webhp?igu=1" class="code-font" />
+                                <button id="browser-go-btn" class="btn btn-primary !py-2 !px-4">Go</button>
+                            </div>
+                        </div>
+                        <div class="browser-content">
+                            <iframe id="browser-iframe" class="browser-iframe" src="https://www.google.com/webhp?igu=1" title="Embedded Browser Content"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ==== BROWSER SECTION END ==== -->
 
         <section id="ai-playground">
             <div class="container mx-auto">
@@ -443,7 +547,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 
-    <!-- UNCHANGED JAVASCRIPT LOGIC -->
+    <!-- MAIN JAVASCRIPT LOGIC -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- DATA ---
@@ -568,7 +672,7 @@
                 showSlide(currentSlide);
             };
             showSlide(0);
-            setInterval(autoSlide, 5000); // Change slide every 5 seconds
+            setInterval(autoSlide, 5000);
         }
         
         // --- MODAL & AI LOGIC ---
@@ -595,6 +699,34 @@
         document.getElementById('ai-chat-btn')?.addEventListener('click', (e) => { const input = document.getElementById('ai-chat-input'); const message = input.value.trim(); if(message) { callPuterAI(`You are a helpful AI assistant on a student's portfolio. Respond to: "${message}"`, e.currentTarget, document.getElementById('ai-chat-output')); input.value = ''; } });
         document.getElementById('explain-code-btn')?.addEventListener('click', (e) => { if (activeCodeToExplain) callPuterAI(`Explain this code snippet clearly for a student learning to code. Break down what each line or block does:\n\`\`\`\n${activeCodeToExplain}\n\`\`\``, e.currentTarget, document.getElementById('ai-explanation-output')); });
         document.getElementById('refine-message-btn')?.addEventListener('click', async (e) => { const textarea = document.getElementById('contact-message'); if (!textarea.value.trim()) return; const status = document.getElementById('form-status'); const refined = await callPuterAI(`Refine this message to be more professional, clear, and concise, while retaining the original friendly intent. Just provide the refined text, no preamble.\n\nOriginal: "${textarea.value}"`, e.currentTarget, status); if (refined) { textarea.value = refined.trim().replace(/^"|"$/g, ''); status.textContent = 'Message refined by AI ✨'; setTimeout(() => status.textContent = '', 4000); } else { status.textContent = 'AI refinement failed.'; } });
+
+        // --- BROWSER LOGIC ---
+        const browserInput = document.getElementById('browser-input');
+        const browserGoBtn = document.getElementById('browser-go-btn');
+        const browserIframe = document.getElementById('browser-iframe');
+
+        const navigateBrowser = () => {
+            let url = browserInput.value.trim();
+            if (url) {
+                // Add https:// if no protocol is present
+                if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+                    url = 'https://' + url;
+                }
+                browserIframe.src = url;
+            }
+        };
+
+        // Set initial URL for browser
+        const defaultBrowserUrl = "https://www.google.com/webhp?igu=1";
+        browserInput.value = defaultBrowserUrl;
+        browserIframe.src = defaultBrowserUrl;
+
+        browserGoBtn.addEventListener('click', navigateBrowser);
+        browserInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                navigateBrowser();
+            }
+        });
         
         // --- PAGE LOAD ANIMATION ---
         const loader = document.getElementById('loader-wrapper');
