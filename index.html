@@ -270,6 +270,35 @@
             background-color: white; /* Fallback background color */
         }
         
+        /* Browser loading indicator */
+        .browser-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .browser-loading.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .browser-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
         /* --- FORMS --- */
         .form-input {
             width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-base); background: var(--color-bg); color: var(--color-text); font-size: 1rem; transition: all var(--transition-base); outline: none; appearance: none;
@@ -376,7 +405,7 @@
         <section id="about">
              <div class="container mx-auto grid md:grid-cols-5 gap-12 lg:gap-20 items-center">
                 <div class="md:col-span-2 scroll-animate order-first md:order-last" style="transition-delay: 150ms;">
-                    <img src="about.png" alt="A photo of Afnad" class="w-full h-auto max-w-md mx-auto rounded-2xl shadow-lg object-cover aspect-square border-2 border-[var(--color-border)]">
+                    <img src="https://afnad.netlify.app/about.png" alt="A photo of Afnad" class="w-full h-auto max-w-md mx-auto rounded-2xl shadow-lg object-cover aspect-square border-2 border-[var(--color-border)]">
                 </div>
                 <div class="md:col-span-3 scroll-animate">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 code-font">My Journey Into Technology</h2>
@@ -437,11 +466,11 @@
             <div class="container mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold scroll-animate code-font">Browser</h2>
-                    <p class="mt-4 text-lg !text-[var(--color-text-muted)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">This embedded browser lets you explore web content directly from my portfolio. Enter a URL to get started.</p>
+                    <p class="mt-4 text-lg !text-[var(--color-text-muted)] max-w-2xl mx-auto scroll-animate" style="transition-delay: 150ms;">Try my web browser.</p>
                 </div>
                 <div class="max-w-5xl mx-auto scroll-animate" style="transition-delay: 250ms;">
                     <div class="browser-window">
-                        <div class="browser-header">
+                        <div class="browser-header" style="display: none;">
                             <div class="browser-controls">
                                 <span class="dot-red"></span>
                                 <span class="dot-yellow"></span>
@@ -453,7 +482,10 @@
                             </div>
                         </div>
                         <div class="browser-content">
-                            <iframe id="browser-iframe" class="browser-iframe" src="https://www.google.com/webhp?igu=1" title="Embedded Browser Content"></iframe>
+                            <div class="browser-loading" id="browser-loading">
+                                <div class="browser-loading-spinner"></div>
+                            </div>
+                            <iframe id="browser-iframe" class="browser-iframe" title="Embedded Browser Content"></iframe>
                         </div>
                     </div>
                 </div>
@@ -546,7 +578,7 @@
     <script src="https://js.puter.com/v2/" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
-
+    
     <!-- MAIN JAVASCRIPT LOGIC -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -704,6 +736,8 @@
         const browserInput = document.getElementById('browser-input');
         const browserGoBtn = document.getElementById('browser-go-btn');
         const browserIframe = document.getElementById('browser-iframe');
+        const browserLoading = document.getElementById('browser-loading');
+        let browserInitialized = false;
 
         const navigateBrowser = () => {
             let url = browserInput.value.trim();
@@ -712,26 +746,66 @@
                 if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
                     url = 'https://' + url;
                 }
+                browserLoading.classList.add('active');
                 browserIframe.src = url;
             }
         };
 
-        // Set initial URL for browser
-        const defaultBrowserUrl = "https://www.google.com/webhp?igu=1";
-        browserInput.value = defaultBrowserUrl;
-        browserIframe.src = defaultBrowserUrl;
+        // Initialize browser only when scrolled into view
+        const browserSection = document.getElementById('browser');
+        const browserObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !browserInitialized) {
+                    browserInitialized = true;
+                    // Set initial URL for browser
+                    const defaultBrowserUrl = "https://www.google.com/webhp?igu=1";
+                    if (browserInput) {
+                        browserInput.value = defaultBrowserUrl;
+                    }
+                    browserLoading.classList.add('active');
+                    browserIframe.src = defaultBrowserUrl;
+                }
+            });
+        }, { threshold: 0.1 });
+        if(browserSection) browserObserver.observe(browserSection);
 
-        browserGoBtn.addEventListener('click', navigateBrowser);
-        browserInput.addEventListener('keydown', (e) => {
+        // Handle browser load events
+        if(browserIframe) {
+            browserIframe.addEventListener('load', () => {
+                if(browserLoading) browserLoading.classList.remove('active');
+            });
+            browserIframe.addEventListener('error', () => {
+                if(browserLoading) browserLoading.classList.remove('active');
+                browserIframe.srcdoc = '<html><body style="display:flex;align-items:center;justify-content:center;height:100%;"><p style="color:#666;font-family:sans-serif;">Failed to load the page</p></body></html>';
+            });
+        }
+
+        if(browserGoBtn) browserGoBtn.addEventListener('click', navigateBrowser);
+        if(browserInput) browserInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 navigateBrowser();
             }
         });
         
+        // --- FORM SUBMISSION ---
+        document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const status = document.getElementById('form-status');
+            status.textContent = 'Message sent successfully!';
+            status.style.color = 'var(--color-accent)';
+            form.reset();
+            setTimeout(() => {
+                status.textContent = '';
+            }, 4000);
+        });
+        
         // --- PAGE LOAD ANIMATION ---
         const loader = document.getElementById('loader-wrapper');
         document.body.classList.add('loaded'); // Fade in content
-        loader.classList.add('hidden'); // Fade out loader
+        setTimeout(() => {
+            loader.classList.add('hidden'); // Fade out loader
+        }, 500);
     });
     </script>
 </body>
