@@ -114,7 +114,16 @@
         @keyframes blink { 50% { opacity: 0; } }
         .loader-ring { border: 3px solid rgba(59, 130, 246, 0.3); border-radius: 50%; border-top: 3px solid #3B82F6; width: 20px; height: 20px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .initially-hidden { visibility: hidden; }
+        
+        /* -- IMMERSIVENESS FIX -- */
+        /* This rule is more specific and guarantees the overview section is hidden on load */
+        #overview.initially-hidden {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+        /* -- END FIX -- */
+        
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0.8; } to { transform: scale(1); opacity: 1; } }
         #loader-overlay { position: fixed; inset: 0; z-index: 10000; background-color: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #e5e5e5; transition: opacity 0.7s 0.5s ease-in-out; }
@@ -193,7 +202,7 @@
             </div>
         </section>
 
-        <!-- The 'initially-hidden' class is now only removed on the first scroll -->
+        <!-- The 'initially-hidden' class is now reliably removed only on the first scroll -->
         <section id="overview" class="scroll-reveal initially-hidden">
             <div class="max-w-7xl mx-auto px-4 md:px-8">
                 <div class="flex items-end justify-between mb-10">
@@ -391,25 +400,21 @@
                             loaderOverlay.style.opacity = '0';
                             loaderOverlay.style.pointerEvents = 'none';
                             
-                            // -- CHANGE FOR IMMERSIVENESS --
-                            // Instead of showing the overview section automatically,
-                            // we wait for the user to scroll for the first time.
+                            // -- IMMERSIVENESS LOGIC --
                             if (overviewSection) {
-                                const revealOnFirstUserAction = () => {
+                                const revealOnFirstScroll = () => {
                                     overviewSection.classList.remove('initially-hidden');
                                 };
-                                // Listen for either scroll or a keydown, and only fire once.
-                                window.addEventListener('scroll', revealOnFirstUserAction, { once: true });
-                                window.addEventListener('keydown', revealOnFirstUserAction, { once: true });
+                                // Listen for the first scroll and then reveal the section.
+                                window.addEventListener('scroll', revealOnFirstScroll, { once: true });
                             }
-                            // -- END CHANGE --
+                            // -- END LOGIC --
 
                         }, 1200);
                     }
                 }, 15);
             }
             
-            // The rest of the script is unchanged and remains correct
             function setupThreeJS() {
                 const canvas = document.getElementById('bg-canvas');
                 if (!canvas || typeof THREE === 'undefined') {
