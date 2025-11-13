@@ -59,7 +59,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Tailwind Configuration (Restored for correct styling) -->
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -193,6 +193,7 @@
             </div>
         </section>
 
+        <!-- The 'initially-hidden' class is now only removed on the first scroll -->
         <section id="overview" class="scroll-reveal initially-hidden">
             <div class="max-w-7xl mx-auto px-4 md:px-8">
                 <div class="flex items-end justify-between mb-10">
@@ -257,8 +258,7 @@
             </div>
         </section>
 
-        <!-- The rest of the body content remains identical to your original file -->
-        <!-- ... from <section id="experience"> to </footer> ... -->
+        <!-- The rest of the body content remains the same -->
         <section id="experience" class="scroll-reveal">
             <div class="max-w-7xl mx-auto px-4 md:px-8">
                 <h2 class="text-3xl font-bold mb-10 text-center">The Journey So Far</h2>
@@ -390,15 +390,28 @@
                         setTimeout(() => {
                             loaderOverlay.style.opacity = '0';
                             loaderOverlay.style.pointerEvents = 'none';
-                            if (overviewSection) overviewSection.classList.remove('initially-hidden');
+                            
+                            // -- CHANGE FOR IMMERSIVENESS --
+                            // Instead of showing the overview section automatically,
+                            // we wait for the user to scroll for the first time.
+                            if (overviewSection) {
+                                const revealOnFirstUserAction = () => {
+                                    overviewSection.classList.remove('initially-hidden');
+                                };
+                                // Listen for either scroll or a keydown, and only fire once.
+                                window.addEventListener('scroll', revealOnFirstUserAction, { once: true });
+                                window.addEventListener('keydown', revealOnFirstUserAction, { once: true });
+                            }
+                            // -- END CHANGE --
+
                         }, 1200);
                     }
                 }, 15);
             }
-
+            
+            // The rest of the script is unchanged and remains correct
             function setupThreeJS() {
                 const canvas = document.getElementById('bg-canvas');
-                // Check if Three.js is loaded, otherwise it can throw an error
                 if (!canvas || typeof THREE === 'undefined') {
                     console.warn("Three.js not loaded or canvas not found, skipping background animation.");
                     return;
@@ -420,11 +433,10 @@
                     renderer.render(scene, camera);
                 };
                 
-                // PERFORMANCE: Pause animation when tab is not visible to save resources
                 const handleVisibilityChange = () => {
                     if (document.hidden) {
                         cancelAnimationFrame(animationFrameId);
-                    } else if(animationFrameId) { // only restart if it was running
+                    } else if(animationFrameId) {
                         animate();
                     }
                 };
@@ -433,7 +445,6 @@
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { 
                     animate(); 
                 } else {
-                    // Render once for static view if motion is reduced
                     renderer.render(scene, camera);
                 }
                 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
@@ -476,7 +487,6 @@
                 };
                 document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', e => closeModal(e.target.closest('.fixed[role="dialog"]'))));
                 
-                // Use event delegation for dynamically added elements
                 document.body.addEventListener('click', function(e) {
                     const projectTrigger = e.target.closest('.project-trigger');
                     const blogTrigger = e.target.closest('.blog-trigger');
@@ -520,7 +530,6 @@
                     const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
                     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
                 } else {
-                    // Fallback for older browsers
                     document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
                 }
             }
@@ -554,7 +563,7 @@
                     }, { threshold: 0.1 });
                     browserObserver.observe(playgroundSection);
                 } else {
-                    navigateTo(input.value); // Load immediately for older browsers
+                    navigateTo(input.value);
                 }
                 iframe.onload = () => loadingOverlay.classList.add('invisible', 'opacity-0');
                 goBtn.addEventListener('click', () => navigateTo(input.value));
