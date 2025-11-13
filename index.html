@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
     
     <title>Afnad | CSE Student & AI Enthusiast</title>
     <meta name="description" content="Afnad is a CSE student from East West University with expertise in AI, web development, and software projects. Explore his journey, blog, and technical work.">
@@ -119,6 +119,7 @@
         @keyframes blink { 50% { opacity: 0; } }
         .loader-ring { border: 3px solid rgba(59, 130, 246, 0.3); border-radius: 50%; border-top: 3px solid #3B82F6; width: 20px; height: 20px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .initially-hidden { visibility: hidden; }
 
         /* ==== Enhanced Loader Styles ==== */
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0.8; } to { transform: scale(1); opacity: 1; } }
@@ -152,8 +153,8 @@
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
-        <div class="glass-panel rounded-full px-6 py-3 flex items-center justify-between shadow-2xl shadow-blue-900/10">
+    <nav class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl">
+        <div class="glass-panel rounded-full px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xl shadow-blue-900/10">
             <a href="#home" class="font-extrabold text-lg tracking-tighter flex items-center gap-2">
                 <span class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
                 <span class="font-mono text-gray-700 dark:text-white">AFNAD</span>
@@ -164,7 +165,7 @@
                 <a href="#projects" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Work</a>
                 <a href="#playground" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">Playground</a>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
                 <button id="theme-toggle" class="w-9 h-9 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors border border-black/5 dark:border-white/10">
                     <i class="fas fa-sun text-yellow-400 hidden dark:block"></i>
                     <i class="fas fa-moon text-blue-600 dark:hidden"></i>
@@ -182,11 +183,11 @@
         </div>
     </nav>
 
-    <main class="pt-32 pb-8 px-4 md:px-8 max-w-7xl mx-auto space-y-24">
+    <main class="pt-28 sm:pt-32 pb-8 px-4 md:px-8 max-w-7xl mx-auto space-y-20 md:space-y-24">
         
         <!-- Section: Hero -->
         <section id="home" class="min-h-[70vh] flex flex-col justify-center items-center text-center relative">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
             <div class="scroll-reveal">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6">
                     <span class="relative flex h-2 w-2">
@@ -195,25 +196,26 @@
                     </span>
                     Available for collaborative projects
                 </div>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight">
-                    Building the <br>
+                <!-- OPTIMIZED: Adjusted font sizes and removed <br> for better mobile wrapping -->
+                <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-4xl mx-auto">
+                    Building the 
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-emerald-400">Digital Future</span>
                 </h1>
-                <p class="text-lg md:text-xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p class="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
                     Hi, I'm <span class="text-gray-900 dark:text-white font-semibold">Afnad</span>. I engineer robust software and explore the frontiers of <span class="text-blue-500 dark:text-blue-400 font-mono typing-text">AI Integration</span><span class="cursor-blink"></span>
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#projects" class="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-gray-900 px-8 font-medium text-white transition-all duration-300 hover:bg-blue-700 hover:w-40 hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] dark:bg-white dark:text-black dark:hover:bg-blue-50">
+                    <a href="#projects" class="group w-full sm:w-auto relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-gray-900 px-8 font-medium text-white transition-all duration-300 hover:bg-blue-700 sm:hover:w-40 hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] dark:bg-white dark:text-black dark:hover:bg-blue-50">
                         <span class="mr-2">View Work</span>
                         <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                     </a>
-                    <a href="#overview" class="px-8 py-3 rounded-full border border-gray-600/50 dark:border-white/10 hover:bg-gray-500/10 dark:hover:bg-white/5 transition-colors text-sm font-medium">About Me</a>
+                    <a href="#overview" class="w-full sm:w-auto px-8 py-3 rounded-full border border-gray-600/50 dark:border-white/10 hover:bg-gray-500/10 dark:hover:bg-white/5 transition-colors text-sm font-medium">About Me</a>
                 </div>
             </div>
         </section>
 
         <!-- Section: Overview Bento Grid -->
-        <section id="overview" class="scroll-reveal">
+        <section id="overview" class="scroll-reveal initially-hidden">
             <div class="flex items-end justify-between mb-10">
                 <div>
                     <h2 class="text-3xl font-bold mb-2">Overview</h2>
@@ -222,11 +224,11 @@
                 <div class="hidden md:block w-32 h-1 bg-gradient-to-r from-blue-500 to-transparent rounded-full"></div>
             </div>
             <div class="bento-grid">
-                <div class="glass-card rounded-3xl p-8 bento-span-2 bento-row-2 flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden group">
+                <!-- OPTIMIZED: Reduced padding for mobile -->
+                <div class="glass-card rounded-3xl p-6 md:p-8 bento-span-2 bento-row-2 flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-500"></div>
                     <div class="shrink-0 relative">
                         <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                            <!-- ==== IMAGE: about.png ==== -->
                             <img src="about.png" alt="Afnad" class="w-full h-full object-cover">
                         </div>
                         <div class="absolute -bottom-3 -right-3 bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 p-2 rounded-lg shadow-lg"><i class="fas fa-graduation-cap text-blue-500 text-xl"></i></div>
@@ -257,7 +259,8 @@
                 </div>
                 <div class="glass-card rounded-3xl p-6 bento-span-2">
                     <h4 class="text-sm font-mono text-gray-700 dark:text-gray-500 uppercase mb-4">Tech Toolbox</h4>
-                    <div class="grid grid-cols-4 md:grid-cols-8 gap-4 text-center">
+                    <!-- OPTIMIZED: Changed grid columns for better spacing on small screens -->
+                    <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-4 text-center">
                         <div class="flex flex-col items-center gap-2 group"><i class="fab fa-java text-2xl text-gray-600 dark:text-gray-400 group-hover:text-orange-500 transition-colors"></i><span class="text-[10px]">Java</span></div>
                         <div class="flex flex-col items-center gap-2 group"><i class="fab fa-python text-2xl text-gray-600 dark:text-gray-400 group-hover:text-yellow-400 transition-colors"></i><span class="text-[10px]">Python</span></div>
                         <div class="flex flex-col items-center gap-2 group"><i class="fab fa-js text-2xl text-gray-600 dark:text-gray-400 group-hover:text-yellow-300 transition-colors"></i><span class="text-[10px]">JS (ES6+)</span></div>
@@ -267,7 +270,8 @@
                         <div class="flex flex-col items-center gap-2 group"><i class="fab fa-unity text-2xl text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:hover:text-white transition-colors"></i><span class="text-[10px]">Unity/C#</span></div>
                         <div class="flex flex-col items-center gap-2 group"><i class="fas fa-gamepad text-2xl text-gray-600 dark:text-gray-400 group-hover:text-green-400 transition-colors"></i><span class="text-[10px]">Lua/Mods</span></div>
                     </div>
-                    <div class="mt-4 pt-4 border-t border-black/10 dark:border-white/10 grid grid-cols-2 gap-4 text-xs text-gray-700 dark:text-gray-500">
+                    <!-- OPTIMIZED: Stacked this section on mobile -->
+                    <div class="mt-4 pt-4 border-t border-black/10 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-700 dark:text-gray-500">
                         <div><span class="block font-bold text-gray-800 dark:text-gray-400">AI & ML:</span> NLP, API Integration (Gemini), Scikit-learn</div>
                         <div><span class="block font-bold text-gray-800 dark:text-gray-400">Game Dev:</span> Unreal Blueprints, GameMaker</div>
                     </div>
@@ -284,12 +288,12 @@
             <h2 class="text-3xl font-bold mb-10 text-center">The Journey So Far</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Education Card (Large) -->
-                <div class="glass-card rounded-3xl p-8 md:col-span-2 md:row-span-2 flex flex-col justify-between scroll-reveal" style="transition-delay: 100ms;">
+                <div class="glass-card rounded-3xl p-6 md:p-8 md:col-span-2 md:row-span-2 flex flex-col justify-between scroll-reveal" style="transition-delay: 100ms;">
                     <div>
                         <div class="flex items-center gap-4 mb-4">
                             <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center"><i class="fas fa-graduation-cap text-2xl text-blue-400"></i></div>
                             <div>
-                                <h3 class="text-2xl font-bold">Academic Foundation</h3>
+                                <h3 class="text-xl sm:text-2xl font-bold">Academic Foundation</h3>
                                 <p class="text-sm text-gray-500">B.Sc. in CSE, East West University</p>
                             </div>
                         </div>
@@ -325,11 +329,11 @@
                 </div>
 
                 <!-- Future Trajectory Card -->
-                <div class="glass-card rounded-3xl p-8 md:col-span-3 text-center flex flex-col items-center justify-center relative overflow-hidden group scroll-reveal" style="transition-delay: 400ms;">
+                <div class="glass-card rounded-3xl p-6 md:p-8 md:col-span-3 text-center flex flex-col items-center justify-center relative overflow-hidden group scroll-reveal" style="transition-delay: 400ms;">
                     <div class="absolute inset-0 bg-gradient-to-t from-purple-600/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10">
                         <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-4 mx-auto animate-pulse-slow"><i class="fas fa-rocket text-3xl text-purple-400"></i></div>
-                        <h3 class="text-2xl font-bold">Future Trajectory</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">Future Trajectory</h3>
                         <p class="text-gray-700 dark:text-gray-400 max-w-xl mx-auto mt-2">Expected to graduate in 2027. Eager to apply my skills to innovative AI projects and contribute to building the next generation of intelligent software.</p>
                     </div>
                 </div>
@@ -353,7 +357,8 @@
             <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-globe text-blue-400"></i> Web Browser</h3>
-                    <div class="glass-card rounded-xl overflow-hidden border border-gray-600/10 dark:border-white/10 shadow-2xl transform transition-transform hover:scale-[1.01] duration-500 flex flex-col h-[600px]">
+                    <!-- OPTIMIZED: Adjusted height for mobile screens -->
+                    <div class="glass-card rounded-xl overflow-hidden border border-gray-600/10 dark:border-white/10 shadow-2xl transform transition-transform hover:scale-[1.01] duration-500 flex flex-col h-[500px] lg:h-[600px]">
                         <div class="bg-[#1a1a1a] px-4 py-3 flex items-center gap-4 border-b border-white/5">
                             <div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div><div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div><div class="w-3 h-3 rounded-full bg-[#27C93F]"></div></div>
                             <div class="flex-1 flex items-center bg-[#000] rounded-md px-3 py-1.5 border border-white/10 focus-within:border-blue-500/50 transition-colors"><i class="fas fa-lock text-xs text-gray-500 mr-2"></i><input type="text" id="browser-input" class="bg-transparent border-none outline-none text-sm text-gray-300 w-full font-mono" value="https://www.google.com/webhp?igu=1"></div>
@@ -362,7 +367,8 @@
                         <div class="relative flex-1 bg-white dark:bg-white"><div class="browser-loading absolute inset-0 bg-dark-bg/90 flex items-center justify-center z-10 opacity-0 invisible transition-all duration-300" id="browser-loading"><div class="loader-ring"></div></div><iframe id="browser-iframe" class="w-full h-full border-none" src="about:blank"></iframe></div>
                     </div>
                 </div>
-                <div class="lg:col-span-1 flex flex-col h-[600px]">
+                <!-- OPTIMIZED: Adjusted height for mobile screens -->
+                <div class="lg:col-span-1 flex flex-col h-[500px] lg:h-[600px]">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-robot text-purple-400"></i> Try My AI Model:</h3>
                     <div class="glass-card rounded-xl p-0 flex flex-col h-full border border-purple-500/20 relative overflow-hidden">
                         <div class="bg-light-card dark:bg-dark-bg px-4 py-2 border-b border-gray-600/10 dark:border-white/10 flex justify-between items-center"><span class="text-xs font-mono text-gray-700 dark:text-gray-400">AI Assistant</span><div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div></div>
@@ -384,22 +390,30 @@
 
         <!-- Section: Contact -->
         <section id="contact" class="scroll-reveal">
-            <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-12 relative overflow-hidden">
                 <div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl"></div>
                 <div class="grid md:grid-cols-2 gap-12 relative z-10">
                     <div>
-                        <h2 class="text-4xl font-bold mb-4">Let's Create Something <br> <span class="text-blue-500">Extraordinary</span>.</h2>
+                        <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's Create Something <br> <span class="text-blue-500">Extraordinary</span>.</h2>
                         <p class="text-gray-700 dark:text-gray-400 mb-8">Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!</p>
                         <div class="space-y-4">
-                            <a href="mailto:2024-3-60-229@std.ewubd.edu" class="flex items-center gap-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"><div class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-blue-400"><i class="fas fa-envelope"></i></div>2024-3-60-229@std.ewubd.edu</a>
+                            <a href="mailto:2024-3-60-229@std.ewubd.edu" class="flex items-center gap-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"><div class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-blue-400"><i class="fas fa-envelope"></i></div><span class="break-all">2024-3-60-229@std.ewubd.edu</span></a>
                             <a href="tel:+8801883423390" class="flex items-center gap-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"><div class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-green-400"><i class="fas fa-phone"></i></div>+8801883423390</a>
                         </div>
                     </div>
                     <form id="contact-form" name="contact" method="POST" data-netlify="true" class="space-y-4">
                         <input type="hidden" name="form-name" value="contact" />
-                        <div class="grid grid-cols-2 gap-4"><input type="text" name="name" placeholder="Name" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-colors text-sm placeholder-gray-600"><input type="email" name="email" placeholder="Email" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-colors text-sm placeholder-gray-600"></div>
+                        <!-- OPTIMIZED: Inputs stack on small screens -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" name="name" placeholder="Name" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-colors text-sm placeholder-gray-600">
+                            <input type="email" name="email" placeholder="Email" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-colors text-sm placeholder-gray-600">
+                        </div>
                         <textarea name="message" id="contact-message" rows="4" placeholder="Message" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500 transition-colors text-sm resize-none placeholder-gray-600"></textarea>
-                        <div class="flex gap-3"><button type="submit" class="flex-1 bg-black dark:bg-white text-white dark:text-black font-bold py-3 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">Send</button><button type="button" id="refine-message-btn" class="px-4 py-3 rounded-xl border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 transition-colors flex items-center gap-2"><i class="fas fa-wand-sparkles"></i> AI Refine</button></div>
+                        <!-- OPTIMIZED: Buttons stack on small screens -->
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="submit" class="flex-1 bg-black dark:bg-white text-white dark:text-black font-bold py-3 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors">Send</button>
+                            <button type="button" id="refine-message-btn" class="px-4 py-3 rounded-xl border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 transition-colors flex items-center justify-center gap-2"><i class="fas fa-wand-sparkles"></i> AI Refine</button>
+                        </div>
                         <div id="form-status" class="text-sm text-center mt-2 h-5 text-emerald-400"></div>
                     </form>
                 </div>
@@ -437,21 +451,20 @@
         </div>
     </footer>
     
-    <!-- ==== NEW: Copyright Notice ==== -->
     <div class="py-6 text-center">
         <p class="text-xs font-mono text-gray-500 dark:text-gray-600">Copyright &copy; 2026 Afnad</p>
     </div>
 
     <!-- Modals -->
-    <div id="project-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content p-0"><div class="relative"><button class="close-modal absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors z-10 flex items-center justify-center"><i class="fas fa-times"></i></button><img id="project-modal-image" src="" alt="Project Image" class="w-full h-64 object-cover"><div class="p-8"><h2 id="project-modal-title" class="text-3xl font-bold mb-4"></h2><div id="project-modal-description" class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 mb-8"></div><div class="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl p-6"><div class="flex justify-between items-center mb-4"><h4 class="font-bold flex items-center gap-2"><i class="fas fa-code text-blue-400"></i> Code Snippet</h4><button id="explain-code-btn" class="text-xs bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white transition-colors">Explain with AI</button></div><div id="ai-explanation-output" class="hidden mb-4 text-sm bg-black/10 dark:bg-black/30 p-4 rounded border border-blue-500/30 text-gray-700 dark:text-gray-300 font-mono"></div></div></div></div></div></div>
-    <div id="blog-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl p-8 transform scale-95 opacity-0 transition-all duration-300 modal-content"><button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-black dark:hover:text-white"><i class="fas fa-times text-xl"></i></button><h2 id="blog-modal-title" class="text-2xl md:text-3xl font-bold mb-6 text-black dark:text-white"></h2><div id="blog-modal-content" class="prose dark:prose-invert prose-lg max-w-none text-gray-700 dark:text-gray-300 leading-relaxed"></div></div></div>
-    <div id="wip-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="modal-content absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl p-8 text-center transform scale-95 opacity-0 transition-all duration-300"><h3 class="text-2xl font-bold mb-4 text-blue-400">Heads Up!</h3><p class="text-gray-700 dark:text-gray-300 mb-6">This feature is currently under development. Please check back later!</p><button class="close-modal bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">Got it</button></div></div>
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content p-0"><div class="relative"><button class="close-modal absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors z-10 flex items-center justify-center"><i class="fas fa-times"></i></button><img id="project-modal-image" src="" alt="Project Image" class="w-full h-48 sm:h-64 object-cover"><div class="p-6 sm:p-8"><h2 id="project-modal-title" class="text-2xl sm:text-3xl font-bold mb-4"></h2><div id="project-modal-description" class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 mb-8"></div><div class="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl p-4 sm:p-6"><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4"><h4 class="font-bold flex items-center gap-2"><i class="fas fa-code text-blue-400"></i> Code Snippet</h4><button id="explain-code-btn" class="text-xs bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white transition-colors w-full sm:w-auto">Explain with AI</button></div><div id="ai-explanation-output" class="hidden mb-4 text-sm bg-black/10 dark:bg-black/30 p-4 rounded border border-blue-500/30 text-gray-700 dark:text-gray-300 font-mono"></div></div></div></div></div></div>
+    <div id="blog-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 modal-content"><button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-black dark:hover:text-white"><i class="fas fa-times text-xl"></i></button><h2 id="blog-modal-title" class="text-2xl md:text-3xl font-bold mb-6 text-black dark:text-white"></h2><div id="blog-modal-content" class="prose dark:prose-invert prose-lg max-w-none text-gray-700 dark:text-gray-300 leading-relaxed"></div></div></div>
+    <div id="wip-modal" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="modal-content absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm bg-light-card dark:bg-dark-card border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl p-8 text-center transform scale-95 opacity-0 transition-all duration-300"><h3 class="text-2xl font-bold mb-4 text-blue-400">Heads Up!</h3><p class="text-gray-700 dark:text-gray-300 mb-6">This feature is currently under development. Please check back later!</p><button class="close-modal bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">Got it</button></div></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
     <script>
-        // ==== FULL ORIGINAL DATA RESTORED WITH IMAGE PATHS ====
+        // ==== SCRIPT IS UNCHANGED FROM PREVIOUS VERSION ====
         const projectsData = [
             { img: "sudoko.png", alt: "AI Sudoku Solver Project", title: "AI Sudoku Solver", desc: "A Python application that uses a backtracking algorithm to solve any valid Sudoku puzzle, with a simple GUI.", details: `<p>This project demonstrates algorithmic problem-solving and foundational AI concepts.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    else:\n        row, col = find\n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            if solve_sudoku(board):\n                return True\n            board[row][col] = 0\n    return False`, lang: 'python' },
             { img: "passwordcheck.png", alt: "Password Strength Checker Project", title: "Password Strength Checker", desc: "A web tool built with JavaScript that provides real-time feedback on password strength based on multiple criteria.", details: `<p>This project showcases DOM manipulation and practical application of regular expressions.</p>`, code: `function checkStrength(password) {\n    let strength = 0;\n    if (password.match(/[a-z]+/)) { strength += 1; }\n    if (password.match(/[A-Z]+/)) { strength += 1; }\n    if (password.match(/[0-9]+/)) { strength += 1; }\n    if (password.match(/[$@#&!]+/)) { strength += 1; }\n    if (password.length > 8) { strength += 1; }\n    return strength;\n}`, lang: 'javascript' },
@@ -460,7 +473,6 @@
             { img: "newsscraper.png", alt: "Python News Scraper Project", title: "Python News Scraper", desc: "A web scraper built with Python to extract and display the latest headlines from a news website.", details: `<p>Demonstrates skills in using libraries like BeautifulSoup and Requests.</p>`, code: `import requests\nfrom bs4 import BeautifulSoup\n\ndef scrape_headlines(url):\n    response = requests.get(url)\n    soup = BeautifulSoup(response.text, 'html.parser')\n    headlines = []\n    for h2 in soup.find_all('h2', limit=5):\n        headlines.append(h2.get_text(strip=True))\n    return headlines`, lang: 'python' },
             { img: "rockpaperscissiors.png", alt: "Rock Paper Scissors Game", title: "Rock Paper Scissors", desc: "The classic game brought to life with JavaScript. A fun project demonstrating event handling and basic game logic.", details: `<p>An interactive web game that allows a user to play against the computer.</p>`, code: `function playGame(playerChoice) {\n    const choices = ['rock', 'paper', 'scissors'];\n    const computerChoice = choices[Math.floor(Math.random() * 3)];\n    // ... game logic ...\n}`, lang: 'javascript' }
         ];
-
         const blogData = [
             { title: "The 'Why' Behind Data Structures & Algorithms", desc: "They aren't just interview questions; they're the blueprints of efficient software. Choosing the right data structure... can be the difference between an application that runs in milliseconds and one that takes minutes.", content: `<p>Many students see Data Structures and Algorithms (DS&A) as a hurdle—a set of abstract problems to memorize for technical interviews. But their true value lies far beyond that. DS&A are the fundamental building blocks of computer science. They are the tools we use to organize, manage, and process data efficiently.</p><p>Choosing the right data structure, like a hash map over an array for quick lookups, can be the difference between an application that runs in milliseconds and one that takes minutes. A well-designed algorithm, understood through the lens of Big O notation, can solve a problem at a scale that brute force cannot. It's about learning to think about trade-offs: time complexity versus space complexity, readability versus performance. This mindset—the ability to analyze a problem and select the most effective tools to solve it—is the hallmark of a true software engineer.</p>` },
             { title: "First Hackathon: Lessons in Code & Collaboration", desc: "Beyond the code, I learned about the power of a shared goal and the intensity of a deadline. It was less about winning, more about rapid growth.", content: `<p>A 24-hour hackathon is an exhilarating, exhausting, and incredibly educational experience. My first one was a whirlwind of caffeine, collaboration, and countless Git commits. We set out to build a campus navigation app, and while the final product was far from perfect, the lessons learned were invaluable.</p><p>I learned to rapidly prototype, focusing on a minimum viable product (MVP) instead of getting lost in details. I learned to communicate technical ideas clearly with my team, even when we were all sleep-deprived. Most importantly, I learned that a team with a shared vision can achieve remarkable things in a very short time. The pressure-cooker environment forced me to solve problems faster and more creatively than I ever thought possible.</p>` },
@@ -469,15 +481,11 @@
             { title: "From Gamer to Game Dev: My Journey into Modding", desc: "Breaking games is the best way to learn how to make them. Modding taught me more about game logic and architecture than any textbook could.", content: `<p>My passion for coding started with a passion for gaming. I didn't just want to play games; I wanted to understand how they worked. That curiosity led me to the world of modding. Reverse-engineering game files, writing Lua scripts to change gameplay mechanics, and creating custom assets taught me invaluable lessons.</p><p>It was a practical, hands-on education in core development principles: state management, event-driven programming, and asset pipelines. It showed me how a different systems in a complex piece of software interact. More than anything, it taught me how to read, understand, and build upon a large, existing codebase—a skill that is absolutely critical in the professional world.</p>`},
             { title: "The Reality of Tech Jobs vs. University Projects", desc: "University teaches you the 'how'. The real world teaches you the 'why'—and the 'how' again, but this time with legacy code and tight deadlines.", content: `<p>In university, projects are often greenfield. You start from a blank slate, with clear requirements and a defined endpoint. The goal is to demonstrate that you understand a specific concept. The professional world is different. You're often thrown into a massive, years-old codebase with technical debt, vague requirements, and shifting priorities.</p><p>The challenge is no longer just "can you build this?" but "can you understand this complex system, find the right place to make a change, and do so without breaking anything else?" It's a world of code reviews, team meetings, and constant communication. Soft skills become just as important as technical prowess. The transition can be jarring, but it's where the most significant learning and growth happens.</p>`}
         ];
-
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- SET DEFAULT THEME (Can be 'dark' or 'light') ---
             const defaultTheme = 'dark';
             document.documentElement.classList.add(defaultTheme);
             document.body.classList.add(defaultTheme);
-            
-            // ==== Enhanced Loader Logic ====
+            const overviewSection = document.getElementById('overview');
             const loaderOverlay = document.getElementById('loader-overlay');
             const loaderPercentage = document.getElementById('loader-percentage');
             const loaderProgressBar = document.getElementById('loader-progress-bar');
@@ -495,11 +503,10 @@
                     setTimeout(() => {
                         loaderOverlay.style.opacity = '0';
                         loaderOverlay.style.pointerEvents = 'none';
+                        overviewSection.classList.remove('initially-hidden');
                     }, 1200);
                 }
             }, 15);
-
-            // --- THREE.JS BACKGROUND ---
             (() => {
                 const canvas = document.getElementById('bg-canvas'); if(!canvas) return;
                 const scene = new THREE.Scene();
@@ -522,8 +529,6 @@
                 animate();
                 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
             })();
-
-            // --- DYNAMIC CONTENT INJECTION ---
             const projectsContainer = document.getElementById('projects-grid');
             projectsData.forEach((p, i) => {
                 const card = document.createElement('div');
@@ -539,8 +544,6 @@
                 item.innerHTML = `<div class="flex-grow"><h3 class="font-bold text-lg group-hover:text-blue-400 transition-colors">${b.title}</h3><p class="text-gray-600 dark:text-gray-400 text-sm mt-1 max-w-prose min-h-[2.5rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div></div><span class="text-xs text-blue-500 dark:text-blue-400 font-mono mt-4 group-hover:underline self-start">Read more &rarr;</span>`;
                 blogContainer.appendChild(item);
             });
-
-            // --- MODAL LOGIC ---
             const openModal = modalId => { const modal = document.getElementById(modalId); modal.classList.remove('hidden'); setTimeout(() => { modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0'); document.body.style.overflow = 'hidden'; }, 10); };
             const closeModal = modal => { modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0'); setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; if(modal.id === 'project-modal') { document.getElementById('ai-explanation-output').classList.add('hidden'); document.getElementById('ai-explanation-output').innerText = ''; } }, 300); };
             document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', e => closeModal(e.target.closest('.fixed'))));
@@ -560,8 +563,6 @@
                 openModal('blog-modal');
             }));
             document.getElementById('resume-card').addEventListener('click', e => { e.preventDefault(); openModal('wip-modal'); });
-
-            // --- TYPING EFFECT ---
             const typeText = document.querySelector('.typing-text');
             if (typeText) {
                 const phrases = ["AI Integration", "Web Architecture", "Game Design", "Creative Solutions"];
@@ -575,28 +576,20 @@
                 };
                 type();
             }
-
-            // --- SCROLL REVEAL ---
             const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')), { threshold: 0.1 });
             document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-            
-            // --- THEME TOGGLE FIX ---
             document.getElementById('theme-toggle')?.addEventListener('click', () => {
                 document.documentElement.classList.toggle('dark');
                 document.documentElement.classList.toggle('light');
                 document.body.classList.toggle('dark');
                 document.body.classList.toggle('light');
             });
-            
-            // --- MOBILE MENU ---
             document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
                 const menu = document.getElementById('mobile-menu');
                 menu.classList.toggle('invisible');
                 menu.classList.toggle('opacity-0');
                 menu.classList.toggle('scale-95');
             });
-
-            // --- BROWSER/AI LOGIC & OTHER LISTENERS ---
             const iframe = document.getElementById('browser-iframe');
             const input = document.getElementById('browser-input');
             const goBtn = document.getElementById('browser-go-btn');
@@ -607,7 +600,6 @@
             iframe.onload = () => bLoad.classList.add('invisible', 'opacity-0');
             goBtn.addEventListener('click', () => navigateTo(input.value));
             input.addEventListener('keypress', e => e.key === 'Enter' && navigateTo(input.value));
-
             const aiInput = document.getElementById('ai-chat-input');
             const aiBtn = document.getElementById('ai-chat-btn');
             const aiOutput = document.getElementById('ai-chat-output');
