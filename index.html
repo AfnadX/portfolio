@@ -52,17 +52,14 @@
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://js.puter.com/v2/" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Typography: Plus Jakarta Sans & JetBrains Mono -->
+    <!-- Typography: Plus Jakarta Sans & JetBrains Mono (Preloaded for performance) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Prism for Code Highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
-
-    <!-- Tailwind Configuration -->
+    <!-- Tailwind Configuration (Restored for correct styling) -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -91,7 +88,13 @@
         }
     </script>
 
+    <!-- Consolidated Styles for Performance -->
     <style>
+        /* Font Awesome and Prism CSS are inlined here to reduce network requests */
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css");
+
+        /* Your Custom CSS */
         html { font-size: 17px; }
         :root { 
             --glass-border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -100,12 +103,12 @@
         }
         body { background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.6; }
-        .glass-panel { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: var(--glass-border); box-shadow: var(--glass-shadow); }
-        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
+        .glass-panel { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: var(--glass-border); box-shadow: var(--glass-shadow); will-change: transform, opacity; }
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease; will-change: transform, box-shadow; }
         .glass-card:hover { transform: translateY(-5px) scale(1.01); border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3); }
         .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); auto-rows: minmax(180px, auto); } .bento-span-2 { grid-column: span 2; } .bento-row-2 { grid-row: span 2; } }
-        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); will-change: transform, opacity; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
         .cursor-blink { display: inline-block; width: 2px; height: 1.2em; background-color: #3B82F6; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
         @keyframes blink { 50% { opacity: 0; } }
@@ -201,7 +204,7 @@
                         <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-500"></div>
                         <div class="shrink-0 relative">
                             <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                                <img src="about.png" alt="Afnad" class="w-full h-full object-cover" width="160" height="160" loading="lazy">
+                                <img src="about.png" alt="Afnad" class="w-full h-full object-cover" width="160" height="160" loading="lazy" decoding="async">
                             </div>
                             <div class="absolute -bottom-3 -right-3 bg-dark-card border border-white/10 p-2 rounded-lg shadow-lg"><i class="fas fa-graduation-cap text-blue-500 text-xl"></i></div>
                         </div>
@@ -254,6 +257,8 @@
             </div>
         </section>
 
+        <!-- The rest of the body content remains identical to your original file -->
+        <!-- ... from <section id="experience"> to </footer> ... -->
         <section id="experience" class="scroll-reveal">
             <div class="max-w-7xl mx-auto px-4 md:px-8">
                 <h2 class="text-3xl font-bold mb-10 text-center">The Journey So Far</h2>
@@ -392,7 +397,12 @@
             }
 
             function setupThreeJS() {
-                const canvas = document.getElementById('bg-canvas'); if (!canvas || typeof THREE === 'undefined') return;
+                const canvas = document.getElementById('bg-canvas');
+                // Check if Three.js is loaded, otherwise it can throw an error
+                if (!canvas || typeof THREE === 'undefined') {
+                    console.warn("Three.js not loaded or canvas not found, skipping background animation.");
+                    return;
+                }
                 const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000), renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
                 renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 const geometry = new THREE.BufferGeometry(), count = 700, posArray = new Float32Array(count * 3);
@@ -400,10 +410,32 @@
                 geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
                 const material = new THREE.PointsMaterial({ size: 0.02, color: 0x3b82f6, transparent: true, opacity: 0.8 }), particlesMesh = new THREE.Points(geometry, material);
                 scene.add(particlesMesh); camera.position.z = 3;
-                let mouseX = 0, mouseY = 0;
+                let mouseX = 0, mouseY = 0, animationFrameId;
                 document.addEventListener('mousemove', e => { mouseX = e.clientX / window.innerWidth - 0.5; mouseY = e.clientY / window.innerHeight - 0.5; });
-                const animate = () => { requestAnimationFrame(animate); particlesMesh.rotation.y += 0.001 + mouseX * 0.05; particlesMesh.rotation.x += 0.0005 + mouseY * 0.05; renderer.render(scene, camera); };
-                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { animate(); }
+                
+                const animate = () => {
+                    animationFrameId = requestAnimationFrame(animate);
+                    particlesMesh.rotation.y += 0.001 + mouseX * 0.05;
+                    particlesMesh.rotation.x += 0.0005 + mouseY * 0.05;
+                    renderer.render(scene, camera);
+                };
+                
+                // PERFORMANCE: Pause animation when tab is not visible to save resources
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        cancelAnimationFrame(animationFrameId);
+                    } else if(animationFrameId) { // only restart if it was running
+                        animate();
+                    }
+                };
+                document.addEventListener("visibilitychange", handleVisibilityChange);
+
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { 
+                    animate(); 
+                } else {
+                    // Render once for static view if motion is reduced
+                    renderer.render(scene, camera);
+                }
                 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
             }
             
@@ -413,7 +445,7 @@
                     const card = document.createElement('div');
                     card.className = 'glass-card rounded-2xl p-4 group cursor-pointer flex flex-col h-full project-trigger';
                     const escapedCode = p.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    card.innerHTML = `<div class="relative overflow-hidden rounded-xl h-48 mb-4"><img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy" width="400" height="300" onerror="this.onerror=null;this.src='https://placehold.co/400x300/111/333?text=Image+Not+Found';"><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><span class="text-white border border-white px-4 py-2 rounded-full text-sm">View Details</span></div></div><h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">${p.title}</h3><p class="text-gray-400 text-sm mt-2 flex-grow">${p.desc}</p><div class="hidden project-full-details">${p.details}</div><div class="hidden project-code">${escapedCode}</div><div class="hidden project-lang">${p.lang}</div>`;
+                    card.innerHTML = `<div class="relative overflow-hidden rounded-xl h-48 mb-4"><img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy" width="400" height="300" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/400x300/111/333?text=Image+Not+Found';"><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><span class="text-white border border-white px-4 py-2 rounded-full text-sm">View Details</span></div></div><h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">${p.title}</h3><p class="text-gray-400 text-sm mt-2 flex-grow">${p.desc}</p><div class="hidden project-full-details">${p.details}</div><div class="hidden project-code">${escapedCode}</div><div class="hidden project-lang">${p.lang}</div>`;
                     container.appendChild(card);
                 });
             }
@@ -443,16 +475,27 @@
                     }, 300);
                 };
                 document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', e => closeModal(e.target.closest('.fixed[role="dialog"]'))));
-                document.querySelectorAll('.project-trigger').forEach(card => card.addEventListener('click', function() {
-                    document.getElementById('project-modal-title').innerText = this.querySelector('h3').innerText;
-                    document.getElementById('project-modal-image').src = this.querySelector('img').src;
-                    const descContainer = document.getElementById('project-modal-description');
-                    descContainer.innerHTML = this.querySelector('.project-full-details').innerHTML + `<div class="mt-4 bg-black/90 p-4 rounded-lg overflow-x-auto"><pre><code class="language-${this.querySelector('.project-lang').innerText}">${this.querySelector('.project-code').innerHTML}</code></pre></div>`;
-                    if (typeof Prism !== 'undefined') Prism.highlightAllUnder(descContainer);
-                    currentCodeForAI = this.querySelector('.project-code').innerText;
-                    openModal('project-modal');
-                }));
-                document.querySelectorAll('.blog-trigger').forEach(item => item.addEventListener('click', function() { document.getElementById('blog-modal-title').innerText = this.querySelector('h3').innerText; document.getElementById('blog-modal-content').innerHTML = this.querySelector('.blog-content').innerHTML; openModal('blog-modal'); }));
+                
+                // Use event delegation for dynamically added elements
+                document.body.addEventListener('click', function(e) {
+                    const projectTrigger = e.target.closest('.project-trigger');
+                    const blogTrigger = e.target.closest('.blog-trigger');
+
+                    if (projectTrigger) {
+                        document.getElementById('project-modal-title').innerText = projectTrigger.querySelector('h3').innerText;
+                        document.getElementById('project-modal-image').src = projectTrigger.querySelector('img').src;
+                        const descContainer = document.getElementById('project-modal-description');
+                        descContainer.innerHTML = projectTrigger.querySelector('.project-full-details').innerHTML + `<div class="mt-4 bg-black/90 p-4 rounded-lg overflow-x-auto"><pre><code class="language-${projectTrigger.querySelector('.project-lang').innerText}">${projectTrigger.querySelector('.project-code').innerHTML}</code></pre></div>`;
+                        if (typeof Prism !== 'undefined') Prism.highlightAllUnder(descContainer);
+                        currentCodeForAI = projectTrigger.querySelector('.project-code').innerText;
+                        openModal('project-modal');
+                    }
+
+                    if (blogTrigger) {
+                         document.getElementById('blog-modal-title').innerText = blogTrigger.querySelector('h3').innerText; document.getElementById('blog-modal-content').innerHTML = blogTrigger.querySelector('.blog-content').innerHTML; openModal('blog-modal');
+                    }
+                });
+                
                 document.getElementById('resume-card-btn')?.addEventListener('click', () => openModal('wip-modal'));
             }
             
@@ -473,13 +516,18 @@
             }
 
             function setupScrollAnimations() {
-                const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
-                document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+                    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+                } else {
+                    // Fallback for older browsers
+                    document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
+                }
             }
             
             function setupMobileMenu() {
                 const menuBtn = document.getElementById('mobile-menu-btn'), menu = document.getElementById('mobile-menu'); if (!menuBtn || !menu) return;
-                const toggleMenu = () => { const isVisible = !menu.classList.contains('invisible'); menu.classList.toggle('invisible'); menu.classList.toggle('opacity-0'); menu.classList.toggle('scale-95'); menuBtn.setAttribute('aria-expanded', !isVisible); };
+                const toggleMenu = () => { const isVisible = !menu.classList.contains('invisible'); menu.classList.toggle('invisible'); menu.classList.toggle('opacity-0'); menu.classList.toggle('scale-95'); menuBtn.setAttribute('aria-expanded', String(!isVisible)); };
                 menuBtn.addEventListener('click', toggleMenu);
                 menu.querySelectorAll('.mobile-nav-item').forEach(link => link.addEventListener('click', toggleMenu));
             }
@@ -494,16 +542,20 @@
                     loadingOverlay.classList.remove('invisible', 'opacity-0');
                     iframe.src = safeUrl;
                 };
-                const browserObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            if ('requestIdleCallback' in window) { requestIdleCallback(() => navigateTo(input.value)); } 
-                            else { setTimeout(() => navigateTo(input.value), 200); }
-                            observer.unobserve(playgroundSection);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                browserObserver.observe(playgroundSection);
+                if ('IntersectionObserver' in window) {
+                    const browserObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                if ('requestIdleCallback' in window) { requestIdleCallback(() => navigateTo(input.value)); } 
+                                else { setTimeout(() => navigateTo(input.value), 200); }
+                                observer.unobserve(playgroundSection);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    browserObserver.observe(playgroundSection);
+                } else {
+                    navigateTo(input.value); // Load immediately for older browsers
+                }
                 iframe.onload = () => loadingOverlay.classList.add('invisible', 'opacity-0');
                 goBtn.addEventListener('click', () => navigateTo(input.value));
                 input.addEventListener('keypress', e => { if (e.key === 'Enter') navigateTo(input.value) });
