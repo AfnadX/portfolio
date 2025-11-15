@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
 <head>
@@ -10,7 +9,6 @@
     <meta name="keywords" content="Afnad, Portfolio, CSE Student, East West University, Java, C, Python, AI, Machine Learning, Developer, Llama 3.1, Gemini, Browser">
     <meta name="theme-color" content="#050505">
 
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Afnad | CSE Student Portfolio">
     <meta property="og:description" content="A showcase of my journey as a computer science student, my skills, and my passion for technology.">
     <meta property="og:image" content="about.png">
@@ -18,13 +16,11 @@
     <meta property="og:url" content="https://afnad.netlify.app/">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Afnad | CSE Student Portfolio">
     <meta name="twitter:description" content="A showcase of my journey as a computer science student and AI enthusiast.">
     <meta property="twitter:image" content="about.png">
 
-    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -42,24 +38,20 @@
     }
     </script>
 
-    <!-- Favicons -->
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     
-    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://js.puter.com/v2/"></script>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Icons and Prism -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" media="print" onload="this.media='all'">
     <noscript>
@@ -67,7 +59,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     </noscript>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -101,7 +92,6 @@
         }
     </script>
 
-    <!-- Custom Styles -->
     <style>
         html { font-size: 16px; } 
         html, body { width: 100%; overflow-x: hidden; }
@@ -183,7 +173,6 @@
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white">
 
-    <!-- Preloader -->
     <div id="loader-overlay">
         <div class="font-mono text-lg sm:text-2xl text-gray-400 mb-6 text-center">Initializing Portfolio</div>
         <div class="font-mono text-5xl sm:text-7xl font-bold mb-4" id="loader-percentage">0%</div>
@@ -192,10 +181,8 @@
         </div>
     </div>
 
-    <!-- 3D Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Header -->
     <header>
         <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl">
             <div class="glass-panel rounded-full px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xl shadow-blue-900/10">
@@ -216,7 +203,6 @@
                     <button id="mobile-menu-btn" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden text-xl p-2 text-white"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="absolute top-full left-0 right-0 mt-3 p-2 glass-panel rounded-2xl flex-col gap-1 transform scale-95 opacity-0 invisible transition-all duration-300 origin-top flex">
                 <a href="#overview" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">About</a>
                 <a href="#skills" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Skills</a>
@@ -232,9 +218,7 @@
 
     <main>
         
-        <!-- Home Section -->
-        <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center relative px-4 sm:px-6 lg:px-8">
-            <!-- Background Blobs -->
+        <section id="home" class="py-32 lg:py-48 flex flex-col justify-center items-center text-center relative px-4 sm:px-6 lg:px-8">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
             <div class="absolute top-1/3 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-purple-500/20 rounded-full blur-[100px] -z-10 animate-blob" style="animation-delay: 2s;"></div>
             
@@ -275,14 +259,12 @@
         </section>
         
         <div class="px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-28">
-            <!-- About Section -->
             <section id="overview" class="scroll-reveal initially-hidden max-w-7xl mx-auto">
                 <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10">
                     <div><h2 class="text-3xl md:text-5xl font-bold mb-2">About Me</h2><p class="text-gray-400 text-lg">Passion meets precision</p></div>
                     <div class="hidden md:block w-32 h-1 bg-gradient-to-r from-blue-500 to-transparent rounded-full mt-2 sm:mt-0"></div>
                 </div>
                 <div class="grid gap-5 md:grid-cols-3 bento-grid">
-                    <!-- Main About Card -->
                     <div class="glass-card rounded-3xl p-6 md:p-8 md:col-span-2 md:row-span-2 flex flex-col md:flex-row gap-8 items-center text-center md:text-left relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-500"></div>
                         <div class="shrink-0 relative">
@@ -302,12 +284,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Location Card -->
                     <div class="glass-card rounded-3xl p-0 relative overflow-hidden min-h-[200px]">
                         <iframe title="Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.27919584056214!3d23.780573258035957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1647516684884!5m2!1sen!2sbd" width="100%" height="100%" class="absolute inset-0 border-0 opacity-60 grayscale invert" allowfullscreen="" loading="lazy"></iframe>
                         <div class="absolute bottom-4 left-4 bg-dark-bg/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10"><p class="text-sm font-mono text-white"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Dhaka, Bangladesh</p></div>
                     </div>
-                    <!-- Socials Card -->
                     <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
                         <h4 class="text-sm font-mono text-gray-500 uppercase mb-4">Connect With Me</h4>
                         <div class="flex flex-wrap gap-3 justify-center">
@@ -318,7 +298,6 @@
                             <a href="https://www.instagram.com/afnad_verse/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-all text-xl border border-white/10 hover:border-[#E1306C]"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                    <!-- Tech Stack Card -->
                     <div class="glass-card rounded-3xl p-6 md:col-span-2">
                         <h4 class="text-sm font-mono text-gray-500 uppercase mb-6">Tech Stack</h4>
                         <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-6 text-center">
@@ -332,7 +311,6 @@
                             <div class="flex flex-col items-center gap-2 group cursor-pointer" title="Git"><i class="fab fa-git-alt text-4xl text-gray-400 group-hover:text-red-500 transition-all duration-300 group-hover:scale-110"></i><span class="text-xs text-gray-500 group-hover:text-red-500 transition-colors">Git</span></div>
                         </div>
                     </div>
-                    <!-- Resume Card -->
                     <button id="resume-card-btn" class="glass-card rounded-3xl p-6 flex items-center justify-between group cursor-pointer text-left hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-purple-500/10 transition-all">
                         <div><h4 class="text-xl font-bold group-hover:text-blue-400 transition-colors">Download Resume</h4><p class="text-xs text-gray-500 mt-1">View full credentials</p></div>
                         <div class="w-14 h-14 rounded-full border-2 border-white/10 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-purple-500 group-hover:text-white group-hover:border-transparent transition-all"><i class="fas fa-download text-xl"></i></div>
@@ -340,7 +318,6 @@
                 </div>
             </section>
     
-            <!-- Skills Section -->
             <section id="skills" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Technical Expertise</h2>
@@ -348,7 +325,6 @@
                 </div>
                 
                 <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <!-- Programming Languages -->
                     <div class="glass-card rounded-3xl p-8">
                         <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
@@ -387,7 +363,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Frameworks & Tools -->
                     <div class="glass-card rounded-3xl p-8">
                         <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
@@ -455,14 +430,12 @@
                 </div>
             </section>
             
-            <!-- Workflow Section -->
             <section id="workflow" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">My Development Workflow</h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto">A structured approach to transform ideas into high-quality, scalable products.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Step 1 -->
                     <div class="glass-card rounded-3xl p-8 text-center group">
                         <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-blue-500/20 relative">
                             <i class="fas fa-compass text-4xl text-blue-400 group-hover:rotate-12 transition-transform"></i>
@@ -471,7 +444,6 @@
                         <h3 class="text-xl font-bold mb-2">Discovery & Planning</h3>
                         <p class="text-gray-400 text-sm">I start by understanding the core problem, defining project goals, user stories, and selecting the optimal technology stack for scalability and performance.</p>
                     </div>
-                    <!-- Step 2 -->
                     <div class="glass-card rounded-3xl p-8 text-center group">
                          <div class="w-20 h-20 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-purple-500/20 relative">
                             <i class="fas fa-drafting-compass text-4xl text-purple-400 group-hover:scale-110 transition-transform"></i>
@@ -480,7 +452,6 @@
                         <h3 class="text-xl font-bold mb-2">Design & Prototyping</h3>
                         <p class="text-gray-400 text-sm">Next, I create intuitive wireframes and high-fidelity UI/UX mockups. This visual blueprint ensures a seamless user experience before a single line of code is written.</p>
                     </div>
-                    <!-- Step 3 -->
                     <div class="glass-card rounded-3xl p-8 text-center group">
                          <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-emerald-500/20 relative">
                             <i class="fas fa-code text-4xl text-emerald-400 group-hover:animate-pulse"></i>
@@ -489,7 +460,6 @@
                         <h3 class="text-xl font-bold mb-2">Development & Testing</h3>
                         <p class="text-gray-400 text-sm">I build the application using clean, efficient code and agile practices. Rigorous unit and integration testing ensures the final product is robust and bug-free.</p>
                     </div>
-                    <!-- Step 4 -->
                     <div class="glass-card rounded-3xl p-8 text-center group">
                          <div class="w-20 h-20 bg-pink-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-pink-500/20 relative">
                             <i class="fas fa-rocket text-4xl text-pink-400 group-hover:-translate-y-1 group-hover:rotate-6 transition-transform"></i>
@@ -501,7 +471,6 @@
                 </div>
             </section>
     
-            <!-- Journey Section -->
             <section id="experience" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">My Journey</h2>
@@ -511,7 +480,6 @@
                 <div class="relative pl-8 md:pl-16 space-y-12">
                     <div class="timeline-line hidden md:block"></div>
                     
-                    <!-- Timeline Item 1 -->
                     <div class="glass-card rounded-3xl p-6 md:p-8 relative scroll-reveal group hover:scale-[1.02] transition-transform" style="transition-delay: 100ms;">
                         <div class="absolute -left-3 md:-left-8 top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-blue-500 border-4 border-dark-bg flex items-center justify-center">
                             <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
@@ -533,7 +501,6 @@
                         </div>
                     </div>
     
-                    <!-- Timeline Item 2 -->
                     <div class="glass-card rounded-3xl p-6 md:p-8 relative scroll-reveal group hover:scale-[1.02] transition-transform" style="transition-delay: 200ms;">
                         <div class="absolute -left-3 md:-left-8 top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-emerald-500 border-4 border-dark-bg"></div>
                         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
@@ -560,7 +527,6 @@
                         </div>
                     </div>
     
-                    <!-- Timeline Item 3 -->
                     <div class="glass-card rounded-3xl p-6 md:p-8 relative scroll-reveal group hover:scale-[1.02] transition-transform" style="transition-delay: 300ms;">
                         <div class="absolute -left-3 md:-left-8 top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-purple-500 border-4 border-dark-bg"></div>
                         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
@@ -573,7 +539,6 @@
                         <p class="text-gray-400 leading-relaxed mb-4">Started web development journey with HTML/CSS, progressively mastering JavaScript, React, Node.js, and modern development practices. Built 20+ projects ranging from simple websites to complex full-stack applications with AI integration. Continuously learning and adapting to new technologies and industry best practices.</p>
                     </div>
     
-                    <!-- Timeline Item 4 -->
                     <div class="glass-card rounded-3xl p-6 md:p-8 relative scroll-reveal group hover:scale-[1.02] transition-transform" style="transition-delay: 400ms;">
                         <div class="absolute -left-3 md:-left-8 top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-yellow-500 border-4 border-dark-bg"></div>
                         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-4">
@@ -588,7 +553,6 @@
                 </div>
             </section>
     
-            <!-- Achievements Section -->
             <section id="achievements" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Achievements & Milestones</h2>
@@ -646,15 +610,13 @@
                 </div>
             </section>
     
-            <!-- Projects Section -->
             <section id="projects" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Featured Projects</h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto">A showcase of my best work - from AI-powered applications to full-stack web solutions</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
-                    <!-- Projects will be dynamically inserted here -->
-                </div>
+                    </div>
                 <div class="text-center mt-12">
                     <button id="load-more-projects" class="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-white/5 px-10 font-bold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:bg-white/10 border border-white/20">
                         Load More Projects
@@ -662,7 +624,6 @@
                 </div>
             </section>
     
-            <!-- Services Section -->
             <section id="services" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">What I Offer</h2>
@@ -670,7 +631,6 @@
                 </div>
     
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Service 1 -->
                     <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-transparent transition-all">
                         <div class="service-icon w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
                             <i class="fas fa-laptop-code text-3xl text-blue-400"></i>
@@ -683,7 +643,6 @@
                             <li class="flex items-center gap-2"><i class="fas fa-check text-blue-400"></i> SEO Optimized</li>
                         </ul>
                     </div>
-                    <!-- Service 2 -->
                     <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-purple-500/10 hover:to-transparent transition-all">
                         <div class="service-icon w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mb-6">
                             <i class="fas fa-brain text-3xl text-purple-400"></i>
@@ -696,7 +655,6 @@
                             <li class="flex items-center gap-2"><i class="fas fa-check text-purple-400"></i> Custom ML Models</li>
                         </ul>
                     </div>
-                    <!-- Service 3 -->
                     <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-emerald-500/10 hover:to-transparent transition-all">
                         <div class="service-icon w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6">
                             <i class="fas fa-mobile-alt text-3xl text-emerald-400"></i>
@@ -712,18 +670,15 @@
                 </div>
             </section>
     
-            <!-- Testimonials Section -->
             <section id="testimonials" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">What People Say</h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto">Feedback from colleagues, mentors, and collaborators</p>
                 </div>
                 <div id="testimonials-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Testimonials will be dynamically inserted here -->
-                </div>
+                    </div>
             </section>
     
-            <!-- Learning Section -->
             <section id="learning" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Continuous Learning</h2>
@@ -732,7 +687,6 @@
     
                 <div class="glass-card rounded-3xl p-8 md:p-12">
                     <div class="grid lg:grid-cols-2 gap-12">
-                        <!-- Currently Learning -->
                         <div>
                             <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
                                 <i class="fas fa-book-open text-blue-400"></i>
@@ -766,7 +720,6 @@
                             </div>
                         </div>
     
-                        <!-- GitHub Stats Simulation -->
                         <div id="github-stats">
                             <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
                                 <i class="fab fa-github text-emerald-400"></i>
@@ -784,7 +737,6 @@
                             </div>
                             <p class="text-sm text-gray-500 mb-2 font-mono">Simulated Activity Graph (Last 12 Weeks)</p>
                             <div class="github-graph">
-                                <!-- Generate 84 days (12 weeks) -->
                                 <script>
                                     let graphHtml = '';
                                     for (let i = 0; i < 84; i++) {
@@ -799,18 +751,15 @@
                 </div>
             </section>
     
-            <!-- FAQ Section -->
             <section id="faq" class="scroll-reveal max-w-4xl mx-auto">
                  <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto">A few common questions I get about my work and passion for technology.</p>
                 </div>
                 <div id="faq-container" class="space-y-4">
-                    <!-- FAQ Items will be dynamically inserted here -->
-                </div>
+                    </div>
             </section>
             
-            <!-- Playground Section -->
             <section id="playground" class="scroll-reveal bg-black/20 py-16 sm:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
                 <div class="max-w-7xl mx-auto">
                     <div class="text-center mb-12">
@@ -819,7 +768,6 @@
                     </div>
     
                     <div class="grid lg:grid-cols-5 gap-8">
-                        <!-- Embedded Browser -->
                         <div class="lg:col-span-3">
                             <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-globe text-blue-400"></i> Embedded Browser</h3>
                             <div class="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl flex flex-col min-h-[500px] lg:min-h-[70vh]">
@@ -834,7 +782,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- AI Assistant -->
                         <div class="lg:col-span-2 flex flex-col">
                             <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-robot text-purple-400"></i> AI Assistant</h3>
                             <div class="glass-card rounded-2xl flex flex-col min-h-[500px] lg:min-h-[70vh] border border-purple-500/20 overflow-hidden">
@@ -873,15 +820,13 @@
                 </div>
             </section>
     
-            <!-- Blog Section -->
             <section id="blog" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Latest Thoughts</h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto">Articles, insights, and lessons learned from my journey in tech</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-list">
-                    <!-- Blog posts will be dynamically inserted here -->
-                </div>
+                    </div>
                 <div class="text-center mt-12">
                     <button id="load-more-blog" class="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-white/5 px-10 font-bold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:bg-white/10 border border-white/20">
                         Load More Posts
@@ -889,7 +834,6 @@
                 </div>
             </section>
     
-            <!-- Contact Section -->
             <section id="contact" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="glass-card rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden">
                     <div class="absolute -right-20 -top-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
@@ -902,7 +846,6 @@
                         </div>
     
                         <div class="grid md:grid-cols-2 gap-12">
-                            <!-- Contact Info -->
                             <div>
                                 <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
                                 <div class="space-y-6">
@@ -938,7 +881,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Contact Form -->
                             <div>
                                 <h3 class="text-2xl font-bold mb-6">Send a Message</h3>
                                 <form id="contact-form" name="contact" method="POST" data-netlify="true" class="space-y-4">
@@ -967,7 +909,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-dark-border bg-dark-card/30 mt-24">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
             <a href="#home" class="font-extrabold text-2xl tracking-tighter flex items-center justify-center gap-2 mb-4 w-fit mx-auto">
@@ -993,17 +934,15 @@
                     <a href="https://www.instagram.com/afnad_verse/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-pink-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
                     <a href="mailto:2024-3-60-229@std.ewubd.edu" aria-label="Email" class="text-gray-400 hover:text-green-500 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
                 </div>
-                <p class="text-sm text-gray-500">&copy; 2024 Afnad. Designed & Developed with <span class="text-red-500 animate-pulse">❤</span></p>
+                <p class="text-sm text-gray-500">© 2024 Afnad. Designed & Developed with <span class="text-red-500 animate-pulse">❤</span></p>
             </div>
         </div>
     </footer>
     
-    <!-- Go To Top Button -->
     <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible scale-90 z-50">
         <i class="fas fa-arrow-up"></i>
     </button>
     
-    <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-4xl max-h-[90vh] overflow-y-auto bg-dark-card border border-white/10 rounded-2xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content p-0">
@@ -1027,7 +966,6 @@
         </div>
     </div>
     
-    <!-- Blog Modal -->
     <div id="blog-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="blog-modal-title">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-3xl max-h-[85vh] overflow-y-auto bg-dark-card border border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 modal-content">
@@ -1038,7 +976,6 @@
         </div>
     </div>
     
-    <!-- WIP/Resume Modal -->
     <div id="wip-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="wip-modal-title">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div>
         <div class="modal-content absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm bg-dark-card border border-white/10 rounded-2xl shadow-2xl p-8 text-center transform scale-95 opacity-0 transition-all duration-300">
@@ -1051,11 +988,9 @@
         </div>
     </div>
 
-    <!-- PrismJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
     
-    <!-- Main Application Logic -->
     <script>
         // --- DATABASE ---
         const projectsData = [ 
@@ -1202,7 +1137,7 @@
                 card.className = 'glass-card rounded-2xl p-0 group cursor-pointer flex flex-col h-full project-trigger overflow-hidden';
                 if (!initialLoad) card.classList.add('animate-slide-up');
                 
-                const escapedCode = p.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                const escapedCode = p.code.replace(/</g, "<").replace(/>/g, ">");
                 card.innerHTML = `<div class="relative overflow-hidden h-56"><img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy" width="400" height="300" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/400x300/111/333?text=Project';"><div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div><div class="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><span class="text-white border-2 border-white px-6 py-3 rounded-full text-sm font-bold backdrop-blur-sm">View Details</span></div></div><div class="p-6 flex flex-col flex-grow"><h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors mb-3">${p.title}</h3><p class="text-gray-400 text-sm leading-relaxed flex-grow">${p.desc}</p></div><div class="hidden project-full-details">${p.details}</div><div class="hidden project-code">${escapedCode}</div><div class="hidden project-lang">${p.lang}</div>`;
                 container.appendChild(card);
             });
@@ -1226,7 +1161,7 @@
                 if (!initialLoad) item.classList.add('animate-slide-up');
                 const readTime = Math.ceil(b.content.length / 1000);
                 
-                item.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"><i class="fas fa-pen-fancy text-blue-400"></i></div><div class="text-xs text-gray-500 font-mono">${b.date} &bull; ${readTime} min read</div></div><h3 class="font-bold text-xl md:text-2xl group-hover:text-blue-400 transition-colors mb-3">${b.title}</h3><p class="text-gray-400 text-sm leading-relaxed min-h-[3rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div><div class="hidden blog-meta">Published on ${b.date} &bull; ${readTime} min read</div></div><div class="flex items-center gap-2 text-blue-400 font-mono mt-6 group-hover:gap-3 transition-all"><span class="text-sm">Read article</span><i class="fas fa-arrow-right text-sm"></i></div>`;
+                item.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"><i class="fas fa-pen-fancy text-blue-400"></i></div><div class="text-xs text-gray-500 font-mono">${b.date} • ${readTime} min read</div></div><h3 class="font-bold text-xl md:text-2xl group-hover:text-blue-400 transition-colors mb-3">${b.title}</h3><p class="text-gray-400 text-sm leading-relaxed min-h-[3rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div><div class="hidden blog-meta">Published on ${b.date} • ${readTime} min read</div></div><div class="flex items-center gap-2 text-blue-400 font-mono mt-6 group-hover:gap-3 transition-all"><span class="text-sm">Read article</span><i class="fas fa-arrow-right text-sm"></i></div>`;
                 container.appendChild(item);
             });
             
@@ -1471,6 +1406,7 @@
             input.addEventListener('keypress', e => { if (e.key === 'Enter') navigateTo(input.value) });
         }
         
+        // *** FIX: Replaced this entire function with the working logic ***
         async function callAI(prompt, outputElement, button) {
             if (typeof puter === 'undefined' || !puter.ai) { 
                 const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI service is currently unavailable. Please refresh.</div>`;
@@ -1492,13 +1428,13 @@
             button.innerHTML = loadingContent;
 
             try {
-                const response = await puter.ai.chat(prompt, { model: 'openrouter:meta-llama/llama-3.1-8b-instruct' });
-                const text = response.message.content;
-                // Basic markdown to HTML for lists, bolding, etc.
+                // *** FIX: Removed the specific model call that was causing errors ***
+                const resp = await puter.ai.chat(prompt);
+                const text = resp.message.content;
+                
+                // *** FIX: Simplified markdown formatting to match the working version ***
                 const formatted = text
                     .replace(/\n/g, '<br>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>')       // Italics
                     .replace(/`([^`]+)`/g, '<code class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</code>');
                 
                 if (outputElement.id === 'ai-chat-output') { 
@@ -1536,6 +1472,7 @@
                 button.disabled = false; 
             }
         }
+        // *** END OF FIX ***
 
         function setupAI() {
             const aiInput = document.getElementById('ai-chat-input'), aiBtn = document.getElementById('ai-chat-btn'), aiOutput = document.getElementById('ai-chat-output'), refineBtn = document.getElementById('refine-message-btn'), explainCodeBtn = document.getElementById('explain-code-btn');
@@ -1546,7 +1483,7 @@
                 const text = aiInput.value.trim(); if (!text) return; 
                 const userDiv = document.createElement('div');
                 userDiv.className = 'flex justify-end animate-slide-up';
-                userDiv.innerHTML = `<div class="bg-blue-600 text-white py-2 px-4 rounded-2xl rounded-br-none max-w-[85%]">${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>`;
+                userDiv.innerHTML = `<div class="bg-blue-600 text-white py-2 px-4 rounded-2xl rounded-br-none max-w-[85%]">${text.replace(/</g, "<").replace(/>/g, ">")}</div>`;
                 aiOutput.appendChild(userDiv); 
                 const prompt = `You are Afnad's helpful AI assistant for his portfolio. A user asked: "${text}". Answer concisely and friendly based on the portfolio's content.`;
                 callAI(prompt, aiOutput, aiBtn); 
