@@ -87,7 +87,13 @@
     <style>
         /* Base Styles */
         html { font-size: 16px; } /* Standard base font size for easier rem calculations */
-        body { background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
+        
+        /* ==== FIX 1: Added robust overflow and width rules ==== */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+        body { background-color: #050505; color: #e5e5e5; }
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.6; }
         
         /* Glassmorphism Effect */
@@ -187,7 +193,7 @@
                         <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
                         Available for collaborative projects
                     </div>
-                    <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
                         Building the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-emerald-400">Digital Future</span>
                     </h1>
                     <p class="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
