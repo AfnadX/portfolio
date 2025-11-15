@@ -230,53 +230,51 @@
         </nav>
     </header>
 
-    <main class="space-y-24 md:space-y-32">
+    <main>
         
         <!-- Home Section -->
         <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center relative px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Background Blobs -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
-                <div class="absolute top-1/3 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-purple-500/20 rounded-full blur-[100px] -z-10 animate-blob" style="animation-delay: 2s;"></div>
-                
-                <div class="scroll-reveal">
-                    <div id="availability-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 transition-colors duration-500">
-                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span></span>
-                        Available for collaborative projects
-                    </div>
-                    <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
-                        Building the <span class="gradient-text">Digital Future</span>
-                    </h1>
-                    <p class="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-                        Hi, I'm <span class="text-white font-semibold">Afnad</span>, a Computer Science student at East West University. I specialize in creating intelligent solutions through <span class="text-blue-400 font-mono typing-text"></span><span class="cursor-blink"></span>
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a href="#projects" class="group w-full sm:w-auto relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-10 font-bold text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-105">
-                            <span class="mr-2">Explore My Work</span>
-                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                        <a href="#contact" class="w-full sm:w-auto px-10 py-3.5 rounded-full border-2 border-white/20 hover:bg-white/5 transition-all text-sm font-bold hover:border-white/40">Let's Connect</a>
-                    </div>
+            <!-- Background Blobs -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
+            <div class="absolute top-1/3 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-purple-500/20 rounded-full blur-[100px] -z-10 animate-blob" style="animation-delay: 2s;"></div>
+            
+            <div class="scroll-reveal max-w-7xl mx-auto">
+                <div id="availability-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 transition-colors duration-500">
+                    <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span></span>
+                    Available for collaborative projects
+                </div>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                    Building the <span class="gradient-text">Digital Future</span>
+                </h1>
+                <p class="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    Hi, I'm <span class="text-white font-semibold">Afnad</span>, a Computer Science student at East West University. I specialize in creating intelligent solutions through <span class="text-blue-400 font-mono typing-text"></span><span class="cursor-blink"></span>
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#projects" class="group w-full sm:w-auto relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-10 font-bold text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-105">
+                        <span class="mr-2">Explore My Work</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-10 py-3.5 rounded-full border-2 border-white/20 hover:bg-white/5 transition-all text-sm font-bold hover:border-white/40">Let's Connect</a>
+                </div>
 
-                    <div id="hero-stats" class="mt-16 flex flex-wrap justify-center gap-8 text-center opacity-0 transform translate-y-5 transition-all duration-1000">
-                        <div class="stat-card">
-                            <div class="text-3xl font-bold text-blue-400" id="projects-count" data-target="20">0+</div>
-                            <div class="text-sm text-gray-500 mt-1">Projects Completed</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="text-3xl font-bold text-purple-400" id="tech-count" data-target="12">0+</div>
-                            <div class="text-sm text-gray-500 mt-1">Technologies</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="text-3xl font-bold text-emerald-400" id="experience-years" data-target="3">0+</div>
-                            <div class="text-sm text-gray-500 mt-1">Years Coding</div>
-                        </div>
+                <div id="hero-stats" class="mt-16 flex flex-wrap justify-center gap-8 text-center opacity-0 transform translate-y-5 transition-all duration-1000">
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-blue-400" id="projects-count" data-target="20">0+</div>
+                        <div class="text-sm text-gray-500 mt-1">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-purple-400" id="tech-count" data-target="12">0+</div>
+                        <div class="text-sm text-gray-500 mt-1">Technologies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-3xl font-bold text-emerald-400" id="experience-years" data-target="3">0+</div>
+                        <div class="text-sm text-gray-500 mt-1">Years Coding</div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <div class="px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32">
+        <div class="px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-28">
             <!-- About Section -->
             <section id="overview" class="scroll-reveal initially-hidden max-w-7xl mx-auto">
                 <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10">
@@ -341,7 +339,7 @@
                     </button>
                 </div>
             </section>
-
+    
             <!-- Skills Section -->
             <section id="skills" class="scroll-reveal max-w-7xl mx-auto">
                 <div class="text-center mb-16">
@@ -429,7 +427,7 @@
                         </div>
                     </div>
                 </div>
-
+    
                 <div class="glass-card rounded-3xl p-8">
                     <h3 class="text-2xl font-bold mb-8 text-center">Additional Competencies</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -1473,72 +1471,76 @@
             input.addEventListener('keypress', e => { if (e.key === 'Enter') navigateTo(input.value) });
         }
         
+        async function callAI(prompt, outputElement, button) {
+            if (typeof puter === 'undefined' || !puter.ai) { 
+                const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI service is currently unavailable. Please refresh.</div>`;
+                if (outputElement.id === 'ai-chat-output') {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'flex justify-start animate-slide-up';
+                    errorDiv.innerHTML = errorHtml;
+                    outputElement.appendChild(errorDiv);
+                } else {
+                    outputElement.innerHTML = `<span class="text-red-400">AI service unavailable.</span>`;
+                }
+                return; 
+            }
+            const originalHTML = button.innerHTML;
+            button.disabled = true;
+            let loadingContent = '<i class="fas fa-spinner fa-spin"></i>';
+            if(button.id === 'refine-message-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...'; } 
+            else if (button.id === 'explain-code-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...'; }
+            button.innerHTML = loadingContent;
+
+            try {
+                const response = await puter.ai.chat(prompt, { model: 'openrouter:meta-llama/llama-3.1-8b-instruct' });
+                const text = response.message.content;
+                // Basic markdown to HTML for lists, bolding, etc.
+                const formatted = text
+                    .replace(/\n/g, '<br>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')       // Italics
+                    .replace(/`([^`]+)`/g, '<code class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</code>');
+                
+                if (outputElement.id === 'ai-chat-output') { 
+                    const msgDiv = document.createElement('div'); 
+                    msgDiv.className = 'flex justify-start animate-slide-up';
+                    msgDiv.innerHTML = `<div class="bg-dark-card text-gray-300 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]">${formatted}</div>`;
+                    outputElement.appendChild(msgDiv); 
+                    outputElement.scrollTop = outputElement.scrollHeight; 
+                } 
+                else if (outputElement.id === 'form-status' && document.getElementById('contact-message')) { 
+                    document.getElementById('contact-message').value = text.replace(/"/g, ''); 
+                    autoResizeTextarea(document.getElementById('contact-message')); 
+                    outputElement.innerHTML = '<span class="text-emerald-400"><i class="fas fa-check-circle mr-1"></i>Message enhanced by AI</span>'; 
+                    setTimeout(() => outputElement.innerHTML = '', 5000); 
+                } 
+                else { 
+                    outputElement.innerHTML = formatted; 
+                    outputElement.classList.remove('hidden'); 
+                }
+            } catch (e) { 
+                const errorMessage = e.message || "An unknown AI error occurred.";
+                const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}</div>`;
+                if (outputElement.id === 'ai-chat-output') {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'flex justify-start animate-slide-up';
+                    errorDiv.innerHTML = errorHtml;
+                    outputElement.appendChild(errorDiv);
+                } else {
+                    outputElement.innerHTML = `<span class="text-red-400">Error: ${errorMessage}</span>`;
+                }
+                console.error("AI Error:", e);
+            } 
+            finally { 
+                button.innerHTML = originalHTML; 
+                button.disabled = false; 
+            }
+        }
+
         function setupAI() {
-            const aiInput = document.getElementById('ai-chat-input'), aiBtn = document.getElementById('ai-chat-btn'), aiOutput = document.getElementById('ai-chat-output'), refineBtn = document.getElementById('refine-message-btn'), explainCodeBtn = document.getElementById('explain-code-btn'), contactMessage = document.getElementById('contact-message');
+            const aiInput = document.getElementById('ai-chat-input'), aiBtn = document.getElementById('ai-chat-btn'), aiOutput = document.getElementById('ai-chat-output'), refineBtn = document.getElementById('refine-message-btn'), explainCodeBtn = document.getElementById('explain-code-btn');
             const autoResizeTextarea = (textarea) => { if (textarea) { textarea.style.height = 'auto'; const newHeight = Math.min(textarea.scrollHeight, 120); textarea.style.height = newHeight + 'px'; }};
             if (aiInput) aiInput.addEventListener('input', () => autoResizeTextarea(aiInput));
-            if (contactMessage) contactMessage.addEventListener('input', () => autoResizeTextarea(contactMessage));
-            
-            async function callAI(prompt, outputElement, button) {
-                if (typeof puter === 'undefined' || !puter.ai) { 
-                    const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI service is currently unavailable. Please refresh.</div>`;
-                    if (outputElement.id === 'ai-chat-output') {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'flex justify-start animate-slide-up';
-                        errorDiv.innerHTML = errorHtml;
-                        outputElement.appendChild(errorDiv);
-                    } else {
-                        outputElement.innerHTML = `<span class="text-red-400">AI service unavailable.</span>`;
-                    }
-                    return; 
-                }
-                const originalHTML = button.innerHTML;
-                button.disabled = true;
-                let loadingContent = '<i class="fas fa-spinner fa-spin"></i>';
-                if(button.id === 'refine-message-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...'; } 
-                else if (button.id === 'explain-code-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...'; }
-                button.innerHTML = loadingContent;
-
-                try {
-                    const messages = [{ role: 'user', content: prompt }];
-                    const response = await puter.ai.chat(messages, { model: 'openrouter:meta-llama/llama-3.1-8b-instruct' });
-                    const text = response.message.content;
-                    const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</code>');
-                    
-                    if (outputElement.id === 'ai-chat-output') { 
-                        const msgDiv = document.createElement('div'); 
-                        msgDiv.className = 'flex justify-start animate-slide-up';
-                        msgDiv.innerHTML = `<div class="bg-dark-card text-gray-300 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]">${formatted}</div>`;
-                        outputElement.appendChild(msgDiv); 
-                        outputElement.scrollTop = outputElement.scrollHeight; 
-                    } 
-                    else if (outputElement.id === 'form-status' && contactMessage) { 
-                        contactMessage.value = text.replace(/"/g, ''); 
-                        autoResizeTextarea(contactMessage); 
-                        outputElement.innerHTML = '<span class="text-emerald-400"><i class="fas fa-check-circle mr-1"></i>Message enhanced by AI</span>'; 
-                        setTimeout(() => outputElement.innerHTML = '', 5000); 
-                    } 
-                    else { 
-                        outputElement.innerHTML = formatted; 
-                        outputElement.classList.remove('hidden'); 
-                    }
-                } catch (e) { 
-                    const errorMessage = e.message || "An unknown AI error occurred.";
-                    const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}</div>`;
-                    if (outputElement.id === 'ai-chat-output') {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'flex justify-start animate-slide-up';
-                        errorDiv.innerHTML = errorHtml;
-                        outputElement.appendChild(errorDiv);
-                    } else {
-                        outputElement.innerHTML = `<span class="text-red-400">Error: ${errorMessage}</span>`;
-                    }
-                } 
-                finally { 
-                    button.innerHTML = originalHTML; 
-                    button.disabled = false; 
-                }
-            }
 
             aiBtn?.addEventListener('click', () => { 
                 const text = aiInput.value.trim(); if (!text) return; 
@@ -1553,7 +1555,7 @@
                 aiOutput.scrollTop = aiOutput.scrollHeight; 
             });
             aiInput?.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiBtn.click(); }});
-            refineBtn?.addEventListener('click', () => { const msg = contactMessage.value; if (msg) callAI(`Refine this message to be professional, friendly, and compelling for a contact form: "${msg}". Return only the refined message without quotes.`, document.getElementById('form-status'), refineBtn); });
+            refineBtn?.addEventListener('click', () => { const msg = document.getElementById('contact-message').value; if (msg) callAI(`Refine this message to be professional, friendly, and compelling for a contact form: "${msg}". Return only the refined message without quotes.`, document.getElementById('form-status'), refineBtn); });
             explainCodeBtn?.addEventListener('click', () => { if (currentCodeForAI) callAI(`Explain this code snippet in simple terms. Break down what it does, highlight the key concepts, and explain how it works step-by-step:\n\n\`\`\`\n${currentCodeForAI}\n\`\`\``, document.getElementById('ai-explanation-output'), explainCodeBtn); });
         }
         
@@ -1614,4 +1616,4 @@
         }
     </script>
 </body>
-</htm
+</html>
