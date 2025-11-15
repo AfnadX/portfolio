@@ -9,7 +9,6 @@
     <meta name="keywords" content="Afnad, Portfolio, CSE Student, East West University, Java, C, Python, AI, Machine Learning, Developer, Llama 3.1, Gemini, Browser">
     <meta name="theme-color" content="#050505">
 
-    <!-- Social Media Meta Tags (Open Graph) -->
     <meta property="og:title" content="Afnad | CSE Student Portfolio">
     <meta property="og:description" content="A showcase of my journey as a computer science student, my skills, and my passion for technology.">
     <meta property="og:image" content="about.png">
@@ -17,13 +16,11 @@
     <meta property="og:url" content="https://afnad.netlify.app/">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Afnad | CSE Student Portfolio">
     <meta name="twitter:description" content="A showcase of my journey as a computer science student and AI enthusiast.">
     <meta property="twitter:image" content="about.png">
 
-    <!-- SEO Schema for Website -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,24 +38,20 @@
     }
     </script>
 
-    <!-- ==== FAVICONS ==== -->
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     
-    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://js.puter.com/v2/" defer></script>
     
-    <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Non-blocking Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" media="print" onload="this.media='all'">
     <noscript>
@@ -66,15 +59,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     </noscript>
 
-    <!-- 
-      ========================================================================================
-      == CRITICAL PERFORMANCE WARNING ==
-      ========================================================================================
-      This Tailwind CSS script is for development purposes. For a production website,
-      it's essential to install Tailwind locally and build a static CSS file.
-      This is the single most important performance optimization for this site.
-      ========================================================================================
-    -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -100,7 +84,6 @@
         }
     </script>
 
-    <!-- Consolidated & Optimized Styles -->
     <style>
         /* Base Styles */
         html { font-size: 16px; } /* Standard base font size for easier rem calculations */
@@ -157,7 +140,7 @@
 <body class="antialiased selection:bg-blue-500 selection:text-white">
 
     <div id="loader-overlay">
-        <div class="font-mono text-gray-500 mb-6 text-center">Calibrating Trajectory...</div>
+        <div class="font-mono text-lg sm:text-2xl text-gray-400 mb-6 text-center">Welcome to my Portfolio</div>
         <div class="font-mono text-5xl sm:text-7xl font-bold mb-4" id="loader-percentage">0%</div>
         <div class="w-4/5 max-w-sm h-1 bg-white/10 rounded-full overflow-hidden">
             <div id="loader-progress-bar" class="h-full bg-blue-500" style="width: 0%; transition: width 0.1s linear;"></div>
@@ -180,7 +163,7 @@
                     <a href="#playground" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Playground</a>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-white transition-all duration-200 bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">Contact</a>
+                    <a href="#contact" class="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-white transition-all duration-200 bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">Contact</a>
                     <button id="mobile-menu-btn" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden text-xl p-2 text-white"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
@@ -245,7 +228,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass-card rounded-3xl p-0 relative overflow-hidden min-h-[200px] md:min-h-0">
+                <div class="glass-card rounded-3xl p-0 relative overflow-hidden min-h-[200px]">
                     <iframe title="Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.27919584056214!3d23.780573258035957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1647516684884!5m2!1sen!2sbd" width="100%" height="100%" class="absolute inset-0 border-0 opacity-60 grayscale invert" allowfullscreen="" loading="lazy"></iframe>
                     <div class="absolute bottom-4 left-4 bg-dark-bg/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10"><p class="text-xs font-mono text-white"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Dhaka, BD</p></div>
                 </div>
@@ -369,18 +352,16 @@
             <div class="glass-card rounded-2xl p-6"><h4 class="font-bold text-lg mb-4 text-center md:text-left">Quick Links</h4><ul class="space-y-2 text-center md:text-left"><li><a href="#overview" class="text-gray-400 hover:text-blue-500 transition-colors text-sm font-medium">Overview</a></li><li><a href="#experience" class="text-gray-400 hover:text-blue-500 transition-colors text-sm font-medium">Journey</a></li><li><a href="#projects" class="text-gray-400 hover:text-blue-500 transition-colors text-sm font-medium">Work</a></li><li><a href="#blog" class="text-gray-400 hover:text-blue-500 transition-colors text-sm font-medium">Articles</a></li></ul></div>
             <div class="glass-card rounded-2xl p-6"><h4 class="font-bold text-lg mb-4 text-center md:text-left">Get in Touch</h4><p class="text-gray-400 text-sm mb-4 text-center md:text-left">Always open to collaborating.</p><div class="flex justify-center md:justify-start space-x-5"><a href="https://github.com/afnad" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-xl"></i></a><a href="https://www.linkedin.com/in/afnadnidul/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a><a href="https://www.facebook.com/afnadverse" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-blue-600 transition-colors"><i class="fab fa-facebook text-xl"></i></a><a href="https://www.instagram.com/afnad_verse/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-pink-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a><a href="mailto:2024-3-60-229@std.ewubd.edu" aria-label="Email" class="text-gray-400 hover:text-green-500 transition-colors"><i class="fas fa-envelope text-xl"></i></a></div></div>
         </div>
-        <div class="py-6 text-center"><p class="text-xs font-mono text-gray-600">Copyright &copy; 2026 Afnad</p></div>
+        <div class="py-6 text-center"><p class="text-xs font-mono text-gray-600">Copyright © 2026 Afnad</p></div>
     </footer>
     
     <div id="project-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-4xl max-h-[90vh] overflow-y-auto bg-dark-card border border-white/10 rounded-2xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content p-0"><div class="relative"><button class="close-modal absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors z-10 flex items-center justify-center" aria-label="Close project details"><i class="fas fa-times"></i></button><img id="project-modal-image" src="" alt="Project Image" class="w-full h-48 sm:h-64 object-cover"><div class="p-6 sm:p-8"><h2 id="project-modal-title" class="text-2xl sm:text-3xl font-bold mb-4"></h2><div id="project-modal-description" class="prose prose-invert max-w-none text-gray-300 mb-8"></div><div class="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6"><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4"><h4 class="font-bold flex items-center gap-2"><i class="fas fa-code text-blue-400"></i> Code Snippet</h4><button id="explain-code-btn" class="text-xs bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full hover:bg-blue-600 hover:text-white transition-colors w-full sm:w-auto">Explain with AI</button></div><div id="ai-explanation-output" class="hidden mb-4 text-sm bg-black/30 p-4 rounded border border-blue-500/30 text-gray-300 font-mono"></div></div></div></div></div></div>
     <div id="blog-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="blog-modal-title"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-3xl max-h-[85vh] overflow-y-auto bg-dark-card border border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 modal-content"><button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-white" aria-label="Close article"><i class="fas fa-times text-xl"></i></button><h2 id="blog-modal-title" class="text-2xl md:text-3xl font-bold mb-6 text-white"></h2><div id="blog-modal-content" class="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"></div></div></div>
     <div id="wip-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="wip-modal-title"><div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal transition-opacity duration-300"></div><div class="modal-content absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm bg-dark-card border border-white/10 rounded-2xl shadow-2xl p-8 text-center transform scale-95 opacity-0 transition-all duration-300"><h3 id="wip-modal-title" class="text-2xl font-bold mb-4 text-blue-400">Heads Up!</h3><p class="text-gray-300 mb-6">This feature is currently under development. Please check back later!</p><button class="close-modal bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">Got it</button></div></div>
 
-    <!-- PrismJS for code highlighting, deferred for performance -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
     
-    <!-- Main Application Script -->
     <script>
         const projectsData = [ { img: "sudoko.png", alt: "AI Sudoku Solver Project", title: "AI Sudoku Solver", desc: "A Python application that uses a backtracking algorithm to solve any valid Sudoku puzzle, with a simple GUI.", details: `<p>This project demonstrates algorithmic problem-solving and foundational AI concepts.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    else:\n        row, col = find\n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            if solve_sudoku(board):\n                return True\n            board[row][col] = 0\n    return False`, lang: 'python' }, { img: "passwordcheck.png", alt: "Password Strength Checker Project", title: "Password Strength Checker", desc: "A web tool built with JavaScript that provides real-time feedback on password strength based on multiple criteria.", details: `<p>This project showcases DOM manipulation and practical application of regular expressions.</p>`, code: `function checkStrength(password) {\n    let strength = 0;\n    if (password.match(/[a-z]+/)) { strength += 1; }\n    if (password.match(/[A-Z]+/)) { strength += 1; }\n    if (password.match(/[0-9]+/)) { strength += 1; }\n    if (password.match(/[$@#&!]+/)) { strength += 1; }\n    if (password.length > 8) { strength += 1; }\n    return strength;\n}`, lang: 'javascript' }, { img: "datastructer.png", alt: "Data Structures Visualizer Project", title: "Data Structures Visualizer", desc: "An interactive web app to visualize data structures, making complex concepts easier to grasp.", details: `<p>This tool allows users to see operations like insertion, deletion, and traversal happen in real-time. Built with vanilla JavaScript, HTML, and CSS.</p>`, code: `const container = document.getElementById('visualizer-container');\nconst array = [20, 50, 30, 70, 10];\n\nfunction renderArray(arr) {\n    container.innerHTML = '';\n    arr.forEach(value => {\n        const bar = document.createElement('div');\n        bar.style.height = \`\${value * 3}px\`;\n        bar.classList.add('bar');\n        bar.textContent = value;\n        container.appendChild(bar);\n    });\n}\n\nrenderArray(array);`, lang: 'javascript' }, { img: "weather.png", alt: "Live Weather App Project", title: "Live Weather App", desc: "A responsive weather forecast app that fetches and displays real-time weather data from an API.", details: `<p>Showcases asynchronous programming with \`fetch\` and dynamic DOM manipulation.</p>`, code: `async function getWeather(city) {\n    const apiKey = 'YOUR_API_KEY';\n    const url = \`https://api.openweathermap.org/data/2.5/weather?q=\${city}&appid=\${apiKey}&units=metric\`;\n    \n    try {\n        const response = await fetch(url);\n        const data = await response.json();\n        // ... update DOM elements ...\n    } catch (error) {\n        console.error('Failed to fetch weather:', error);\n    }\n}`, lang: 'javascript' }, { img: "newsscraper.png", alt: "Python News Scraper Project", title: "Python News Scraper", desc: "A web scraper built with Python to extract and display the latest headlines from a news website.", details: `<p>Demonstrates skills in using libraries like BeautifulSoup and Requests.</p>`, code: `import requests\nfrom bs4 import BeautifulSoup\n\ndef scrape_headlines(url):\n    response = requests.get(url)\n    soup = BeautifulSoup(response.text, 'html.parser')\n    headlines = []\n    for h2 in soup.find_all('h2', limit=5):\n        headlines.append(h2.get_text(strip=True))\n    return headlines`, lang: 'python' }, { img: "rockpaperscissiors.png", alt: "Rock Paper Scissors Game", title: "Rock Paper Scissors", desc: "The classic game brought to life with JavaScript. A fun project demonstrating event handling and basic game logic.", details: `<p>An interactive web game that allows a user to play against the computer.</p>`, code: `function playGame(playerChoice) {\n    const choices = ['rock', 'paper', 'scissors'];\n    const computerChoice = choices[Math.floor(Math.random() * 3)];\n    // ... game logic ...\n}`, lang: 'javascript' } ];
         const blogData = [ { title: "The 'Why' Behind Data Structures & Algorithms", desc: "They aren't just interview questions; they're the blueprints of efficient software. Choosing the right data structure... can be the difference between an application that runs in milliseconds and one that takes minutes.", content: `<p>Many students see Data Structures and Algorithms (DS&A) as a hurdle—a set of abstract problems to memorize for technical interviews. But their true value lies far beyond that. DS&A are the fundamental building blocks of computer science. They are the tools we use to organize, manage, and process data efficiently.</p><p>Choosing the right data structure, like a hash map over an array for quick lookups, can be the difference between an application that runs in milliseconds and one that takes minutes. A well-designed algorithm, understood through the lens of Big O notation, can solve a problem at a scale that brute force cannot. It's about learning to think about trade-offs: time complexity versus space complexity, readability versus performance. This mindset—the ability to analyze a problem and select the most effective tools to solve it—is the hallmark of a true software engineer.</p>` }, { title: "First Hackathon: Lessons in Code & Collaboration", desc: "Beyond the code, I learned about the power of a shared goal and the intensity of a deadline. It was less about winning, more about rapid growth.", content: `<p>A 24-hour hackathon is an exhilarating, exhausting, and incredibly educational experience. My first one was a whirlwind of caffeine, collaboration, and countless Git commits. We set out to build a campus navigation app, and while the final product was far from perfect, the lessons learned were invaluable.</p><p>I learned to rapidly prototype, focusing on a minimum viable product (MVP) instead of getting lost in details. I learned to communicate technical ideas clearly with my team, even when we were all sleep-deprived. Most importantly, I learned that a team with a shared vision can achieve remarkable things in a very short time. The pressure-cooker environment forced me to solve problems faster and more creatively than I ever thought possible.</p>` }, { title: "Why Your Portfolio is Your Most Important Project", desc: "A portfolio tells a story that grades can't. It's a living showcase of your passion and skills, demonstrating what you can create.", content: `<p>Your GPA and course list show that you can learn. Your portfolio shows that you can *build*. In the tech world, that distinction is everything. A well-crafted portfolio is a narrative of your journey as a developer. Each project is a chapter, showcasing a new skill, a problem you solved, or a technology you mastered.</p><p>It's your chance to go beyond the resume and demonstrate your passion. It proves you're a self-starter who codes not just for classes, but because you love to create. It's a platform to experiment, to fail, and to learn publicly. For a recruiter or hiring manager, a link to a live, interactive portfolio is often more compelling than any cover letter.</p>` }, { title: "The AI Revolution: An Opportunity, Not a Threat", desc: "AI isn't here to replace developers; it's here to augment them. Learning to leverage tools like Gemini is the next essential skill.", content: `<p>The rise of Large Language Models (LLMs) and accessible AI APIs is changing the landscape of software development. For us as students, this isn't a threat—it's an enormous opportunity. The engineers of tomorrow won't just be building applications; they'll be building applications that are intelligent.</p><p>This means we need to focus on more than just traditional programming. We need to understand the fundamentals of machine learning, know how to work with APIs like Gemini, and learn how to "prompt engineer" to get the best results from these powerful tools. By embracing AI now, we are not just preparing for the future of our field; we are preparing to build it.</p>`}, { title: "From Gamer to Game Dev: My Journey into Modding", desc: "Breaking games is the best way to learn how to make them. Modding taught me more about game logic and architecture than any textbook could.", content: `<p>My passion for coding started with a passion for gaming. I didn't just want to play games; I wanted to understand how they worked. That curiosity led me to the world of modding. Reverse-engineering game files, writing Lua scripts to change gameplay mechanics, and creating custom assets taught me invaluable lessons.</p><p>It was a practical, hands-on education in core development principles: state management, event-driven programming, and asset pipelines. It showed me how a different systems in a complex piece of software interact. More than anything, it taught me how to read, understand, and build upon a large, existing codebase—a skill that is absolutely critical in the professional world.</p>`}, { title: "The Reality of Tech Jobs vs. University Projects", desc: "University teaches you the 'how'. The real world teaches you the 'why'—and the 'how' again, but this time with legacy code and tight deadlines.", content: `<p>In university, projects are often greenfield. You start from a blank slate, with clear requirements and a defined endpoint. The goal is to demonstrate that you understand a specific concept. The professional world is different. You're often thrown into a massive, years-old codebase with technical debt, vague requirements, and shifting priorities.</p><p>The challenge is no longer just "can you build this?" but "can you understand this complex system, find the right place to make a change, and do so without breaking anything else?" It's a world of code reviews, team meetings, and constant communication. Soft skills become just as important as technical prowess. The transition can be jarring, but it's where the most significant learning and growth happens.</p>`} ];
@@ -445,7 +426,7 @@
                 projectsData.forEach(p => {
                     const card = document.createElement('div');
                     card.className = 'glass-card rounded-2xl p-4 group cursor-pointer flex flex-col h-full project-trigger';
-                    const escapedCode = p.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const escapedCode = p.code.replace(/</g, "<").replace(/>/g, ">");
                     card.innerHTML = `<div class="relative overflow-hidden rounded-xl h-48 mb-4"><img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy" width="400" height="300" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/400x300/111/333?text=Image+Not+Found';"><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><span class="text-white border border-white px-4 py-2 rounded-full text-sm">View Details</span></div></div><h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">${p.title}</h3><p class="text-gray-400 text-sm mt-2 flex-grow">${p.desc}</p><div class="hidden project-full-details">${p.details}</div><div class="hidden project-code">${escapedCode}</div><div class="hidden project-lang">${p.lang}</div>`;
                     container.appendChild(card);
                 });
@@ -456,7 +437,7 @@
                 blogData.forEach(b => {
                     const item = document.createElement('article');
                     item.className = 'glass-card p-6 rounded-2xl group cursor-pointer blog-trigger flex flex-col h-full';
-                    item.innerHTML = `<div class="flex-grow"><h3 class="font-bold text-lg group-hover:text-blue-400 transition-colors">${b.title}</h3><p class="text-gray-400 text-sm mt-1 max-w-prose min-h-[2.5rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div></div><span class="text-xs text-blue-400 font-mono mt-4 group-hover:underline self-start">Read more &rarr;</span>`;
+                    item.innerHTML = `<div class="flex-grow"><h3 class="font-bold text-lg group-hover:text-blue-400 transition-colors">${b.title}</h3><p class="text-gray-400 text-sm mt-1 max-w-prose min-h-[2.5rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div></div><span class="text-xs text-blue-400 font-mono mt-4 group-hover:underline self-start">Read more →</span>`;
                     container.appendChild(item);
                 });
             }
