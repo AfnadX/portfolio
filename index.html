@@ -59,7 +59,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- PERFORMANCE: Replaced slow @import with faster <link> tags for parallel downloads -->
+    <!-- PERFORMANCE: Replaced slow @import with faster <link> tags for parallel downloads. CSS is loaded non-blockingly. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" media="print" onload="this.media='all'">
     <noscript>
@@ -68,10 +68,20 @@
     </noscript>
 
     <!-- 
-      PERFORMANCE CRITICAL: Replaced Tailwind CDN JIT Compiler.
-      The original site used a script that compiled Tailwind CSS in the user's browser, causing significant lag.
-      This has been replaced by a pre-compiled, static CSS file. For this example, it's included inline.
-      For production, you should generate this file using the Tailwind CLI and link to it externally.
+      ========================================================================================
+      == CRITICAL PERFORMANCE WARNING ==
+      ========================================================================================
+      The script below enables Tailwind CSS by compiling it in your browser.
+      This is EASY for development but VERY BAD for performance. It makes your site load slowly.
+      
+      FOR A REAL WEBSITE, YOU MUST REPLACE THIS.
+      1. Install Tailwind CSS locally: `npm install -D tailwindcss`
+      2. Create a `tailwind.config.js` and an input CSS file.
+      3. Run the Tailwind CLI to build a static CSS file: `npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch`
+      4. Link to that static file: `<link rel="stylesheet" href="/dist/output.css">`
+      
+      This is the single most important optimization for this site.
+      ========================================================================================
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -100,7 +110,7 @@
 
     <!-- Consolidated & Optimized Styles -->
     <style>
-        /* Your Custom CSS */
+        /* Base Styles */
         html { font-size: 17px; }
         :root { 
             --glass-border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -110,29 +120,27 @@
         body { background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.6; }
         
-        /* PERFORMANCE: `will-change` hints to the browser about upcoming transformations, improving animation smoothness. */
-        .glass-panel, .glass-card { will-change: transform, opacity; }
-
+        /* Glassmorphism Effect */
         .glass-panel { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: var(--glass-border); box-shadow: var(--glass-shadow); }
-        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease; will-change: transform, box-shadow; }
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
         .glass-card:hover { transform: translateY(-5px) scale(1.01); border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3); }
         
+        /* Bento Grid Layout */
         .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); auto-rows: minmax(180px, auto); } .bento-span-2 { grid-column: span 2; } .bento-row-2 { grid-row: span 2; } }
         
-        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); will-change: transform, opacity; }
+        /* Scroll Reveal Animation */
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
         
+        /* UI Components & Loader */
         .cursor-blink { display: inline-block; width: 2px; height: 1.2em; background-color: #3B82F6; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
         @keyframes blink { 50% { opacity: 0; } }
         .loader-ring { border: 3px solid rgba(59, 130, 246, 0.3); border-radius: 50%; border-top: 3px solid #3B82F6; width: 20px; height: 20px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
         #overview.initially-hidden { visibility: hidden; opacity: 0; pointer-events: none; }
-        
-        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0.8; } to { transform: scale(1); opacity: 1; } }
         #loader-overlay { position: fixed; inset: 0; z-index: 10000; background-color: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #e5e5e5; transition: opacity 0.7s 0.5s ease-in-out; }
-        #loader-percentage-container { animation: zoomIn 0.5s ease-out; }
+        #loader-percentage-container { animation: zoomIn 0.5s ease-out; } @keyframes zoomIn { from { transform: scale(0.9); opacity: 0.8; } to { transform: scale(1); opacity: 1; } }
         #loader-percentage { font-family: "JetBrains Mono", monospace; font-size: 5rem; font-weight: 700; }
         .loader-text-container { height: 2rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; }
         .loader-text { font-family: "JetBrains Mono", monospace; font-size: 1rem; color: #6b7280; transition: opacity 0.5s ease-in-out; position: absolute; }
@@ -140,7 +148,7 @@
         .loader-progress-container { width: 80%; max-width: 400px; height: 4px; background-color: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; margin-top: 1rem; }
         #loader-progress-bar { width: 0%; height: 100%; background: linear-gradient(to right, #3B82F6, #10B981); border-radius: 2px; transition: width 0.05s linear; }
 
-        /* --- PERFORMANCE OPTIMIZATIONS --- */
+        /* --- PERFORMANCE & RESPONSIVENESS OPTIMIZATIONS --- */
         
         /* 1. Gracefully degrade expensive blur effects on mobile for smoother performance */
         @media (max-width: 768px) {
@@ -155,7 +163,7 @@
           }
         }
 
-        /* 2. Add `contain` property to complex grid items to isolate rendering, improving performance */
+        /* 2. Isolate rendering of complex grid items to improve performance */
         .bento-grid > *, #projects-grid > *, #blog-list > * {
             contain: layout style;
         }
@@ -163,19 +171,27 @@
         /* 3. Use `content-visibility` to make the browser skip rendering off-screen content. This dramatically improves scroll performance. */
         #experience, #projects, #playground, #blog, #contact {
             content-visibility: auto;
-            contain-intrinsic-size: 1000px; /* An estimated height to prevent layout shifts */
+            contain-intrinsic-size: 800px; /* An estimated height to prevent layout shifts */
         }
         
-        /* 4. Honor user's preference for reduced motion for accessibility and performance */
+        /* 4. GPU-accelerate animations by hinting to the browser */
+        .glass-panel, .glass-card, .scroll-reveal { 
+            will-change: transform, opacity;
+        }
+        
+        /* 5. Honor user's preference for reduced motion for accessibility and performance */
         @media (prefers-reduced-motion: reduce) { 
+            html {
+                scroll-behavior: auto !important;
+            }
             *, *::before, *::after { 
                 animation-duration: 0.01ms !important; 
                 animation-iteration-count: 1 !important; 
                 transition-duration: 0.01ms !important; 
-                scroll-behavior: auto !important; 
             }
             /* Specifically disable the most demanding animations */
-            #bg-canvas, .animate-blob, .animate-float {
+            #bg-canvas, .animate-blob, .animate-float, .animate-ping, .animate-pulse-slow {
+                animation: none !important;
                 display: none !important;
             }
         }
@@ -423,8 +439,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 
     <!-- 
-      RECOMMENDATION: For best performance, move this script into an external app.js file 
-      and load it with <script src="app.js" defer></script>
+      RECOMMENDATION: For a real project, move this script into an external app.js file 
+      and load it with <script src="app.js" defer></script> for better caching.
     -->
     <script>
         const projectsData = [ { img: "sudoko.png", alt: "AI Sudoku Solver Project", title: "AI Sudoku Solver", desc: "A Python application that uses a backtracking algorithm to solve any valid Sudoku puzzle, with a simple GUI.", details: `<p>This project demonstrates algorithmic problem-solving and foundational AI concepts.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    else:\n        row, col = find\n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            if solve_sudoku(board):\n                return True\n            board[row][col] = 0\n    return False`, lang: 'python' }, { img: "passwordcheck.png", alt: "Password Strength Checker Project", title: "Password Strength Checker", desc: "A web tool built with JavaScript that provides real-time feedback on password strength based on multiple criteria.", details: `<p>This project showcases DOM manipulation and practical application of regular expressions.</p>`, code: `function checkStrength(password) {\n    let strength = 0;\n    if (password.match(/[a-z]+/)) { strength += 1; }\n    if (password.match(/[A-Z]+/)) { strength += 1; }\n    if (password.match(/[0-9]+/)) { strength += 1; }\n    if (password.match(/[$@#&!]+/)) { strength += 1; }\n    if (password.length > 8) { strength += 1; }\n    return strength;\n}`, lang: 'javascript' }, { img: "datastructer.png", alt: "Data Structures Visualizer Project", title: "Data Structures Visualizer", desc: "An interactive web app to visualize data structures, making complex concepts easier to grasp.", details: `<p>This tool allows users to see operations like insertion, deletion, and traversal happen in real-time. Built with vanilla JavaScript, HTML, and CSS.</p>`, code: `const container = document.getElementById('visualizer-container');\nconst array = [20, 50, 30, 70, 10];\n\nfunction renderArray(arr) {\n    container.innerHTML = '';\n    arr.forEach(value => {\n        const bar = document.createElement('div');\n        bar.style.height = \`\${value * 3}px\`;\n        bar.classList.add('bar');\n        bar.textContent = value;\n        container.appendChild(bar);\n    });\n}\n\nrenderArray(array);`, lang: 'javascript' }, { img: "weather.png", alt: "Live Weather App Project", title: "Live Weather App", desc: "A responsive weather forecast app that fetches and displays real-time weather data from an API.", details: `<p>Showcases asynchronous programming with \`fetch\` and dynamic DOM manipulation.</p>`, code: `async function getWeather(city) {\n    const apiKey = 'YOUR_API_KEY';\n    const url = \`https://api.openweathermap.org/data/2.5/weather?q=\${city}&appid=\${apiKey}&units=metric\`;\n    \n    try {\n        const response = await fetch(url);\n        const data = await response.json();\n        // ... update DOM elements ...\n    } catch (error) {\n        console.error('Failed to fetch weather:', error);\n    }\n}`, lang: 'javascript' }, { img: "newsscraper.png", alt: "Python News Scraper Project", title: "Python News Scraper", desc: "A web scraper built with Python to extract and display the latest headlines from a news website.", details: `<p>Demonstrates skills in using libraries like BeautifulSoup and Requests.</p>`, code: `import requests\nfrom bs4 import BeautifulSoup\n\ndef scrape_headlines(url):\n    response = requests.get(url)\n    soup = BeautifulSoup(response.text, 'html.parser')\n    headlines = []\n    for h2 in soup.find_all('h2', limit=5):\n        headlines.append(h2.get_text(strip=True))\n    return headlines`, lang: 'python' }, { img: "rockpaperscissiors.png", alt: "Rock Paper Scissors Game", title: "Rock Paper Scissors", desc: "The classic game brought to life with JavaScript. A fun project demonstrating event handling and basic game logic.", details: `<p>An interactive web game that allows a user to play against the computer.</p>`, code: `function playGame(playerChoice) {\n    const choices = ['rock', 'paper', 'scissors'];\n    const computerChoice = choices[Math.floor(Math.random() * 3)];\n    // ... game logic ...\n}`, lang: 'javascript' } ];
@@ -450,11 +466,10 @@
                             loaderOverlay.style.pointerEvents = 'none';
                             
                             if (overviewSection) {
-                                const revealOnFirstScroll = () => {
+                                // PERFORMANCE: Use a passive, once-only listener for the initial scroll reveal.
+                                window.addEventListener('scroll', () => {
                                     overviewSection.classList.remove('initially-hidden');
-                                };
-                                // PERFORMANCE: Use a passive listener for scroll events to avoid blocking the main thread.
-                                window.addEventListener('scroll', revealOnFirstScroll, { once: true, passive: true });
+                                }, { once: true, passive: true });
                             }
 
                         }, 1200);
@@ -500,6 +515,7 @@
                     renderer.render(scene, camera);
                 };
                 
+                // PERFORMANCE: Pause animation when tab is not visible to save resources.
                 const handleVisibilityChange = () => {
                     if (document.hidden) {
                         cancelAnimationFrame(animationFrameId);
@@ -512,7 +528,7 @@
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { 
                     animate(); 
                 } else {
-                    renderer.render(scene, camera);
+                    renderer.render(scene, camera); // Render a single static frame if motion is reduced
                 }
                 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
             }
@@ -542,13 +558,15 @@
                 const openModal = (modalId) => {
                     const modal = document.getElementById(modalId); if (!modal) return;
                     modal.classList.remove('hidden');
-                    setTimeout(() => { modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0'); document.body.style.overflow = 'hidden'; }, 10);
+                    document.body.style.overflow = 'hidden';
+                    setTimeout(() => { modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0'); }, 10);
                 };
                 const closeModal = (modal) => {
                     if (!modal) return;
                     modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
                     setTimeout(() => {
-                        modal.classList.add('hidden'); document.body.style.overflow = 'auto';
+                        modal.classList.add('hidden'); 
+                        document.body.style.overflow = '';
                         if (modal.id === 'project-modal') { document.getElementById('ai-explanation-output').classList.add('hidden'); document.getElementById('ai-explanation-output').innerText = ''; }
                     }, 300);
                 };
@@ -589,14 +607,20 @@
                     else if (isDeleting && cIndex === 0) { isDeleting = false; pIndex = (pIndex + 1) % phrases.length; typeSpeed = 500; }
                     setTimeout(type, typeSpeed);
                 };
-                type();
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { 
+                    type();
+                } else {
+                    typeText.textContent = phrases[0]; // Show first phrase statically
+                }
             }
 
             function setupScrollAnimations() {
                 if ('IntersectionObserver' in window) {
-                    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+                    const observer = new IntersectionObserver((entries) => { 
+                        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); 
+                    }, { threshold: 0.1 });
                     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-                } else {
+                } else { // Fallback for older browsers
                     document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
                 }
             }
@@ -622,6 +646,7 @@
                     const browserObserver = new IntersectionObserver((entries, observer) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
+                                // Defer loading until browser is idle for better perceived performance
                                 if ('requestIdleCallback' in window) { requestIdleCallback(() => navigateTo(input.value)); } 
                                 else { setTimeout(() => navigateTo(input.value), 200); }
                                 observer.unobserve(playgroundSection);
@@ -629,7 +654,7 @@
                         });
                     }, { threshold: 0.1 });
                     browserObserver.observe(playgroundSection);
-                } else {
+                } else { // Fallback for older browsers
                     navigateTo(input.value);
                 }
                 iframe.onload = () => loadingOverlay.classList.add('invisible', 'opacity-0');
