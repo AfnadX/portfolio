@@ -205,9 +205,10 @@
                 </a>
                 <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full p-1">
                     <a href="#overview" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">About</a>
+                    <a href="#skills" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Skills</a>
+                    <a href="#experience" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Journey</a>
                     <a href="#workflow" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Workflow</a>
                     <a href="#projects" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Work</a>
-                    <a href="#services" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Services</a>
                     <a href="#blog" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Blog</a>
                 </div>
                 <div class="flex items-center gap-2">
@@ -218,6 +219,8 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="absolute top-full left-0 right-0 mt-3 p-2 glass-panel rounded-2xl flex-col gap-1 transform scale-95 opacity-0 invisible transition-all duration-300 origin-top flex">
                 <a href="#overview" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">About</a>
+                <a href="#skills" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Skills</a>
+                <a href="#experience" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Journey</a>
                 <a href="#workflow" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Workflow</a>
                 <a href="#projects" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Projects</a>
                 <a href="#services" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Services</a>
@@ -230,7 +233,7 @@
     <main class="pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32">
         
         <!-- Home Section -->
-        <section id="home" class="min-h-[70vh] flex flex-col justify-center items-center text-center relative">
+        <section id="home" class="flex flex-col justify-center items-center text-center relative py-16 sm:py-24">
             <div class="max-w-7xl mx-auto">
                 <!-- Background Blobs -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
@@ -1023,7 +1026,7 @@
     </footer>
     
     <!-- Go To Top Button -->
-    <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible scale-90">
+    <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible scale-90 z-50">
         <i class="fas fa-arrow-up"></i>
     </button>
     
@@ -1502,7 +1505,18 @@
             if (contactMessage) contactMessage.addEventListener('input', () => autoResizeTextarea(contactMessage));
             
             async function callAI(prompt, outputElement, button) {
-                if (typeof puter === 'undefined') { outputElement.innerHTML += `<div class="text-red-500 p-3 bg-red-500/10 rounded-lg border border-red-500/20">Error: AI library not loaded. Please refresh the page.</div>`; return; }
+                if (typeof puter === 'undefined' || !puter.ai) { 
+                    const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI service is currently unavailable. Please refresh.</div>`;
+                    if (outputElement.id === 'ai-chat-output') {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'flex justify-start animate-slide-up';
+                        errorDiv.innerHTML = errorHtml;
+                        outputElement.appendChild(errorDiv);
+                    } else {
+                        outputElement.innerHTML = `<span class="text-red-400">AI service unavailable.</span>`;
+                    }
+                    return; 
+                }
                 const originalHTML = button.innerHTML;
                 button.disabled = true;
                 let loadingContent = '<i class="fas fa-spinner fa-spin"></i>';
@@ -1511,7 +1525,14 @@
                 button.innerHTML = loadingContent;
 
                 try {
-                    const response = await puter.ai.chat(prompt), text = response.message.content, formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<span class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</span>');
+                    const messages = [
+                        { role: 'system', content: "You are Afnad's helpful AI assistant for his portfolio website. Be concise, friendly, and helpful. Format code snippets properly using markdown." },
+                        { role: 'user', content: prompt }
+                    ];
+                    const response = await puter.ai.chat(messages);
+                    const text = response.message.content;
+                    const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</code>');
+                    
                     if (outputElement.id === 'ai-chat-output') { 
                         const msgDiv = document.createElement('div'); 
                         msgDiv.className = 'flex justify-start animate-slide-up';
@@ -1531,10 +1552,11 @@
                     }
                 } catch (e) { 
                     const errorMessage = e.message || "An unknown AI error occurred.";
+                    const errorHtml = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl"><i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}</div>`;
                     if (outputElement.id === 'ai-chat-output') {
                         const errorDiv = document.createElement('div');
                         errorDiv.className = 'flex justify-start animate-slide-up';
-                        errorDiv.innerHTML = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]"><i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}</div>`;
+                        errorDiv.innerHTML = errorHtml;
                         outputElement.appendChild(errorDiv);
                     } else {
                         outputElement.innerHTML = `<span class="text-red-400">Error: ${errorMessage}</span>`;
@@ -1552,7 +1574,7 @@
                 userDiv.className = 'flex justify-end animate-slide-up';
                 userDiv.innerHTML = `<div class="bg-blue-600 text-white py-2 px-4 rounded-2xl rounded-br-none max-w-[85%]">${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>`;
                 aiOutput.appendChild(userDiv); 
-                callAI(`You are Afnad's helpful AI assistant. Answer questions about his work, skills, or provide tech advice. Keep responses concise, friendly, and helpful. Question: ${text}`, aiOutput, aiBtn); 
+                callAI(text, aiOutput, aiBtn); 
                 aiInput.value = ''; 
                 autoResizeTextarea(aiInput); 
                 aiOutput.scrollTop = aiOutput.scrollHeight; 
@@ -1620,4 +1642,3 @@
     </script>
 </body>
 </html>
-```
