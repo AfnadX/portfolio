@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
 <head>
@@ -93,7 +94,7 @@
                         blob: { '0%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' }, '100%': { transform: 'translate(0px, 0px) scale(1)' } },
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
                         gradient: { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
-                        slideUp: { '0%': { transform: 'translateY(100px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
                     }
                 }
             }
@@ -148,7 +149,7 @@
         @media (prefers-reduced-motion: reduce) { 
             html { scroll-behavior: auto !important; }
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-            #bg-canvas, .animate-blob, .animate-float, .animate-ping, .animate-pulse-slow, .animate-gradient { animation: none !importa; display: none !important; }
+            #bg-canvas, .animate-blob, .animate-float, .animate-ping, .animate-pulse-slow, .animate-gradient { animation: none !important; display: none !important; }
         }
 
         .skill-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; }
@@ -166,6 +167,18 @@
         .github-graph-day.level-2 { background-color: #006d32; }
         .github-graph-day.level-3 { background-color: #26a641; }
         .github-graph-day.level-4 { background-color: #39d353; }
+        
+        /* FAQ Accordion Styles */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .faq-item.open .faq-answer { max-height: 500px; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .faq-icon { transition: transform 0.3s ease; }
+
+        /* Custom scrollbar for AI chat */
+        #ai-chat-output::-webkit-scrollbar { width: 6px; }
+        #ai-chat-output::-webkit-scrollbar-track { background: transparent; }
+        #ai-chat-output::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
+        #ai-chat-output::-webkit-scrollbar-thumb:hover { background: #2563EB; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white">
@@ -187,13 +200,12 @@
         <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl">
             <div class="glass-panel rounded-full px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xl shadow-blue-900/10">
                 <a href="#home" class="font-extrabold text-lg tracking-tighter flex items-center gap-2">
-                    <span class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
+                    <span id="afnad-dot" class="w-3 h-3 bg-blue-500 rounded-full animate-pulse transition-colors duration-500"></span>
                     <span class="font-mono text-white">AFNAD</span>
                 </a>
                 <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full p-1">
                     <a href="#overview" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">About</a>
-                    <a href="#skills" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Skills</a>
-                    <a href="#experience" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Journey</a>
+                    <a href="#workflow" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Workflow</a>
                     <a href="#projects" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Work</a>
                     <a href="#services" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Services</a>
                     <a href="#blog" class="nav-item px-4 py-1.5 rounded-full text-sm font-semibold text-gray-300 hover:bg-white/10 transition-colors">Blog</a>
@@ -206,9 +218,7 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="absolute top-full left-0 right-0 mt-3 p-2 glass-panel rounded-2xl flex-col gap-1 transform scale-95 opacity-0 invisible transition-all duration-300 origin-top flex">
                 <a href="#overview" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">About</a>
-                <a href="#skills" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Skills</a>
-                <a href="#experience" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Journey</a>
-                <a href="#achievements" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Achievements</a>
+                <a href="#workflow" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Workflow</a>
                 <a href="#projects" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Projects</a>
                 <a href="#services" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Services</a>
                 <a href="#blog" class="mobile-nav-item block p-3 rounded-lg hover:bg-white/5 font-semibold text-center">Blog</a>
@@ -217,18 +227,18 @@
         </nav>
     </header>
 
-    <main class="pt-28 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32">
+    <main class="pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32">
         
         <!-- Home Section -->
-        <section id="home" class="min-h-[80vh] flex flex-col justify-center items-center text-center relative">
+        <section id="home" class="min-h-[70vh] flex flex-col justify-center items-center text-center relative">
             <div class="max-w-7xl mx-auto">
                 <!-- Background Blobs -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/20 rounded-full blur-[120px] -z-10 animate-blob"></div>
                 <div class="absolute top-1/3 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-purple-500/20 rounded-full blur-[100px] -z-10 animate-blob" style="animation-delay: 2s;"></div>
                 
                 <div class="scroll-reveal">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6">
-                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
+                    <div id="availability-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6 transition-colors duration-500">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span></span>
                         Available for collaborative projects
                     </div>
                     <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
@@ -442,6 +452,52 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Workflow Section -->
+        <section id="workflow" class="scroll-reveal max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">My Development Workflow</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">A structured approach to transform ideas into high-quality, scalable products.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="glass-card rounded-3xl p-8 text-center group">
+                    <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-blue-500/20 relative">
+                        <i class="fas fa-compass text-4xl text-blue-400 group-hover:rotate-12 transition-transform"></i>
+                        <span class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-sm flex items-center justify-center border-4 border-dark-bg">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Discovery & Planning</h3>
+                    <p class="text-gray-400 text-sm">I start by understanding the core problem, defining project goals, user stories, and selecting the optimal technology stack for scalability and performance.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="glass-card rounded-3xl p-8 text-center group">
+                     <div class="w-20 h-20 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-purple-500/20 relative">
+                        <i class="fas fa-drafting-compass text-4xl text-purple-400 group-hover:scale-110 transition-transform"></i>
+                        <span class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-purple-500 text-white font-bold text-sm flex items-center justify-center border-4 border-dark-bg">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Design & Prototyping</h3>
+                    <p class="text-gray-400 text-sm">Next, I create intuitive wireframes and high-fidelity UI/UX mockups. This visual blueprint ensures a seamless user experience before a single line of code is written.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="glass-card rounded-3xl p-8 text-center group">
+                     <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-emerald-500/20 relative">
+                        <i class="fas fa-code text-4xl text-emerald-400 group-hover:animate-pulse"></i>
+                        <span class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 text-white font-bold text-sm flex items-center justify-center border-4 border-dark-bg">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Development & Testing</h3>
+                    <p class="text-gray-400 text-sm">I build the application using clean, efficient code and agile practices. Rigorous unit and integration testing ensures the final product is robust and bug-free.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="glass-card rounded-3xl p-8 text-center group">
+                     <div class="w-20 h-20 bg-pink-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-pink-500/20 relative">
+                        <i class="fas fa-rocket text-4xl text-pink-400 group-hover:-translate-y-1 group-hover:rotate-6 transition-transform"></i>
+                        <span class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-pink-500 text-white font-bold text-sm flex items-center justify-center border-4 border-dark-bg">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Deployment & Iteration</h3>
+                    <p class="text-gray-400 text-sm">The project is deployed using CI/CD pipelines for smooth releases. I then monitor performance and gather feedback for continuous improvement and feature updates.</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Journey Section -->
         <section id="experience" class="scroll-reveal max-w-7xl mx-auto">
@@ -583,7 +639,7 @@
                         <i class="fas fa-project-diagram text-3xl text-cyan-400"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">20+ Projects</h3>
-                    <p class="text-gray-400 text-sm">Successfully completed diverse technical projects</Gacruxp>
+                    <p class="text-gray-400 text-sm">Successfully completed diverse technical projects</p>
                 </div>
             </div>
         </section>
@@ -649,45 +705,6 @@
                         <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> User Research</li>
                         <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> Wireframing</li>
                         <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-400"></i> Prototyping</li>
-                    </ul>
-                </div>
-                <!-- Service 4 -->
-                <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-orange-500/10 hover:to-transparent transition-all">
-                    <div class="service-icon w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i class="fas fa-database text-3xl text-orange-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Backend Development</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Building robust backend systems with Node.js, databases, and API development. Ensuring scalability, security, and optimal performance.</p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-orange-400"></i> RESTful APIs</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-orange-400"></i> Database Design</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-orange-400"></i> Authentication</li>
-                    </ul>
-                </div>
-                <!-- Service 5 -->
-                <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-pink-500/10 hover:to-transparent transition-all">
-                    <div class="service-icon w-16 h-16 bg-pink-500/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i class="fas fa-code-branch text-3xl text-pink-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Code Review & Consulting</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Providing expert code reviews, technical consulting, and mentorship for developers and teams looking to improve their codebase.</p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-pink-400"></i> Code Analysis</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-pink-400"></i> Best Practices</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-pink-400"></i> Mentorship</li>
-                    </ul>
-                </div>
-                <!-- Service 6 -->
-                <div class="service-card glass-card rounded-3xl p-8 hover:bg-gradient-to-br hover:from-cyan-500/10 hover:to-transparent transition-all">
-                    <div class="service-icon w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i class="fas fa-gamepad text-3xl text-cyan-400"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Game Development</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Creating interactive games and experiences using Unity, C#, and game development best practices. From 2D mobile games to complex game mechanics.</p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400"></i> Unity Development</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400"></i> Game Mechanics</li>
-                        <li class="flex items-center gap-2"><i class="fas fa-check text-cyan-400"></i> Lua Scripting</li>
                     </ul>
                 </div>
             </div>
@@ -775,14 +792,22 @@
                                 document.write(graphHtml);
                             </script>
                         </div>
-                        <div class="mt-8 p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20">
-                            <p class="text-sm text-gray-300"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong>Current Focus:</strong> Building production-ready applications with modern tech stacks and best practices</p>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section id="faq" class="scroll-reveal max-w-4xl mx-auto">
+             <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">A few common questions I get about my work and passion for technology.</p>
+            </div>
+            <div id="faq-container" class="space-y-4">
+                <!-- FAQ Items will be dynamically inserted here -->
+            </div>
+        </section>
+        
         <!-- Playground Section -->
         <section id="playground" class="scroll-reveal bg-black/20 py-16 sm:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
@@ -796,39 +821,47 @@
                     <div class="lg:col-span-3">
                         <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-globe text-blue-400"></i> Embedded Browser</h3>
                         <div class="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl flex flex-col min-h-[500px] lg:min-h-[70vh]">
-                            <div class="bg-[#1a1a1a] px-4 py-3 flex items-center gap-2 sm:gap-4 border-b border-white/5 shrink-0">
+                            <div class="bg-dark-card/50 px-4 py-3 flex items-center gap-2 sm:gap-4 border-b border-dark-border shrink-0">
                                 <div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div><div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div><div class="w-3 h-3 rounded-full bg-[#27C93F]"></div></div>
-                                <div class="flex-1 flex items-center bg-[#000] rounded-md px-3 py-1.5 border border-white/10 focus-within:border-blue-500/50 transition-colors"><i class="fas fa-lock text-xs text-gray-500 mr-2"></i><input type="text" id="browser-input" class="bg-transparent border-none outline-none text-sm text-gray-300 w-full font-mono" value="httpsGacrux://www.google.com/webhp?igu=1" aria-label="Browser URL"></div>
+                                <div class="flex-1 flex items-center bg-dark-bg rounded-md px-3 py-1.5 border border-dark-border focus-within:border-blue-500/50 transition-colors"><i class="fas fa-lock text-xs text-gray-500 mr-2"></i><input type="text" id="browser-input" class="bg-transparent border-none outline-none text-sm text-gray-300 w-full font-mono" value="https://www.google.com/search?igu=1" aria-label="Browser URL"></div>
                                 <button id="browser-go-btn" class="text-gray-400 hover:text-white transition-colors" aria-label="Go"><i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="relative flex-1 bg-black">
                                 <div class="browser-loading absolute inset-0 bg-dark-bg/90 flex items-center justify-center z-20 opacity-0 invisible transition-all duration-300" id="browser-loading"><div class="loader-ring"></div></div>
-                                <iframe id="browser-iframe" title="Embedded Web Browser" class="absolute inset-0 w-full h-full border-none z-10" src="about:blank"></iframe>
+                                <iframe id="browser-iframe" title="Embedded Web Browser" class="absolute inset-0 w-full h-full border-none z-10" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
                             </div>
                         </div>
                     </div>
                     <!-- AI Assistant -->
                     <div class="lg:col-span-2 flex flex-col">
                         <h3 class="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-robot text-purple-400"></i> AI Assistant</h3>
-                        <div class="glass-card rounded-2xl p-0 flex flex-col min-h-[500px] lg:min-h-[70vh] border border-purple-500/20 relative overflow-hidden">
-                            <div class="bg-dark-bg px-4 py-3 border-b border-white/10 flex justify-between items-center shrink-0">
-                                <span class="text-sm font-mono text-gray-400">Powered by Puter AI</span>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                    <span class="text-xs text-green-400">Online</span>
+                        <div class="glass-card rounded-2xl flex flex-col min-h-[500px] lg:min-h-[70vh] border border-purple-500/20 overflow-hidden">
+                            <div class="shrink-0 p-4 border-b border-dark-border flex items-center justify-between bg-dark-card/50">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shrink-0">
+                                        <i class="fas fa-robot text-xl text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white leading-tight">AI Assistant</h4>
+                                        <p class="text-xs text-green-400 flex items-center gap-1.5 leading-tight">
+                                            <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
+                                            Online
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="ai-chat-output" class="flex-1 p-4 overflow-y-auto font-mono text-sm space-y-4 bg-black/40">
-                                <div class="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 text-gray-300">
-                                    <span class="text-purple-400 font-bold mr-2">AI:</span> Hello! I'm Afnad's AI assistant. I can answer questions about his work, skills, or anything tech-related. What would you like to know?
+                            <div id="ai-chat-output" class="flex-1 p-4 space-y-4 overflow-y-auto bg-black/20">
+                                <div class="flex justify-start">
+                                    <div class="bg-dark-card text-gray-300 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]">
+                                        Hello! I'm Afnad's AI assistant. I can answer questions about his work, skills, or anything tech-related. What would you like to know?
+                                    </div>
                                 </div>
                             </div>
-                            <div class="p-4 bg-dark-bg border-t border-white/10 shrink-0">
-                                <div class="flex gap-2 items-end">
-                                    <span class="text-purple-500 font-mono pb-2 text-xl">➜</span>
-                                    <textarea id="ai-chat-input" rows="1" class="w-full bg-white/5 border border-white/10 outline-none text-gray-300 font-mono resize-none p-3 rounded-lg focus:ring-2 focus:ring-purple-500/50 focus:border-transparent placeholder-gray-600" placeholder="Ask me anything..."></textarea>
-                                    <button id="ai-chat-btn" aria-label="Send message" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 rounded-lg transition-all h-12 w-12 shrink-0 flex items-center justify-center shadow-lg hover:shadow-purple-500/50">
-                                        <i class="fas fa-paper-plane"></i>
+                            <div class="shrink-0 p-3 border-t border-dark-border bg-dark-bg/50">
+                                <div class="flex items-center gap-2 bg-dark-bg p-1.5 rounded-full border border-dark-border focus-within:border-purple-500 transition-all">
+                                    <textarea id="ai-chat-input" rows="1" class="flex-1 bg-transparent resize-none outline-none py-2 px-3 text-sm text-gray-300 placeholder-gray-500" placeholder="Ask me anything..."></textarea>
+                                    <button id="ai-chat-btn" aria-label="Send message" class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 text-white shrink-0 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 disabled:opacity-50 disabled:scale-100">
+                                        <i class="fas fa-arrow-up"></i>
                                     </button>
                                 </div>
                             </div>
@@ -942,50 +975,57 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-white/5 bg-transparent pt-12 pb-8 max-w-7xl mx-auto mt-24">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div class="md:col-span-2">
-                <a href="#home" class="font-extrabold text-2xl tracking-tighter flex items-center gap-2 mb-4">
-                    <span class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
-                    <span class="font-mono">AFNAD</span>
-                </a>
-                <p class="text-gray-400 text-sm max-w-md mb-6">Computer Science student passionate about building intelligent, scalable solutions. Transforming ideas into reality through code, one project at a time.</p>
-                <div class="flex gap-3">
-                    <a href="https://github.com/afnad" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-xl"></i></a>
-                    <a href="https://www.linkedin.com/in/afnadnidul/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
-                    <a href="https://www.facebook.com/afnadverse" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-blue-600 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
-                    <a href="https://www.instagram.com/afnad_verse/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-pink-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-                    <a href="mailto:2024-3-60-229@std.ewubd.edu" aria-label="Email" class="text-gray-400 hover:text-green-500 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+    <footer class="border-t border-dark-border bg-dark-card/30 mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="lg:col-span-2 pr-8">
+                    <a href="#home" class="font-extrabold text-2xl tracking-tighter flex items-center gap-2 mb-4">
+                        <span class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
+                        <span class="font-mono text-white">AFNAD</span>
+                    </a>
+                    <p class="text-gray-400 text-sm max-w-md mb-6">Computer Science student passionate about building intelligent, scalable solutions. Transforming ideas into reality through code, one project at a time.</p>
+                    <div class="flex gap-4">
+                        <a href="https://github.com/afnad" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-xl"></i></a>
+                        <a href="https://www.linkedin.com/in/afnadnidul/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="https://www.facebook.com/afnadverse" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-blue-600 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="https://www.instagram.com/afnad_verse/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-pink-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="mailto:2024-3-60-229@std.ewubd.edu" aria-label="Email" class="text-gray-400 hover:text-green-500 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#overview" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">About Me</a></li>
+                        <li><a href="#skills" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Skills</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Projects</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Services</a></li>
+                        <li><a href="#blog" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white text-lg mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#experience" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">My Journey</a></li>
+                        <li><a href="#achievements" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Achievements</a></li>
+                        <li><a href="#playground" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Playground</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Contact</a></li>
+                    </ul>
                 </div>
             </div>
             
-            <div>
-                <h4 class="font-bold text-lg mb-4">Quick Links</h4>
-                <ul class="space-y-2">
-                    <li><a href="#overview" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">About Me</a></li>
-                    <li><a href="#skills" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Skills</a></li>
-                    <li><a href="#projects" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Projects</a></li>
-                    <li><a href="#services" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Services</a></li>
-                    <li><a href="#blog" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Blog</a></li>
-                </ul>
+            <div class="mt-16 pt-8 border-t border-dark-border flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>&copy; 2024 Afnad. All Rights Reserved.</p>
+                <p>Designed & Developed with <span class="text-red-500 animate-pulse">❤</span> by Afnad</p>
             </div>
-            
-            <div>
-                <h4 class="font-bold text-lg mb-4">Resources</h4>
-                <ul class="space-y-2">
-                    <li><a href="#experience" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">My Journey</a></li>
-                    <li><a href="#achievements" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Achievements</a></li>
-                    <li><a href="#playground" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Playground</a></li>
-                    <li><a href="#contact" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-xs font-mono text-gray-600">© 2024 Afnad. All rights reserved.</p>
-            <p class="text-xs text-gray-600">Designed & Developed with <span class="text-red-500">❤</span> by Afnad</p>
         </div>
     </footer>
+    
+    <!-- Go To Top Button -->
+    <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible scale-90">
+        <i class="fas fa-arrow-up"></i>
+    </button>
     
     <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
@@ -1016,7 +1056,8 @@
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-modal"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-3xl max-h-[85vh] overflow-y-auto bg-dark-card border border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 modal-content">
             <button class="close-modal absolute top-4 right-4 text-gray-400 hover:text-white" aria-label="Close article"><i class="fas fa-times text-xl"></i></button>
-            <h2 id="blog-modal-title" class="text-2xl md:text-3xl font-bold mb-6 text-white"></h2>
+            <h2 id="blog-modal-title" class="text-2xl md:text-4xl font-bold mb-3 gradient-text"></h2>
+            <div id="blog-modal-meta" class="text-sm text-gray-500 font-mono mb-6 border-b border-dark-border pb-4"></div>
             <div id="blog-modal-content" class="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"></div>
         </div>
     </div>
@@ -1044,56 +1085,41 @@
         const projectsData = [ 
             { img: "sudoko.png", alt: "AI Sudoku Solver Project", title: "AI Sudoku Solver", desc: "An intelligent Sudoku solver using backtracking algorithm with an intuitive GUI built in Python.", details: `<p>This project demonstrates advanced algorithmic problem-solving using recursive backtracking to solve any valid 9x9 Sudoku puzzle. The application features constraint propagation for optimization and a clean graphical interface built with Tkinter.</p><p>Key features include puzzle validation, step-by-step visualization, and the ability to import/export puzzles. The algorithm efficiently explores the solution space while pruning invalid branches early.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    else:\n        row, col = find\n    \n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            \n            if solve_sudoku(board):\n                return True\n            \n            board[row][col] = 0\n    \n    return False`, lang: 'python' }, 
             { img: "passwordcheck.png", alt: "Password Strength Checker", title: "Password Strength Checker", desc: "Real-time password strength analyzer with security recommendations and breach checking.", details: `<p>A comprehensive password security tool that provides instant feedback on password strength using multiple criteria including length, character diversity, common patterns, and dictionary words.</p><p>Features include visual strength indicators, real-time suggestions for improvement, entropy calculation, and integration with Have I Been Pwned API to check if passwords have been compromised in data breaches.</p>`, code: `function checkStrength(password) {\n    let strength = 0;\n    const feedback = [];\n    \n    if (password.length > 12) strength += 1;\n    if (password.match(/[a-z]+/)) strength += 1;\n    if (password.match(/[A-Z]+/)) strength += 1;\n    if (password.match(/[0-9]+/)) strength += 1;\n    if (password.match(/[$@#&!]+/)) strength += 1;\n    \n    return { strength, feedback };\n}`, lang: 'javascript' }, 
-            { img: "datastructer.png", alt: "Data Structures Visualizer", title: "Data Structures Visualizer", desc: "Interactive educational tool for visualizing data structures and algorithms in real-time.", details: `<p>An educational web application that brings data structures to life through interactive visualizations. Students can see how arrays, linked lists, stacks, queues, trees, and graphs work with step-by-step animations.</p><p>Features include multiple sorting algorithm visualizations (bubble, merge, quick sort), search algorithms, and tree traversals. Built entirely with vanilla JavaScript and HTML5 Canvas for smooth animations.</p>`, code: `async function bubbleSort(arr, render) {\n    const n = arr.length;\n    for (let i = 0; i < n - 1; i++) {\n        for (let j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];\n                await render(arr);\n            }\n        }\n    }\n}`, lang: 'javascript' }, 
+            { img: "datastructer.png", alt: "Data Structures Visualizer", title: "Data Structures Visualizer", desc: "Interactive educational tool for visualizing data structures and algorithms in real-time.", details: `<p>An educational web application that brings data structures to life through interactive visualizations. Students can see how arrays, linked lists, stacks, queues, trees, and graphs work with step-by-step animations.</p><p>Features include multiple sorting algorithm visualizations (bubble, merge, quick sort), search algorithms, and tree traversals. Built entirely with vanilla JavaScript and HTML5 Canvas for smooth animations.</p>`, code: `async function bubbleSort(arr, render) {\n    const n = arr.length;\n    for (let i = 0; i < n - 1; i++) {\n        for (let j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                [arr[j], arr[j + 1]] = [arr[j] + 1], arr[j]];\n                await render(arr);\n            }\n        }\n    }\n}`, lang: 'javascript' }, 
             { img: "weather.png", alt: "Live Weather App", title: "Live Weather Dashboard", desc: "Real-time weather application with forecasts, maps, and beautiful UI animations.", details: `<p>A modern weather application that fetches live data from OpenWeatherMap API, displaying current conditions, hourly and 7-day forecasts, weather maps, and air quality information.</p><p>Features include location-based weather, search functionality, dynamic backgrounds that change based on weather conditions, and detailed meteorological data including UV index, visibility, and precipitation probability.</p>`, code: `async function getWeather(city, apiKey) {\n    const url = \`https://api.openweathermap.org/data/2.5/weather?q=\${city}&appid=\${apiKey}&units=metric\`;\n    try {\n        const response = await fetch(url);\n        const data = await response.json();\n        if (data.cod === 200) {\n            displayWeather(data);\n        } else {\n            showError(data.message);\n        }\n    } catch (error) {\n        showError('Unable to fetch weather data');\n    }\n}`, lang: 'javascript' }, 
             { img: "newsscraper.png", alt: "Python News Scraper", title: "Intelligent News Aggregator", desc: "AI-powered news scraper with sentiment analysis and topic categorization.", details: `<p>A sophisticated web scraping application built with Python that aggregates news from multiple sources, performs sentiment analysis on articles, and categorizes content by topics using natural language processing.</p><p>Utilizes BeautifulSoup for web scraping, NLTK for text processing, and implements caching to respect rate limits. Features include duplicate detection, RSS feed parsing, and export to various formats.</p>`, code: `import requests\nfrom bs4 import BeautifulSoup\n\ndef scrape_headlines(url):\n    try:\n        response = requests.get(url, timeout=10)\n        soup = BeautifulSoup(response.text, 'html.parser')\n        headlines = []\n        for item in soup.find_all('h2', limit=10):\n            title = item.get_text(strip=True)\n            if title:\n                headlines.append(title)\n        return headlines\n    except Exception as e:\n        print(f"Error scraping {url}: {e}")\n        return []`, lang: 'python' }, 
             { img: "rockpaperscissiors.png", alt: "Rock Paper Scissors Game", title: "Rock Paper Scissors AI", desc: "Classic game with AI opponent that learns from player patterns using machine learning.", details: `<p>An enhanced version of the classic game featuring an AI opponent that uses pattern recognition to predict player moves. The AI tracks move history and adapts its strategy over time.</p><p>Includes beautiful animations, sound effects, score tracking, statistics dashboard, and multiple difficulty levels. Built with vanilla JavaScript and CSS animations.</p>`, code: `function getComputerChoice(playerHistory) {\n    if (playerHistory.length > 3) {\n        // Simple pattern matching AI\n        const lastMove = playerHistory[playerHistory.length - 1];\n        // Counter the player's last move\n        if (lastMove === 'rock') return 'paper';\n        if (lastMove === 'paper') return 'scissors';\n        if (lastMove === 'scissors') return 'rock';\n    }\n    return ['rock', 'paper', 'scissors'][Math.floor(Math.random() * 3)];\n}`, lang: 'javascript' },
-            { img: "https://placehold.co/400x300/1F1F1F/F87171?text=Portfolio+v1", alt: "My First Portfolio", title: "My First Portfolio (2021)", desc: "A look back at my first-ever portfolio website. Built with pure HTML, CSS, and a bit of JS.", details: `<p>This project is a nostalgic look at where my web development journey began. It was my first major project, built from scratch to showcase my early skills. While the design is simple, it taught me the fundamentals of web layout, CSS, and DOM manipulation.</p><p>Comparing this to my current portfolio shows a clear progression in skill, design sense, and understanding of modern web technologies. It's a great reminder that everyone starts somewhere!</p>`, code: `/* My first CSS file! */\nbody {\n    font-family: 'Arial', sans-serif;\n    margin: 0;\n    padding: 0;\n    background-color: #f0f0f0;\n}\n\n.container {\n    width: 960px;\n    margin: 0 auto;\n}\n\nheader {\n    background-color: #333;\n    color: white;\n    padding: 20px;\n    text-align: center;\n}`, lang: 'css' },
-            { img: "https://placehold.co/400x300/1F1F1F/34D399?text=E-Commerce+API", alt: "E-Commerce REST API", title: "E-Commerce REST API", desc: "A robust backend API for an e-commerce platform, built with Node.js, Express, and MongoDB.", details: `<p>This project is a complete backend solution for an e-commerce website. It includes endpoints for user authentication (JWT), product management, shopping cart functionality, and order processing.</p><p>The API is built following RESTful principles, with data validation using Joi, and secure password hashing with bcrypt. It's structured for scalability and maintainability, with a clear separation of concerns (models, routes, controllers).</p>`, code: `const express = require('express');\nconst router = express.Router();\nconst Product = require('../models/Product');\n\n// GET all products\nrouter.get('/', async (req, res) => {\n    try {\n        const products = await Product.find();\n        res.json(products);\n    } catch (err) {\n        res.status(500).json({ message: err.message });\n    }\n});\n\n// POST a new product\nrouter.post('/', async (req, res) => {\n    // ... (validation & creation logic)\n});`, lang: 'javascript' },
-            { img: "https://placehold.co/400x300/1F1F1F/F0ABFC?text=AI+Chatbot", alt: "AI Chatbot", title: "AI Customer Service Bot", desc: "A full-stack chatbot application using React and a custom-trained AI model.", details: `<p>This project features a React-based chat interface that communicates with a Python backend (Flask) running a machine learning model. The bot is trained on a custom dataset to handle specific customer service inquiries.</p><p>I explored natural language processing (NLP) techniques to understand user intent and provide relevant answers. The frontend is built for a seamless, conversational user experience.</p>`, code: `import React, { useState } from 'react';\n\nfunction Chatbot() {\n    const [messages, setMessages] = useState([]);\n    const [input, setInput] = useState('');\n\n    const handleSubmit = async (e) => {\n        e.preventDefault();\n        const userMessage = { text: input, sender: 'user' };\n        setMessages([...messages, userMessage]);\n        \n        // Call to backend API\n        const response = await fetch('/api/chat', {\n            method: 'POST',\n            body: JSON.stringify({ message: input })\n        });\n        const data = await response.json();\n        \n        const botMessage = { text: data.reply, sender: 'bot' };\n        setMessages(prev => [...prev, botMessage]);\n        setInput('');\n    };\n\n    // ... (JSX for chat interface)\n}`, lang: 'javascript' }
+            { img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&q=80&w=800&auto=format&fit=crop", alt: "My First Portfolio", title: "My First Portfolio (2021)", desc: "A look back at my first-ever portfolio website. Built with pure HTML, CSS, and a bit of JS.", details: `<p>This project is a nostalgic look at where my web development journey began. It was my first major project, built from scratch to showcase my early skills. While the design is simple, it taught me the fundamentals of web layout, CSS, and DOM manipulation.</p><p>Comparing this to my current portfolio shows a clear progression in skill, design sense, and understanding of modern web technologies. It's a great reminder that everyone starts somewhere!</p>`, code: `/* My first CSS file! */\nbody {\n    font-family: 'Arial', sans-serif;\n    margin: 0;\n    padding: 0;\n    background-color: #f0f0f0;\n}\n\n.container {\n    width: 960px;\n    margin: 0 auto;\n}\n\nheader {\n    background-color: #333;\n    color: white;\n    padding: 20px;\n    text-align: center;\n}`, lang: 'css' },
+            { img: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?ixlib=rb-4.0.3&q=80&w=800&auto=format&fit=crop", alt: "E-Commerce REST API", title: "E-Commerce REST API", desc: "A robust backend API for an e-commerce platform, built with Node.js, Express, and MongoDB.", details: `<p>This project is a complete backend solution for an e-commerce website. It includes endpoints for user authentication (JWT), product management, shopping cart functionality, and order processing.</p><p>The API is built following RESTful principles, with data validation using Joi, and secure password hashing with bcrypt. It's structured for scalability and maintainability, with a clear separation of concerns (models, routes, controllers).</p>`, code: `const express = require('express');\nconst router = express.Router();\nconst Product = require('../models/Product');\n\n// GET all products\nrouter.get('/', async (req, res) => {\n    try {\n        const products = await Product.find();\n        res.json(products);\n    } catch (err) {\n        res.status(500).json({ message: err.message });\n    }\n});\n\n// POST a new product\nrouter.post('/', async (req, res) => {\n    // ... (validation & creation logic)\n});`, lang: 'javascript' },
+            { img: "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&q=80&w=800&auto=format&fit=crop", alt: "AI Chatbot", title: "AI Customer Service Bot", desc: "A full-stack chatbot application using React and a custom-trained AI model.", details: `<p>This project features a React-based chat interface that communicates with a Python backend (Flask) running a machine learning model. The bot is trained on a custom dataset to handle specific customer service inquiries.</p><p>I explored natural language processing (NLP) techniques to understand user intent and provide relevant answers. The frontend is built for a seamless, conversational user experience.</p>`, code: `import React, { useState } from 'react';\n\nfunction Chatbot() {\n    const [messages, setMessages] = useState([]);\n    const [input, setInput] = useState('');\n\n    const handleSubmit = async (e) => {\n        e.preventDefault();\n        const userMessage = { text: input, sender: 'user' };\n        setMessages([...messages, userMessage]);\n        \n        // Call to backend API\n        const response = await fetch('/api/chat', {\n            method: 'POST',\n            body: JSON.stringify({ message: input })\n        });\n        const data = await response.json();\n        \n        const botMessage = { text: data.reply, sender: 'bot' };\n        setMessages(prev => [...prev, botMessage]);\n        setInput('');\n    };\n\n    // ... (JSX for chat interface)\n}`, lang: 'javascript' }
         ];
         
         const blogData = [ 
-            { title: "The 'Why' Behind Data Structures & Algorithms", desc: "Understanding DSA isn't just about passing interviews - it's about thinking like an engineer. Learn why choosing the right data structure can make or break your application's performance.", content: `<p>Many students see Data Structures and Algorithms (DSA) as a hurdle—a set of abstract problems to memorize for technical interviews. But their true value lies far beyond that. DS&A are the fundamental building blocks of computer science and the foundation of efficient software engineering.</p><p>When you understand data structures, you gain the ability to organize information in ways that make your programs faster, more scalable, and more maintainable. Choosing the right data structure, like a hash map over an array for quick lookups, can be the difference between an application that runs in milliseconds and one that takes minutes. This isn't theoretical—it's practical engineering that affects real users every day.</p><p>Algorithms teach you to think about trade-offs. Every solution has costs in terms of time complexity, space complexity, and code complexity. A well-designed algorithm understood through Big O notation can solve problems at a scale that brute force cannot. Consider how Google searches billions of web pages in milliseconds, or how Netflix recommends content from millions of titles instantly. These are DSA principles at work.</p><p>More importantly, studying DSA develops your problem-solving mindset. You learn to break down complex problems, identify patterns, and apply proven solutions. This analytical thinking transfers to every aspect of software development, from debugging to system design. The goal isn't to memorize every algorithm—it's to understand the principles so you can reason about any problem you encounter.</p>` }, 
-            { title: "First Hackathon: Lessons in Code & Collaboration", desc: "My first 24-hour hackathon was a whirlwind of caffeine, code, and collaboration. Here's what I learned about teamwork, time management, and building under pressure.", content: `<p>A 24-hour hackathon is unlike any other coding experience. My first one was an intense, exhilarating crash course in rapid development, team dynamics, and creative problem-solving. We set out to build a campus navigation app, and while our final product was far from perfect, the lessons learned were invaluable.</p><p>The first lesson was about scoping. With only 24 hours, you can't build everything. We quickly learned to focus on an MVP (Minimum Viable Product)—the core features that demonstrate our idea's value. This meant making tough decisions about what to cut and what to prioritize. It's a skill that translates directly to professional development where deadlines are constant.</p><p>Communication proved crucial. With team members working on different components, we needed clear interfaces and constant updates. We used GitHub for version control and Slack for coordination. I learned that over-communication is better than under-communication, especially when everyone's sleep-deprived and working in parallel.</p><p>The pressure-cooker environment forced us to code faster and more decisively than ever before. There was no time for perfectionism or endless refactoring. We had to write code that worked, then iterate if time permitted. This taught me to distinguish between critical features and nice-to-haves—a valuable skill for any developer.</p><p>Perhaps most importantly, I learned that a team with a shared vision can achieve remarkable things in a very short time. The energy, creativity, and collective problem-solving of a hackathon team working toward a common goal creates magic. Even though we didn't win, the experience of building something from nothing in 24 hours was its own reward.</p>` }, 
-            { title: "Why Your Portfolio is Your Most Important Project", desc: "In tech, your portfolio speaks louder than your resume. It's your chance to show—not just tell—what you can build and how you think as a developer.", content: `<p>Your GPA shows that you can learn. Your resume lists your experiences. But your portfolio? That shows what you can actually build. In the tech world, that distinction is everything. A well-crafted portfolio is a living narrative of your journey as a developer, and it's often the first thing recruiters and hiring managers look at.</p><p>Think of your portfolio as a curated exhibition of your best work. Each project tells a story—a problem you identified, the technologies you chose, the challenges you overcame, and the solution you built. This narrative demonstrates not just technical skills, but also your problem-solving approach, creativity, and ability to complete projects.</p><p>What makes a great portfolio? First, quality over quantity. Five well-documented, polished projects are better than twenty half-finished experiments. Each project should have clear descriptions, screenshots or demos, and if possible, live deployments. Include the "why" behind each project—what problem does it solve? Why did you build it?</p><p>Your portfolio also proves you're a self-starter who codes because you love it, not just for class assignments. It shows initiative, curiosity, and passion. These are qualities every employer values. When you can link to a live, interactive application or a well-maintained GitHub repository, you're demonstrating professional-level skills.</p><p>Moreover, building a portfolio is itself a learning experience. You'll grapple with deployment, responsive design, user experience, and technical writing. You'll learn to present your work in a compelling way. These meta-skills are just as valuable as coding itself in a professional context.</p>` }, 
-            { title: "The AI Revolution: An Opportunity, Not a Threat", desc: "AI tools like ChatGPT and GitHub Copilot aren't replacing developers—they're augmenting them. Here's why learning to work with AI is the next essential skill for software engineers.", content: `<p>The rise of Large Language Models (LLMs) and AI coding assistants has sparked debates about the future of software development. Will AI replace programmers? The answer is no—but it will fundamentally change how we work. The developers who thrive will be those who learn to leverage AI as a powerful tool, not those who fear it.</p><p>Think of AI as a force multiplier. GitHub Copilot can generate boilerplate code, suggest implementations, and catch common errors. ChatGPT can explain complex concepts, help debug issues, and generate test cases. These tools don't replace the need for developers who understand architecture, business logic, and user needs—they free us to focus on higher-level problems.</p><p>The skill of the future isn't just coding—it's knowing what to build and how to architect it. AI can write functions, but it can't determine product requirements or design systems that scale. It can't understand your users' needs or make strategic technical decisions. These uniquely human skills become more valuable, not less, as AI handles routine tasks.</p><p>We're also seeing new roles emerge: prompt engineering, AI integration specialists, and ML ops engineers. Understanding how to work with AI APIs, fine-tune models for specific use cases, and integrate AI capabilities into applications is becoming as fundamental as knowing how to use databases or APIs.</p><p>For students, this is an enormous opportunity. By embracing AI tools now, you're preparing for the future of the industry. Learn to use Copilot effectively. Experiment with integrating AI APIs into your projects. Understand the fundamentals of how these models work. The developers who combine traditional programming skills with AI literacy will be the most valuable in tomorrow's job market.</p>`}, 
-            { title: "From Gamer to Game Dev: My Journey into Modding", desc: "Breaking games taught me more about programming than any tutorial could. Here's how game modding became my gateway to understanding complex systems and software architecture.", content: `<p>My journey into programming didn't start with "Hello World"—it started with trying to modify games I loved. I wasn't satisfied with just playing; I wanted to understand how games worked under the hood and bend them to my will. This curiosity led me down the rabbit hole of game modding, and it became one of my best educational experiences.</p><p>Modding forces you to work with existing codebases, often large and complex ones. You can't start from scratch—you have to read, understand, and modify someone else's code. This is exactly what professional developers do daily, but it's rarely taught in courses. I learned to navigate unfamiliar file structures, decipher poorly documented APIs, and trace code execution to find where to make my changes.</p><p>I started with simple mods: changing game variables, adjusting difficulty, customizing appearances. But as I got more ambitious, I dove deeper. I learned Lua for scripting game logic, experimented with memory editing, and eventually started creating original content. Each mod taught me new concepts: event-driven programming from hooking into game events, state management from tracking game variables, optimization from keeping mods performant.</p><p>Game development is also incredibly rewarding because feedback is immediate and visual. When you write a function that works, you see it in the game instantly. This rapid feedback loop kept me motivated through the frustration of debugging and the challenge of learning new concepts. It made programming feel less like abstract study and more like creative problem-solving.</p><p>The skills I developed through modding are directly applicable to professional development. Understanding how large systems are architected, reading and extending existing code, debugging in production environments—these are core competencies. Game modding was my practical education, and it gave me confidence that I could understand and contribute to any codebase.</p>`}, 
-            { title: "University vs Real World: Bridging the Gap", desc: "University teaches you theory. The workplace needs practical skills. Here's how to bridge that gap and prepare for your first tech job while still in school.", content: `<p>One of the biggest shocks for new graduates is how different professional software development is from university projects. In school, projects are greenfield—you start from a blank slate with clear requirements and a defined endpoint. The real world is messier, more collaborative, and requires different skills than what most curriculums emphasize.</p><p>In university, you're often working alone or in small groups on projects that last a few weeks. In the workplace, you're part of a large team working on a codebase that's years old, with millions of lines of code, technical debt, and legacy systems. The challenge shifts from "can you build this?" to "can you understand this complex system, find the right place to make a change, and do so without breaking anything else?"</p><p>This is where soft skills become crucial. Code reviews teach you to write code that others can understand and maintain. Daily standups and planning meetings develop your communication skills. Working with designers, product managers, and other stakeholders teaches you that code is just one part of delivering value to users. These interpersonal and collaborative skills are often more important than technical prowess for career success.</p><p>So how do you bridge this gap while still in school? First, contribute to open source projects. This exposes you to real-world codebases, code review processes, and collaborative development. Second, do internships or freelance work. Nothing replaces actual professional experience. Third, build substantial projects that you maintain over time—not just one-off assignments. Learn about version control, testing, deployment, and monitoring.</p><p>Also, focus on fundamentals that transfer across contexts: clean code principles, design patterns, testing strategies, and system design. These core concepts are valuable regardless of which framework or language you're using. Finally, cultivate curiosity about how things work in production. What happens when you deploy code? How do you monitor it? How do you debug issues in live systems? These questions will prepare you for the realities of professional development.</p>`},
-            { title: "The Art of 'Good Enough' Code", desc: "Perfectionism can be a developer's worst enemy. Learning when to refactor and when to ship is a crucial, and difficult, skill to master.", content: `<p>In the world of software development, it's easy to fall into the trap of perfectionism. We want to write the cleanest code, use the most optimal algorithms, and refactor every imperfection. But in a professional environment, 'perfect' is often the enemy of 'done'.</p><p>Shipping features and delivering value to users is the primary goal. This means learning the art of 'good enough' code—code that is maintainable, understandable, and works correctly, even if it's not a masterpiece of software architecture. It's about balancing technical debt with product velocity.</p><p>This doesn't mean writing bad code. It means making conscious trade-offs. It means understanding the product's long-term vision versus its immediate needs. Sometimes, a quick solution is needed to test a hypothesis with users, with the understanding that it will be refactored or rebuilt later if the feature is successful. This is a pragmatic approach that's vital for a fast-moving tech company.</p><p>The key is to be intentional. Leave comments (like \`// TODO: Refactor this after launch\`) to mark areas for improvement. Discuss technical debt with your team and product manager so it can be prioritized. Write tests to ensure your 'good enough' code is still robust. This pragmatic balance is one of the hardest but most important skills for a software engineer to learn.</p>`},
-            { title: "Why I Use TailwindCSS for (Almost) Everything", desc: "Utility-first CSS has changed the way I build UIs. Here's a breakdown of why I'm all-in on TailwindCSS and how it speeds up my development process.", content: `<p>I used to write a lot of custom CSS. I had my BEM conventions, my SCSS mixins, and my carefully organized stylesheets. Then I tried TailwindCSS, and my entire workflow changed. At first, the long list of classes in my HTML felt wrong, but I soon realized the power of the utility-first approach.</p><p>The biggest benefit is speed. I no longer have to jump between my HTML and CSS files, thinking of class names, and writing new rules. I can build, iterate, and style complex components directly in my markup. This colocation of structure and style makes development incredibly fast and context-switching almost non-existent.</p><p>Secondly, it enforces consistency. By using a predefined design system (colors, spacing, typography), my UIs are more consistent by default. I'm not inventing new spacing values or slightly different shades of blue. This is invaluable when working on a team, as it creates a shared visual language.</p><p>Finally, performance is excellent. Tailwind's JIT (Just-In-Time) engine scans your files and generates only the CSS you're actually using, resulting in a tiny, highly-optimized production build. No more shipping a giant CSS framework with unused styles. It's the best of both worlds: a comprehensive toolkit during development and a minimal footprint in production.</p>`},
-            { title: "Building in Public: Why I Share My Journey", desc: "Documenting my learning process and sharing projects publicly has accelerated my growth as a developer. Here's why building in public is the best decision I've made.", content: `<p>One of the best decisions I've made as a developer is committing to building in public. Sharing my projects, writing about what I'm learning, and documenting my journey has not only helped others but has dramatically accelerated my own growth. Here's why I believe every developer should embrace public building.</p><p>First, it creates accountability. When you announce you're building something publicly, you're more likely to finish it. The knowledge that others are watching (even if it's just a few people) provides motivation to push through the difficult parts and actually ship your projects instead of abandoning them halfway.</p><p>Second, explaining concepts to others deepens your own understanding. Writing blog posts or creating tutorials forces you to organize your thoughts and identify gaps in your knowledge. If you can't explain something clearly, you probably don't understand it as well as you think. Teaching is one of the most effective ways to learn.</p><p>Third, building in public creates opportunities. Sharing your work attracts like-minded people, potential collaborators, mentors, and even job opportunities. Your public projects become your portfolio, your blog posts demonstrate your communication skills, and your GitHub activity shows your consistency and growth over time. Recruiters notice this.</p><p>Finally, building in public contributes to the community that has helped you. All developers have learned from tutorials, open source projects, and blogs created by others. Sharing your own work is a way of giving back and helping the next generation of learners. Even if you think your work is basic, it might be exactly what someone else needs to see at their stage of learning.</p>`}
+            { title: "The 'Why' Behind Data Structures & Algorithms", date: "August 10, 2024", desc: "Understanding DSA isn't just about passing interviews - it's about thinking like an engineer. Learn why choosing the right data structure can make or break your application's performance.", content: `<p>Many students see Data Structures and Algorithms (DSA) as a hurdle—a set of abstract problems to memorize for technical interviews. But their true value lies far beyond that. DS&A are the fundamental building blocks of computer science and the foundation of efficient software engineering.</p><p>When you understand data structures, you gain the ability to organize information in ways that make your programs faster, more scalable, and more maintainable. Choosing the right data structure, like a hash map over an array for quick lookups, can be the difference between an application that runs in milliseconds and one that takes minutes. This isn't theoretical—it's practical engineering that affects real users every day.</p><p>Algorithms teach you to think about trade-offs. Every solution has costs in terms of time complexity, space complexity, and code complexity. A well-designed algorithm understood through Big O notation can solve problems at a scale that brute force cannot. Consider how Google searches billions of web pages in milliseconds, or how Netflix recommends content from millions of titles instantly. These are DSA principles at work.</p><p>More importantly, studying DSA develops your problem-solving mindset. You learn to break down complex problems, identify patterns, and apply proven solutions. This analytical thinking transfers to every aspect of software development, from debugging to system design. The goal isn't to memorize every algorithm—it's to understand the principles so you can reason about any problem you encounter.</p>` }, 
+            { title: "First Hackathon: Lessons in Code & Collaboration", date: "July 22, 2024", desc: "My first 24-hour hackathon was a whirlwind of caffeine, code, and collaboration. Here's what I learned about teamwork, time management, and building under pressure.", content: `<p>A 24-hour hackathon is unlike any other coding experience. My first one was an intense, exhilarating crash course in rapid development, team dynamics, and creative problem-solving. We set out to build a campus navigation app, and while our final product was far from perfect, the lessons learned were invaluable.</p><p>The first lesson was about scoping. With only 24 hours, you can't build everything. We quickly learned to focus on an MVP (Minimum Viable Product)—the core features that demonstrate our idea's value. This meant making tough decisions about what to cut and what to prioritize. It's a skill that translates directly to professional development where deadlines are constant.</p><p>Communication proved crucial. With team members working on different components, we needed clear interfaces and constant updates. We used GitHub for version control and Slack for coordination. I learned that over-communication is better than under-communication, especially when everyone's sleep-deprived and working in parallel.</p><p>The pressure-cooker environment forced us to code faster and more decisively than ever before. There was no time for perfectionism or endless refactoring. We had to write code that worked, then iterate if time permitted. This taught me to distinguish between critical features and nice-to-haves—a valuable skill for any developer.</p><p>Perhaps most importantly, I learned that a team with a shared vision can achieve remarkable things in a very short time. The energy, creativity, and collective problem-solving of a hackathon team working toward a common goal creates magic. Even though we didn't win, the experience of building something from nothing in 24 hours was its own reward.</p>` }, 
+            { title: "Why Your Portfolio is Your Most Important Project", date: "June 15, 2024", desc: "In tech, your portfolio speaks louder than your resume. It's your chance to show—not just tell—what you can build and how you think as a developer.", content: `<p>Your GPA shows that you can learn. Your resume lists your experiences. But your portfolio? That shows what you can actually build. In the tech world, that distinction is everything. A well-crafted portfolio is a living narrative of your journey as a developer, and it's often the first thing recruiters and hiring managers look at.</p><p>Think of your portfolio as a curated exhibition of your best work. Each project tells a story—a problem you identified, the technologies you chose, the challenges you overcame, and the solution you built. This narrative demonstrates not just technical skills, but also your problem-solving approach, creativity, and ability to complete projects.</p><p>What makes a great portfolio? First, quality over quantity. Five well-documented, polished projects are better than twenty half-finished experiments. Each project should have clear descriptions, screenshots or demos, and if possible, live deployments. Include the "why" behind each project—what problem does it solve? Why did you build it?</p><p>Your portfolio also proves you're a self-starter who codes because you love it, not just for class assignments. It shows initiative, curiosity, and passion. These are qualities every employer values. When you can link to a live, interactive application or a well-maintained GitHub repository, you're demonstrating professional-level skills.</p><p>Moreover, building a portfolio is itself a learning experience. You'll grapple with deployment, responsive design, user experience, and technical writing. You'll learn to present your work in a compelling way. These meta-skills are just as valuable as coding itself in a professional context.</p>` }, 
+            { title: "The AI Revolution: An Opportunity, Not a Threat", date: "May 28, 2024", desc: "AI tools like ChatGPT and GitHub Copilot aren't replacing developers—they're augmenting them. Here's why learning to work with AI is the next essential skill for software engineers.", content: `<p>The rise of Large Language Models (LLMs) and AI coding assistants has sparked debates about the future of software development. Will AI replace programmers? The answer is no—but it will fundamentally change how we work. The developers who thrive will be those who learn to leverage AI as a powerful tool, not those who fear it.</p><p>Think of AI as a force multiplier. GitHub Copilot can generate boilerplate code, suggest implementations, and catch common errors. ChatGPT can explain complex concepts, help debug issues, and generate test cases. These tools don't replace the need for developers who understand architecture, business logic, and user needs—they free us to focus on higher-level problems.</p><p>The skill of the future isn't just coding—it's knowing what to build and how to architect it. AI can write functions, but it can't determine product requirements or design systems that scale. It can't understand your users' needs or make strategic technical decisions. These uniquely human skills become more valuable, not less, as AI handles routine tasks.</p><p>We're also seeing new roles emerge: prompt engineering, AI integration specialists, and ML ops engineers. Understanding how to work with AI APIs, fine-tune models for specific use cases, and integrate AI capabilities into applications is becoming as fundamental as knowing how to use databases or APIs.</p><p>For students, this is an enormous opportunity. By embracing AI tools now, you're preparing for the future of the industry. Learn to use Copilot effectively. Experiment with integrating AI APIs into your projects. Understand the fundamentals of how these models work. The developers who combine traditional programming skills with AI literacy will be the most valuable in tomorrow's job market.</p>`}, 
+            { title: "From Gamer to Game Dev: My Journey into Modding", date: "April 19, 2024", desc: "Breaking games taught me more about programming than any tutorial could. Here's how game modding became my gateway to understanding complex systems and software architecture.", content: `<p>My journey into programming didn't start with "Hello World"—it started with trying to modify games I loved. I wasn't satisfied with just playing; I wanted to understand how games worked under the hood and bend them to my will. This curiosity led me down the rabbit hole of game modding, and it became one of my best educational experiences.</p><p>Modding forces you to work with existing codebases, often large and complex ones. You can't start from scratch—you have to read, understand, and modify someone else's code. This is exactly what professional developers do daily, but it's rarely taught in courses. I learned to navigate unfamiliar file structures, decipher poorly documented APIs, and trace code execution to find where to make my changes.</p><p>I started with simple mods: changing game variables, adjusting difficulty, customizing appearances. But as I got more ambitious, I dove deeper. I learned Lua for scripting game logic, experimented with memory editing, and eventually started creating original content. Each mod taught me new concepts: event-driven programming from hooking into game events, state management from tracking game variables, optimization from keeping mods performant.</p><p>Game development is also incredibly rewarding because feedback is immediate and visual. When you write a function that works, you see it in the game instantly. This rapid feedback loop kept me motivated through the frustration of debugging and the challenge of learning new concepts. It made programming feel less like abstract study and more like creative problem-solving.</p><p>The skills I developed through modding are directly applicable to professional development. Understanding how large systems are architected, reading and extending existing code, debugging in production environments—these are core competencies. Game modding was my practical education, and it gave me confidence that I could understand and contribute to any codebase.</p>`}, 
+            { title: "University vs Real World: Bridging the Gap", date: "March 05, 2024", desc: "University teaches you theory. The workplace needs practical skills. Here's how to bridge that gap and prepare for your first tech job while still in school.", content: `<p>One of the biggest shocks for new graduates is how different professional software development is from university projects. In school, projects are greenfield—you start from a blank slate with clear requirements and a defined endpoint. The real world is messier, more collaborative, and requires different skills than what most curriculums emphasize.</p><p>In university, you're often working alone or in small groups on projects that last a few weeks. In the workplace, you're part of a large team working on a codebase that's years old, with millions of lines of code, technical debt, and legacy systems. The challenge shifts from "can you build this?" to "can you understand this complex system, find the right place to make a change, and do so without breaking anything else?"</p><p>This is where soft skills become crucial. Code reviews teach you to write code that others can understand and maintain. Daily standups and planning meetings develop your communication skills. Working with designers, product managers, and other stakeholders teaches you that code is just one part of delivering value to users. These interpersonal and collaborative skills are often more important than technical prowess for career success.</p><p>So how do you bridge this gap while still in school? First, contribute to open source projects. This exposes you to real-world codebases, code review processes, and collaborative development. Second, do internships or freelance work. Nothing replaces actual professional experience. Third, build substantial projects that you maintain over time—not just one-off assignments. Learn about version control, testing, deployment, and monitoring.</p><p>Also, focus on fundamentals that transfer across contexts: clean code principles, design patterns, testing strategies, and system design. These core concepts are valuable regardless of which framework or language you're using. Finally, cultivate curiosity about how things work in production. What happens when you deploy code? How do you monitor it? How do you debug issues in live systems? These questions will prepare you for the realities of professional development.</p>`},
+            { title: "The Art of 'Good Enough' Code", date: "February 12, 2024", desc: "Perfectionism can be a developer's worst enemy. Learning when to refactor and when to ship is a crucial, and difficult, skill to master.", content: `<p>In the world of software development, it's easy to fall into the trap of perfectionism. We want to write the cleanest code, use the most optimal algorithms, and refactor every imperfection. But in a professional environment, 'perfect' is often the enemy of 'done'.</p><p>Shipping features and delivering value to users is the primary goal. This means learning the art of 'good enough' code—code that is maintainable, understandable, and works correctly, even if it's not a masterpiece of software architecture. It's about balancing technical debt with product velocity.</p><p>This doesn't mean writing bad code. It means making conscious trade-offs. It means understanding the product's long-term vision versus its immediate needs. Sometimes, a quick solution is needed to test a hypothesis with users, with the understanding that it will be refactored or rebuilt later if the feature is successful. This is a pragmatic approach that's vital for a fast-moving tech company.</p><p>The key is to be intentional. Leave comments (like \`// TODO: Refactor this after launch\`) to mark areas for improvement. Discuss technical debt with your team and product manager so it can be prioritized. Write tests to ensure your 'good enough' code is still robust. This pragmatic balance is one of the hardest but most important skills for a software engineer to learn.</p>`},
+            { title: "Why I Use TailwindCSS for (Almost) Everything", date: "January 20, 2024", desc: "Utility-first CSS has changed the way I build UIs. Here's a breakdown of why I'm all-in on TailwindCSS and how it speeds up my development process.", content: `<p>I used to write a lot of custom CSS. I had my BEM conventions, my SCSS mixins, and my carefully organized stylesheets. Then I tried TailwindCSS, and my entire workflow changed. At first, the long list of classes in my HTML felt wrong, but I soon realized the power of the utility-first approach.</p><p>The biggest benefit is speed. I no longer have to jump between my HTML and CSS files, thinking of class names, and writing new rules. I can build, iterate, and style complex components directly in my markup. This colocation of structure and style makes development incredibly fast and context-switching almost non-existent.</p><p>Secondly, it enforces consistency. By using a predefined design system (colors, spacing, typography), my UIs are more consistent by default. I'm not inventing new spacing values or slightly different shades of blue. This is invaluable when working on a team, as it creates a shared visual language.</p><p>Finally, performance is excellent. Tailwind's JIT (Just-In-Time) engine scans your files and generates only the CSS you're actually using, resulting in a tiny, highly-optimized production build. No more shipping a giant CSS framework with unused styles. It's the best of both worlds: a comprehensive toolkit during development and a minimal footprint in production.</p>`},
+            { title: "Building in Public: Why I Share My Journey", date: "December 18, 2023", desc: "Documenting my learning process and sharing projects publicly has accelerated my growth as a developer. Here's why building in public is the best decision I've made.", content: `<p>One of the best decisions I've made as a developer is committing to building in public. Sharing my projects, writing about what I'm learning, and documenting my journey has not only helped others but has dramatically accelerated my own growth. Here's why I believe every developer should embrace public building.</p><p>First, it creates accountability. When you announce you're building something publicly, you're more likely to finish it. The knowledge that others are watching (even if it's just a few people) provides motivation to push through the difficult parts and actually ship your projects instead of abandoning them halfway.</p><p>Second, explaining concepts to others deepens your own understanding. Writing blog posts or creating tutorials forces you to organize your thoughts and identify gaps in your knowledge. If you can't explain something clearly, you probably don't understand it as well as you think. Teaching is one of the most effective ways to learn.</p><p>Third, building in public creates opportunities. Sharing your work attracts like-minded people, potential collaborators, mentors, and even job opportunities. Your public projects become your portfolio, your blog posts demonstrate your communication skills, and your GitHub activity shows your consistency and growth over time. Recruiters notice this.</p><p>Finally, building in public contributes to the community that has helped you. All developers have learned from tutorials, open source projects, and blogs created by others. Sharing your own work is a way of giving back and helping the next generation of learners. Even if you think your work is basic, it might be exactly what someone else needs to see at their stage of learning.</p>`}
         ];
 
         const testimonialsData = [
-            {
-                name: "Dr. Mohammad Rahman",
-                title: "Professor, CSE Department",
-                quote: "Afnad demonstrates exceptional problem-solving abilities and a genuine passion for computer science. His projects showcase both technical proficiency and creative thinking.",
-                initial: "M",
-                color: "blue"
-            },
-            {
-                name: "Sarah Ahmed",
-                title: "Fellow Developer",
-                quote: "Working with Afnad on our hackathon project was amazing. His knowledge of modern web technologies and ability to write clean code made collaboration seamless.",
-                initial: "S",
-                color: "purple"
-            },
-            {
-                name: "Karim Hassan",
-                title: "Gaming Club Member",
-                quote: "As president of the Gaming Club, Afnad has been instrumental in organizing events and fostering community. His leadership and technical skills inspire all of us.",
-                initial: "K",
-                color: "emerald"
-            },
-            {
-                name: "Alia Jan",
-                title: "UX/UI Designer",
-                quote: "Afnad has a keen eye for design and user experience, which is rare for a developer. He gives thoughtful feedback and implements pixel-perfect designs.",
-                initial: "A",
-                color: "pink"
-            }
+            { name: "Dr. Mohammad Rahman", title: "Professor, CSE Department", quote: "Afnad demonstrates exceptional problem-solving abilities and a genuine passion for computer science. His projects showcase both technical proficiency and creative thinking.", initial: "M", color: "blue" },
+            { name: "Sarah Ahmed", title: "Senior Developer, TechCorp", quote: "Working with Afnad on our hackathon project was amazing. His knowledge of modern web technologies and ability to write clean, maintainable code made collaboration seamless.", initial: "S", color: "purple" },
+            { name: "Karim Hassan", title: "Gaming Club Member", quote: "As president of the Gaming Club, Afnad has been instrumental in organizing events and fostering community. His leadership and technical skills inspire all of us.", initial: "K", color: "emerald" },
+            { name: "Alia Jan", title: "UX/UI Designer", quote: "Afnad has a keen eye for design and user experience, which is rare for a developer. He gives thoughtful feedback and implements pixel-perfect designs.", initial: "A", color: "pink" },
+            { name: "David Chen", title: "Open Source Maintainer", quote: "Afnad's contributions to our project were well-researched and of high quality. He's a proactive communicator and was quick to grasp our complex codebase.", initial: "D", color: "orange" },
+            { name: "Fatima Khan", title: "Project Manager", quote: "Afnad quickly understood our vision, provided valuable technical insights, and delivered a high-quality product ahead of schedule. A reliable and skilled developer.", initial: "F", color: "cyan" }
+        ];
+
+        const faqData = [
+            { question: "What are you most passionate about in tech?", answer: "I'm most passionate about the intersection of Artificial Intelligence and user-centric design. I love building smart applications that not only solve complex problems but are also intuitive and enjoyable to use. The potential for AI to augment human creativity and efficiency is what truly excites me." },
+            { question: "What's your favorite technology stack right now?", answer: "Currently, I'm really enjoying the MERN stack (MongoDB, Express.js, React, Node.js) for its speed and flexibility in building full-stack applications. However, I'm a strong believer in using the right tool for the job and I'm always exploring new technologies. For AI projects, Python with PyTorch and LangChain is my go-to." },
+            { question: "Are you currently looking for internships or freelance work?", answer: "Absolutely! I am actively seeking internship opportunities where I can contribute to meaningful projects, learn from experienced developers, and apply my skills in a professional environment. I am also open to select freelance projects, particularly those involving AI integration or full-stack web development." },
+            { question: "What are your long-term career goals?", answer: "My long-term goal is to lead a team developing innovative AI-powered products that have a positive real-world impact. I aim to stay at the forefront of technology, continuously learning and adapting. Ultimately, I want to be in a position where I can solve challenging problems and mentor the next generation of developers." }
         ];
 
         // --- GLOBAL STATE ---
@@ -1111,6 +1137,7 @@
             populateProjects(true);
             populateBlog(true);
             populateTestimonials();
+            populateFAQ();
             
             setupModals();
             setupTypingEffect();
@@ -1121,6 +1148,8 @@
             setupAI();
             setupContactForm();
             setupLoadMore();
+            setupToTopButton();
+            setupDynamicColors();
         });
         
         // --- SETUP FUNCTIONS ---
@@ -1139,7 +1168,6 @@
                         loaderOverlay.style.opacity = '0';
                         loaderOverlay.style.pointerEvents = 'none';
                         if (overviewSection) {
-                            // Trigger scroll reveal for overview after loader
                             setTimeout(() => {
                                 overviewSection.classList.remove('initially-hidden');
                                 overviewSection.classList.add('scroll-reveal', 'visible');
@@ -1220,8 +1248,9 @@
                 const item = document.createElement('article');
                 item.className = 'glass-card p-8 rounded-2xl group cursor-pointer blog-trigger flex flex-col h-full hover:bg-gradient-to-br hover:from-blue-500/5 hover:to-transparent transition-all';
                 if (!initialLoad) item.classList.add('animate-slide-up');
+                const readTime = Math.ceil(b.content.length / 1000);
                 
-                item.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"><i class="fas fa-pen-fancy text-blue-400"></i></div><div class="text-xs text-gray-500 font-mono">${Math.ceil(b.content.length / 1000)} min read</div></div><h3 class="font-bold text-xl md:text-2xl group-hover:text-blue-400 transition-colors mb-3">${b.title}</h3><p class="text-gray-400 text-sm leading-relaxed min-h-[3rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div></div><div class="flex items-center gap-2 text-blue-400 font-mono mt-6 group-hover:gap-3 transition-all"><span class="text-sm">Read article</span><i class="fas fa-arrow-right text-sm"></i></div>`;
+                item.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"><i class="fas fa-pen-fancy text-blue-400"></i></div><div class="text-xs text-gray-500 font-mono">${b.date} &bull; ${readTime} min read</div></div><h3 class="font-bold text-xl md:text-2xl group-hover:text-blue-400 transition-colors mb-3">${b.title}</h3><p class="text-gray-400 text-sm leading-relaxed min-h-[3rem]">${b.desc}</p><div class="hidden blog-content">${b.content}</div><div class="hidden blog-meta">Published on ${b.date} &bull; ${readTime} min read</div></div><div class="flex items-center gap-2 text-blue-400 font-mono mt-6 group-hover:gap-3 transition-all"><span class="text-sm">Read article</span><i class="fas fa-arrow-right text-sm"></i></div>`;
                 container.appendChild(item);
             });
             
@@ -1238,7 +1267,9 @@
                 blue: "from-blue-400 to-blue-600",
                 purple: "from-purple-400 to-purple-600",
                 emerald: "from-emerald-400 to-emerald-600",
-                pink: "from-pink-400 to-pink-600"
+                pink: "from-pink-400 to-pink-600",
+                orange: "from-orange-400 to-orange-600",
+                cyan: "from-cyan-400 to-cyan-600",
             };
             
             testimonialsData.forEach(t => {
@@ -1263,6 +1294,29 @@
                         <i class="fas fa-star text-yellow-400"></i>
                     </div>`;
                 container.appendChild(card);
+            });
+        }
+        
+        function populateFAQ() {
+            const container = document.getElementById('faq-container'); if (!container) return;
+            faqData.forEach(item => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item glass-card rounded-2xl overflow-hidden';
+                faqItem.innerHTML = `
+                    <button class="faq-question w-full flex justify-between items-center text-left p-6 hover:bg-white/5 transition-colors">
+                        <span class="font-bold text-lg">${item.question}</span>
+                        <i class="fas fa-chevron-down faq-icon text-blue-400 shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="p-6 pt-0 text-gray-400 leading-relaxed">${item.answer}</p>
+                    </div>
+                `;
+                container.appendChild(faqItem);
+            });
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    button.parentElement.classList.toggle('open');
+                });
             });
         }
         
@@ -1307,6 +1361,7 @@
 
                 if (blogTrigger) {
                     document.getElementById('blog-modal-title').innerText = blogTrigger.querySelector('h3').innerText; 
+                    document.getElementById('blog-modal-meta').innerText = blogTrigger.querySelector('.blog-meta').innerText; 
                     document.getElementById('blog-modal-content').innerHTML = blogTrigger.querySelector('.blog-content').innerHTML; 
                     openModal('blog-modal');
                 }
@@ -1337,7 +1392,6 @@
                     entries.forEach(e => { 
                         if (e.isIntersecting) { 
                             e.target.classList.add('visible'); 
-                            // Check if the intersecting element is one of our counters
                             if (e.target.id === 'hero-stats' || e.target.id === 'github-stats') {
                                 animateCounters(e.target);
                             }
@@ -1346,7 +1400,6 @@
                 }, { threshold: 0.1 });
                 document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
                 
-                // Observe counter containers
                 const heroStats = document.getElementById('hero-stats');
                 const githubStats = document.getElementById('github-stats');
                 if (heroStats) observer.observe(heroStats);
@@ -1444,32 +1497,66 @@
         
         function setupAI() {
             const aiInput = document.getElementById('ai-chat-input'), aiBtn = document.getElementById('ai-chat-btn'), aiOutput = document.getElementById('ai-chat-output'), refineBtn = document.getElementById('refine-message-btn'), explainCodeBtn = document.getElementById('explain-code-btn'), contactMessage = document.getElementById('contact-message');
-            const autoResizeTextarea = (textarea) => { if (textarea) { textarea.style.height = 'auto'; textarea.style.height = textarea.scrollHeight + 'px'; }};
+            const autoResizeTextarea = (textarea) => { if (textarea) { textarea.style.height = 'auto'; const newHeight = Math.min(textarea.scrollHeight, 120); textarea.style.height = newHeight + 'px'; }};
             if (aiInput) aiInput.addEventListener('input', () => autoResizeTextarea(aiInput));
             if (contactMessage) contactMessage.addEventListener('input', () => autoResizeTextarea(contactMessage));
+            
             async function callAI(prompt, outputElement, button) {
                 if (typeof puter === 'undefined') { outputElement.innerHTML += `<div class="text-red-500 p-3 bg-red-500/10 rounded-lg border border-red-500/20">Error: AI library not loaded. Please refresh the page.</div>`; return; }
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span class="ml-2">Thinking...</span>'; button.disabled = true;
+                const originalHTML = button.innerHTML;
+                button.disabled = true;
+                let loadingContent = '<i class="fas fa-spinner fa-spin"></i>';
+                if(button.id === 'refine-message-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...'; } 
+                else if (button.id === 'explain-code-btn') { loadingContent = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...'; }
+                button.innerHTML = loadingContent;
+
                 try {
                     const response = await puter.ai.chat(prompt), text = response.message.content, formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<span class="text-blue-400 bg-white/10 px-1 rounded font-mono text-sm">$1</span>');
-                    if (outputElement.id === 'ai-chat-output') { const msgDiv = document.createElement('div'); msgDiv.className = 'p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-gray-300 animate-slide-up'; msgDiv.innerHTML = `<span class="text-purple-400 font-bold mr-2">AI:</span> ${formatted}`; outputElement.appendChild(msgDiv); outputElement.scrollTop = outputElement.scrollHeight; } 
-                    else if (outputElement.id === 'form-status' && contactMessage) { contactMessage.value = text.replace(/"/g, ''); autoResizeTextarea(contactMessage); outputElement.innerHTML = '<span class="text-emerald-400"><i class="fas fa-check-circle mr-1"></i>Message enhanced by AI</span>'; setTimeout(() => outputElement.innerHTML = '', 5000); } 
-                    else { outputElement.innerHTML = formatted; outputElement.classList.remove('hidden'); }
+                    if (outputElement.id === 'ai-chat-output') { 
+                        const msgDiv = document.createElement('div'); 
+                        msgDiv.className = 'flex justify-start animate-slide-up';
+                        msgDiv.innerHTML = `<div class="bg-dark-card text-gray-300 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]">${formatted}</div>`;
+                        outputElement.appendChild(msgDiv); 
+                        outputElement.scrollTop = outputElement.scrollHeight; 
+                    } 
+                    else if (outputElement.id === 'form-status' && contactMessage) { 
+                        contactMessage.value = text.replace(/"/g, ''); 
+                        autoResizeTextarea(contactMessage); 
+                        outputElement.innerHTML = '<span class="text-emerald-400"><i class="fas fa-check-circle mr-1"></i>Message enhanced by AI</span>'; 
+                        setTimeout(() => outputElement.innerHTML = '', 5000); 
+                    } 
+                    else { 
+                        outputElement.innerHTML = formatted; 
+                        outputElement.classList.remove('hidden'); 
+                    }
                 } catch (e) { 
                     const errorMessage = e.message || "An unknown AI error occurred.";
                     if (outputElement.id === 'ai-chat-output') {
                         const errorDiv = document.createElement('div');
-                        errorDiv.className = 'p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400';
-                        errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}`;
+                        errorDiv.className = 'flex justify-start animate-slide-up';
+                        errorDiv.innerHTML = `<div class="bg-red-500/10 border border-red-500/20 text-red-400 py-2 px-4 rounded-2xl rounded-bl-none max-w-[85%]"><i class="fas fa-exclamation-triangle mr-2"></i>AI Error: ${errorMessage}</div>`;
                         outputElement.appendChild(errorDiv);
                     } else {
                         outputElement.innerHTML = `<span class="text-red-400">Error: ${errorMessage}</span>`;
                     }
                 } 
-                finally { button.innerHTML = originalText; button.disabled = false; }
+                finally { 
+                    button.innerHTML = originalHTML; 
+                    button.disabled = false; 
+                }
             }
-            aiBtn?.addEventListener('click', () => { const text = aiInput.value.trim(); if (!text) return; const userDiv = document.createElement('div'); userDiv.className = 'text-right p-3'; userDiv.innerHTML = `<div class="inline-block bg-blue-600 text-white px-4 py-3 rounded-2xl rounded-tr-sm max-w-[80%] text-left"><span class="font-bold mr-2">You:</span>${text}</div>`; aiOutput.appendChild(userDiv); callAI(`You are Afnad's helpful AI assistant. Answer questions about his work, skills, or provide tech advice. Keep responses concise, friendly, and helpful. Question: ${text}`, aiOutput, aiBtn); aiInput.value = ''; autoResizeTextarea(aiInput); aiOutput.scrollTop = aiOutput.scrollHeight; });
+
+            aiBtn?.addEventListener('click', () => { 
+                const text = aiInput.value.trim(); if (!text) return; 
+                const userDiv = document.createElement('div');
+                userDiv.className = 'flex justify-end animate-slide-up';
+                userDiv.innerHTML = `<div class="bg-blue-600 text-white py-2 px-4 rounded-2xl rounded-br-none max-w-[85%]">${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>`;
+                aiOutput.appendChild(userDiv); 
+                callAI(`You are Afnad's helpful AI assistant. Answer questions about his work, skills, or provide tech advice. Keep responses concise, friendly, and helpful. Question: ${text}`, aiOutput, aiBtn); 
+                aiInput.value = ''; 
+                autoResizeTextarea(aiInput); 
+                aiOutput.scrollTop = aiOutput.scrollHeight; 
+            });
             aiInput?.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiBtn.click(); }});
             refineBtn?.addEventListener('click', () => { const msg = contactMessage.value; if (msg) callAI(`Refine this message to be professional, friendly, and compelling for a contact form: "${msg}". Return only the refined message without quotes.`, document.getElementById('form-status'), refineBtn); });
             explainCodeBtn?.addEventListener('click', () => { if (currentCodeForAI) callAI(`Explain this code in simple terms, highlighting key concepts and how it works:\n\n${currentCodeForAI}`, document.getElementById('ai-explanation-output'), explainCodeBtn); });
@@ -1487,6 +1574,50 @@
                 .finally(() => { setTimeout(() => { status.innerHTML = ''; }, 5000); });
             });
         }
+        
+        function setupToTopButton() {
+            const toTopBtn = document.getElementById('to-top-btn'); if (!toTopBtn) return;
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    toTopBtn.classList.remove('opacity-0', 'invisible', 'scale-90');
+                } else {
+                    toTopBtn.classList.add('opacity-0', 'invisible', 'scale-90');
+                }
+            });
+            toTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function setupDynamicColors() {
+            const afnadDot = document.getElementById('afnad-dot');
+            const availabilityPill = document.getElementById('availability-pill');
+            if (afnadDot) {
+                const colors = ['bg-blue-500', 'bg-purple-500', 'bg-emerald-500', 'bg-pink-500'];
+                let currentIndex = 0;
+                setInterval(() => {
+                    afnadDot.classList.remove(colors[currentIndex]);
+                    currentIndex = (currentIndex + 1) % colors.length;
+                    afnadDot.classList.add(colors[currentIndex]);
+                }, 4500);
+            }
+            if (availabilityPill) {
+                const styles = [
+                    { text: 'text-blue-400', border: 'border-blue-500/20', bg: 'bg-blue-500/10' },
+                    { text: 'text-emerald-400', border: 'border-emerald-500/20', bg: 'bg-emerald-500/10' },
+                    { text: 'text-purple-400', border: 'border-purple-500/20', bg: 'bg-purple-500/10' },
+                    { text: 'text-pink-400', border: 'border-pink-500/20', bg: 'bg-pink-500/10' }
+                ];
+                let currentIndex = 0;
+                setInterval(() => {
+                    styles.forEach(s => availabilityPill.classList.remove(s.text, s.border, s.bg));
+                    currentIndex = (currentIndex + 1) % styles.length;
+                    const newStyle = styles[currentIndex];
+                    availabilityPill.classList.add(newStyle.text, newStyle.border, newStyle.bg);
+                }, 5500);
+            }
+        }
     </script>
 </body>
 </html>
+```
