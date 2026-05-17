@@ -20,24 +20,6 @@
 
     <link rel="canonical" href="https://afnad.netlify.app/">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Afnad Alam Nidul",
-      "url": "https://afnad.netlify.app/",
-      "image": "https://afnad.netlify.app/about.png",
-      "jobTitle": "CSE Student & AI Developer",
-      "worksFor": { "@type": "Organization", "name": "East West University" },
-      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Python", "JavaScript", "Java", "C++", "React", "Node.js", "Full-Stack Development"],
-      "sameAs": [
-        "https://github.com/afnad",
-        "https://www.linkedin.com/in/afnadnidul/",
-        "https://www.facebook.com/afnadverse"
-      ]
-    }
-    </script>
-
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -48,7 +30,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 
@@ -63,48 +45,22 @@
                         sans: ['"Inter"', 'system-ui', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
                     },
-                    colors: {
-                        aura: {
-                            bg: '#050505',
-                            card: '#18181b', // zinc-900
-                        }
-                    },
+                    colors: { aura: { bg: '#050505', card: '#18181b' } },
                     animation: { 
-                        'orbit': 'orbit 8s linear infinite',
-                        'orbit-reverse': 'orbit 12s linear infinite reverse',
-                        'orbit-fast': 'orbit-fast 4s linear infinite',
                         'marquee': 'marquee 25s linear infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
+                        'breathe': 'breathe 4s ease-in-out infinite',
                         'spin-slow': 'spin 15s linear infinite',
                         'spin-reverse': 'spin 10s linear infinite reverse',
-                        'breathe': 'breathe 4s ease-in-out infinite',
-                        'core-pulse': 'corePulse 2s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
                     },
                     keyframes: {
-                        orbit: {
-                            '0%': { transform: 'rotate(0deg) translateX(120px) rotate(0deg)' },
-                            '100%': { transform: 'rotate(360deg) translateX(120px) rotate(-360deg)' }
-                        },
-                        'orbit-fast': {
-                            '0%': { transform: 'rotate(0deg) translateX(70px) rotate(0deg)' },
-                            '100%': { transform: 'rotate(360deg) translateX(70px) rotate(-360deg)' }
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }
-                        },
-                        float: { 
-                            '0%, 100%': { transform: 'translateY(0)' }, 
-                            '50%': { transform: 'translateY(-15px)' } 
-                        },
-                        breathe: {
-                            '0%, 100%': { transform: 'scale(1)' },
-                            '50%': { transform: 'scale(1.03)' }
-                        },
-                        corePulse: {
-                            '0%': { transform: 'scale(0.95)', opacity: '0.8', filter: 'brightness(1)' },
-                            '100%': { transform: 'scale(1.05)', opacity: '1', filter: 'brightness(1.5)' }
+                        marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+                        breathe: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.03)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-20px)' } },
+                        pulseGlow: { 
+                            '0%': { boxShadow: '0 0 20px rgba(34,211,238,0.2), inset 0 0 20px rgba(34,211,238,0.2)' }, 
+                            '100%': { boxShadow: '0 0 50px rgba(34,211,238,0.6), inset 0 0 40px rgba(34,211,238,0.4)' } 
                         }
                     }
                 }
@@ -113,13 +69,7 @@
     </script>
 
     <style>
-        :root {
-            --aura-bg: #050505;
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --ring-speed-1: 15s;
-            --ring-speed-2: 10s;
-            --ring-speed-3: 5s;
-        }
+        :root { --aura-bg: #050505; --glass-border: rgba(255, 255, 255, 0.08); }
 
         body { 
             background-color: var(--aura-bg); 
@@ -132,110 +82,55 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Ambient Glow Background */
         body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(34, 211, 238, 0.03), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.03), transparent 25%);
-            z-index: -2;
-            pointer-events: none;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at 15% 50%, rgba(34, 211, 238, 0.03), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.03), transparent 25%);
+            z-index: -2; pointer-events: none;
         }
 
-        /* Sleek Cards */
         .glass-card { 
-            background: #18181b; 
-            border: 1px solid var(--glass-border); 
-            border-radius: 2rem;
-            position: relative;
-            overflow: hidden;
+            background: #18181b; border: 1px solid var(--glass-border); 
+            border-radius: 2rem; position: relative; overflow: hidden;
             transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         @media (hover: hover) {
-            .glass-card:hover {
-                border-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-                transform: translateY(-4px);
-            }
+            .glass-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.4); transform: translateY(-4px); }
         }
 
-        /* 3D Device Classes & Upgrades */
-        .preserve-3d { transform-style: preserve-3d; }
-        .translate-z-12 { transform: translateZ(3rem); }
-        .translate-z-24 { transform: translateZ(6rem); }
-        .translate-z-32 { transform: translateZ(8rem); }
-        .translate-z-40 { transform: translateZ(10rem); }
-        .will-change-transform { will-change: transform; }
-        
-        .dynamic-ring { transition: animation-duration 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .energy-core { transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        
-        /* Particle Trails */
-        .particle-trail {
-            box-shadow: -4px 0 10px rgba(34,211,238,0.5), -8px 0 15px rgba(34,211,238,0.3), -12px 0 20px rgba(34,211,238,0.1);
-        }
-
-        /* Animation Classes */
-        .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
         
-        .cursor-blink { 
-            display: inline-block; width: 8px; height: 1.2em; 
-            background-color: #22d3ee; animation: blink 1s step-end infinite; 
-            vertical-align: middle; margin-left: 4px; 
-        }
+        .cursor-blink { display: inline-block; width: 8px; height: 1.2em; background-color: #22d3ee; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 4px; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; background: #050505; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-        /* Custom Inputs */
         input, textarea, select {
-            background: rgba(255, 255, 255, 0.03) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: #fff !important;
-            transition: 0.3s !important;
-            font-size: 16px !important; /* Prevents iOS auto-zoom */
+            background: rgba(255, 255, 255, 0.03) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important; transition: 0.3s !important; font-size: 16px !important; 
         }
-        input:focus, textarea:focus {
-            border-color: #22d3ee !important;
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.1) !important;
-            background: rgba(255, 255, 255, 0.08) !important;
-        }
+        input:focus, textarea:focus { border-color: #22d3ee !important; box-shadow: 0 0 15px rgba(34, 211, 238, 0.1) !important; background: rgba(255, 255, 255, 0.08) !important; }
 
-        /* Lines & Bars */
-        .timeline-line { 
-            position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; 
-            background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.5), rgba(168,85,247,0.5), transparent);
-        }
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.5), rgba(168,85,247,0.5), transparent); }
         .skill-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
         .skill-fill { height: 100%; background: linear-gradient(90deg, #22d3ee, #a855f7); transition: width 1.2s ease; }
 
-        /* General Utilities */
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; mix-blend-mode: screen; }
-        #loader-overlay { 
-            position: fixed; inset: 0; z-index: 10000; 
-            background: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: opacity 0.8s ease; 
-        }
+        #loader-overlay { position: fixed; inset: 0; z-index: 10000; background: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
         
-        /* FAQ specifics */
         .faq-answer { max-height: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0, 1, 0, 1); opacity: 0.5; }
         .faq-item.open .faq-answer { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
         .faq-item.open .faq-icon { transform: rotate(180deg); color: #22d3ee; }
 
         .terminal-container { background: #09090b; border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; }
-        
         .bento-grid > * { contain: layout style; }
     </style>
 </head>
 <body class="antialiased text-slate-200">
 
-    <!-- Strict wrapper to prevent mobile overflow completely -->
     <div class="relative w-full overflow-hidden flex flex-col min-h-screen">
 
         <!-- Loader -->
@@ -266,11 +161,6 @@
             </div>
         </div>
 
-        <!-- Sound Toggle -->
-        <button id="sound-toggle" class="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all z-40 shadow-xl hover:scale-110">
-            <i class="fas fa-volume-high text-sm sm:text-base" id="sound-icon"></i>
-        </button>
-
         <!-- Header / Navbar -->
         <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-4 sm:py-6 bg-transparent">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between relative">
@@ -281,7 +171,6 @@
                     <span class="text-lg sm:text-xl font-bold tracking-widest text-white uppercase">AURA</span>
                 </a>
 
-                <!-- Desktop Nav -->
                 <div class="hidden lg:flex items-center gap-8">
                     <a href="#overview" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Architecture</a>
                     <a href="#hardware-hud" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Specs</a>
@@ -299,7 +188,6 @@
                     </a>
                 </div>
 
-                <!-- Mobile Toggle -->
                 <button id="mobile-menu-btn" class="lg:hidden text-white w-10 h-10 flex items-center justify-end"><i class="fas fa-bars text-xl"></i></button>
             </div>
 
@@ -317,27 +205,30 @@
         <main>
             <!-- Hero Section -->
             <section id="home" class="relative min-h-[100dvh] flex items-center justify-center pt-28 pb-16 lg:pt-20 lg:pb-0 overflow-hidden">
-                <!-- Dynamic Background Glows -->
                 <div class="absolute inset-0 z-0 pointer-events-none">
                     <div class="absolute top-1/4 left-1/4 w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-cyan-500/15 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen parallax-bg" data-speed="0.5"></div>
                     <div class="absolute bottom-1/4 right-1/4 w-[70vw] md:w-[50vw] h-[70vw] md:h-[50vw] bg-purple-600/15 rounded-full blur-[100px] md:blur-[150px] mix-blend-screen parallax-bg" data-speed="-0.3"></div>
                 </div>
 
                 <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center w-full">
-                    <!-- Hero Text -->
+                    
+                    <!-- Hero Text (Name Highlighted) -->
                     <div class="flex flex-col items-center lg:items-start text-center lg:text-left scroll-reveal mt-4 lg:mt-0">
                         <div id="availability-pill" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6 sm:mb-8 shadow-lg">
                             <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                             <span class="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-slate-300">System Online — Available</span>
                         </div>
                         
-                        <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter text-white mb-4 sm:mb-6 leading-[1.1]">
-                            Intelligence. <br/>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Upgraded.</span>
+                        <p class="text-slate-400 font-mono tracking-widest uppercase text-xs sm:text-sm mb-2">Hello, I am</p>
+                        <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-white mb-2 pb-2 leading-none">
+                            AFNAD
                         </h1>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
+                            Intelligence. <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Upgraded.</span>
+                        </h2>
                         
                         <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-lg mb-8 sm:mb-10 leading-relaxed px-2 lg:px-0">
-                            I am <span class="text-white font-medium">Afnad Alam Nidul</span>, a Computer Science student architecting intelligent systems bridging human intent with machine execution.<br/>
+                            Computer Science student architecting intelligent systems bridging human intent with machine execution.<br/>
                             <span class="text-cyan-400 font-mono text-xs sm:text-sm mt-3 block"><span class="typing-text"></span><span class="cursor-blink"></span></span>
                         </p>
 
@@ -350,7 +241,7 @@
                             </a>
                         </div>
                         
-                        <!-- Stats Inline -->
+                        <!-- Stats -->
                         <div id="hero-stats" class="mt-10 sm:mt-14 grid grid-cols-2 sm:flex sm:flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 opacity-0 transform translate-y-5 transition-all duration-1000 w-full px-4 sm:px-0">
                             <div class="text-center sm:text-left sm:border-l sm:border-white/10 sm:pl-4">
                                 <div class="text-2xl sm:text-3xl font-bold text-white" id="projects-count" data-target="20">0</div>
@@ -371,73 +262,34 @@
                         </div>
                     </div>
 
-                    <!-- Highly Interactive 3D Device (Gyroscope Core) -->
-                    <div class="h-[350px] sm:h-[450px] lg:h-[600px] flex items-center justify-center relative scroll-reveal w-full">
-                        <div id="device-container" class="relative w-[95%] max-w-[350px] lg:max-w-[500px] aspect-square mx-auto perspective-[1200px] cursor-crosshair z-10 touch-none animate-breathe">
-                            <div id="device-core" class="absolute inset-0 transition-transform duration-75 ease-out preserve-3d will-change-transform flex items-center justify-center">
-                                
-                                <!-- Reactive Atmospheric Glow -->
-                                <div id="core-glow" class="absolute inset-0 bg-cyan-500/10 blur-[80px] lg:blur-[120px] rounded-full mix-blend-screen pointer-events-none transition-all duration-700"></div>
-
-                                <!-- Outer Axis Ring (X-Axis) -->
-                                <div class="absolute inset-2 sm:inset-4 rounded-full border-[1px] border-dashed border-cyan-400/30 preserve-3d shadow-[0_0_50px_rgba(34,211,238,0.1)_inset]" style="transform: rotateX(75deg);">
-                                    <div class="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin dynamic-ring" style="animation-duration: var(--ring-speed-1);"></div>
-                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_20px_#22d3ee]"></div>
-                                </div>
-                                
-                                <!-- Middle Axis Ring (Y-Axis) -->
-                                <div class="absolute inset-10 sm:inset-12 rounded-full border border-purple-500/20 preserve-3d shadow-[0_0_30px_rgba(168,85,247,0.1)_inset]" style="transform: rotateY(70deg) rotateX(20deg);">
-                                    <div class="absolute inset-0 rounded-full border-b-2 border-purple-400 animate-spin-reverse dynamic-ring" style="animation-duration: var(--ring-speed-2);"></div>
-                                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_15px_#c084fc]"></div>
-                                    <!-- Orbiting sub-particle -->
-                                    <div class="absolute inset-0 preserve-3d dynamic-ring animate-spin" style="animation-duration: 8s;">
-                                        <div class="absolute top-1/2 -left-1 w-2 h-2 bg-pink-400 rounded-full shadow-[0_0_15px_#f472b6]"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Inner Axis Ring (Z-Axis) -->
-                                <div class="absolute inset-16 sm:inset-20 rounded-full border border-white/10 preserve-3d" style="transform: rotateZ(30deg) rotateX(45deg);">
-                                    <div class="absolute inset-0 rounded-full border-l-[3px] border-white/50 animate-spin dynamic-ring" style="animation-duration: var(--ring-speed-3);"></div>
-                                </div>
-
-                                <!-- Central AI Core Container -->
-                                <div id="inner-orb-container" class="absolute inset-0 flex items-center justify-center preserve-3d translate-z-24 pointer-events-none energy-core">
-                                    <div class="relative w-32 h-32 sm:w-40 sm:h-40 preserve-3d">
-                                        
-                                        <!-- Solid Core Shell -->
-                                        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#050505] via-zinc-900 to-[#050505] border border-cyan-400/30 shadow-[0_0_60px_rgba(34,211,238,0.2)_inset,0_0_30px_rgba(34,211,238,0.4)] flex items-center justify-center overflow-hidden preserve-3d transition-colors duration-500 energy-core" id="core-shell">
-                                            
-                                            <!-- Internal Volumetric Energy -->
-                                            <div class="absolute w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent,rgba(34,211,238,0.2),transparent,rgba(168,85,247,0.2),transparent)] animate-spin-slow"></div>
-                                            <div class="absolute w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-cyan-400/30 blur-2xl animate-core-pulse mix-blend-screen"></div>
-                                            
-                                            <!-- Dynamic Glare -->
-                                            <div id="device-glare" class="absolute inset-0 bg-[radial-gradient(circle_at_40%_20%,rgba(255,255,255,0.6),transparent_60%)] opacity-50 mix-blend-overlay transition-opacity duration-300 will-change-transform"></div>
-                                        </div>
-                                        
-                                        <!-- True Floating Solid Orb -->
-                                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-white via-cyan-300 to-purple-600 shadow-[0_0_60px_rgba(255,255,255,0.8),0_0_100px_rgba(34,211,238,0.6)] animate-core-pulse flex items-center justify-center translate-z-40 border border-white/80">
-                                            <div class="w-full h-full rounded-full bg-white/50 blur-[4px] mix-blend-screen"></div>
-                                        </div>
-                                        
-                                        <!-- Orbiting Data Particles around the core -->
-                                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] preserve-3d translate-z-32">
-                                            <!-- Fast Orbit 1 -->
-                                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 sm:w-3 sm:h-3 bg-cyan-300 rounded-full particle-trail animate-orbit-fast dynamic-ring" style="animation-duration: 3s;"></div>
-                                            <!-- Slow Orbit 2 -->
-                                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-300 rounded-full particle-trail animate-orbit-reverse dynamic-ring" style="animation-duration: 5s;"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <!-- Holographic Neural Core Visual -->
+                    <div class="h-[350px] sm:h-[450px] lg:h-[550px] flex items-center justify-center relative scroll-reveal w-full">
+                        <div id="neural-core" class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 flex items-center justify-center animate-float transition-transform duration-500 ease-out">
+                            <!-- Background Glow -->
+                            <div class="absolute inset-0 bg-cyan-500/20 rounded-full blur-[60px] mix-blend-screen pointer-events-none"></div>
+                            
+                            <!-- Outer Rotating Ring -->
+                            <div class="absolute inset-0 border-[2px] border-dashed border-cyan-500/30 rounded-full animate-spin-slow"></div>
+                            
+                            <!-- Middle Rotating Ring (Reverse) -->
+                            <div class="absolute inset-8 border border-purple-500/40 rounded-full animate-spin-reverse">
+                                <div class="absolute top-0 left-1/2 w-3 h-3 bg-purple-400 rounded-full shadow-[0_0_15px_#c084fc] -translate-x-1/2 -translate-y-1/2"></div>
                             </div>
                             
-                            <!-- Magnetic Hover Field (Floor glow) -->
-                            <div id="hover-field" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[160%] bg-gradient-to-br from-cyan-500/10 to-purple-600/10 blur-[80px] sm:blur-[120px] -z-10 rounded-full opacity-30 transition-all duration-700 pointer-events-none hidden md:block"></div>
+                            <!-- Inner Data Ring -->
+                            <div class="absolute inset-16 border-t-2 border-l-2 border-white/20 rounded-full animate-spin" style="animation-duration: 8s;"></div>
+
+                            <!-- Central Diamond Core -->
+                            <div class="relative w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-cyan-900 to-purple-900 border border-cyan-400/50 flex items-center justify-center rotate-45 animate-pulse-glow shadow-2xl backdrop-blur-md overflow-hidden">
+                                <!-- Core Energy -->
+                                <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.8),transparent_70%)] opacity-30 animate-ping" style="animation-duration: 3s;"></div>
+                                <!-- Floating Node -->
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-sm shadow-[0_0_30px_#fff] -rotate-45 relative z-10"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Scroll Indicator -->
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-bounce hidden sm:flex">
                     <span class="text-[10px] tracking-widest uppercase text-slate-400 font-mono">Scroll</span>
                     <div class="w-px h-8 sm:h-12 bg-gradient-to-b from-white to-transparent"></div>
@@ -445,7 +297,7 @@
             </section>
 
             <!-- Marquee Section -->
-            <div class="py-8 sm:py-12 bg-white/[0.02] border-y border-white/5 overflow-hidden flex relative rotate-1 scale-105 z-0 mb-20 sm:mb-32 w-full max-w-[100vw]">
+            <div class="py-8 sm:py-12 bg-white/[0.02] border-y border-white/5 overflow-hidden flex relative rotate-1 scale-105 z-0 mb-20 sm:mb-32 w-full max-w-full">
                 <div class="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
                 <div class="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
                 
@@ -460,7 +312,6 @@
                         <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">SOFTWARE ENGINEER</span>
                         <i class="fas fa-code text-purple-500/30 text-xl sm:text-2xl"></i>
                     </div>
-                    <!-- Duplicate for infinite scroll -->
                     <div class="flex items-center gap-8 sm:gap-12 px-4 sm:px-6">
                         <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">AI DEVELOPER</span>
                         <i class="fas fa-sparkles text-cyan-500/30 text-xl sm:text-2xl"></i>
@@ -562,7 +413,6 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                        <!-- GPU 1 -->
                         <div class="glass-card p-6 sm:p-8 border-t-4 border-t-cyan-400 hover:-translate-y-2 transition-transform">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
@@ -584,7 +434,6 @@
                             </div>
                         </div>
                         
-                        <!-- GPU 2 -->
                         <div class="glass-card p-6 sm:p-8 border-t-4 border-t-purple-500 hover:-translate-y-2 transition-transform">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
@@ -606,7 +455,6 @@
                             </div>
                         </div>
 
-                        <!-- System -->
                         <div class="glass-card p-6 sm:p-8 border-t-4 border-t-white hover:-translate-y-2 transition-transform">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
@@ -630,7 +478,7 @@
                     </div>
                 </section>
 
-                <!-- Status & System Dashboards (Charts) -->
+                <!-- Status Dashboards -->
                 <section id="system-status" class="scroll-reveal pt-8 sm:pt-12">
                     <div class="text-center mb-10 sm:mb-12">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Dashboards.</h2>
@@ -638,21 +486,18 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                        <!-- Activity -->
                         <div class="glass-card p-4 sm:p-6">
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-chart-line text-cyan-400"></i> Coding Activity
                             </h3>
                             <div class="h-40 sm:h-48 relative w-full"><canvas id="activityChart"></canvas></div>
                         </div>
-                        <!-- Languages -->
                         <div class="glass-card p-4 sm:p-6">
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-code text-purple-400"></i> Language Breakdown
                             </h3>
                             <div class="h-40 sm:h-48 relative w-full"><canvas id="languageChart"></canvas></div>
                         </div>
-                        <!-- Health -->
                         <div class="glass-card p-4 sm:p-6">
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-heartbeat text-red-400"></i> Project Health
@@ -714,7 +559,6 @@
                         </div>
                     </div>
 
-                    <!-- Additional Capabilities -->
                     <div class="glass-card p-6 sm:p-8">
                         <h3 class="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-6 sm:mb-8 text-center">Additional Capabilities</h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
@@ -752,7 +596,6 @@
                     <div class="relative pl-4 sm:pl-6 md:pl-12 space-y-8 sm:space-y-12 max-w-4xl mx-auto">
                         <div class="timeline-line hidden md:block"></div>
                         
-                        <!-- Item 1 -->
                         <div class="relative group scroll-reveal">
                             <div class="absolute -left-[3.5rem] top-6 w-5 h-5 rounded-full bg-[#050505] border-4 border-cyan-400 shadow-[0_0_15px_#22d3ee] z-10 hidden md:block"></div>
                             <div class="glass-card p-5 sm:p-6 md:p-8 hover:border-cyan-400/30 transition-all">
@@ -763,7 +606,7 @@
                                     </div>
                                     <span class="text-[9px] sm:text-[10px] font-mono bg-cyan-900/30 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30 w-fit">2024 - Present</span>
                                 </div>
-                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">Currently pursuing Bachelor of Science in Computer Science & Engineering with focus on intelligent systems, algorithms, and software architecture. Core coursework includes Data Structures, OOP, Database Systems, and AI.</p>
+                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">Currently pursuing Bachelor of Science in Computer Science & Engineering with focus on intelligent systems, algorithms, and software architecture.</p>
                                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 border-t border-white/5 pt-4">
                                     <div class="bg-white/5 rounded-xl p-2 sm:p-3 text-center border border-white/5"><div class="text-base sm:text-lg font-bold text-white font-mono">3.8</div><div class="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-500">GPA</div></div>
                                     <div class="bg-white/5 rounded-xl p-2 sm:p-3 text-center border border-white/5"><div class="text-base sm:text-lg font-bold text-white font-mono">42</div><div class="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-500">Credits</div></div>
@@ -773,7 +616,6 @@
                             </div>
                         </div>
 
-                        <!-- Item 2 -->
                         <div class="relative group scroll-reveal">
                             <div class="absolute -left-[3.5rem] top-6 w-5 h-5 rounded-full bg-[#050505] border-4 border-purple-400 shadow-[0_0_15px_#c084fc] hidden md:block"></div>
                             <div class="glass-card p-5 sm:p-6 md:p-8 hover:border-purple-400/30 transition-all">
@@ -785,14 +627,9 @@
                                     <span class="text-[9px] sm:text-[10px] font-mono bg-purple-900/30 text-purple-300 px-3 py-1 rounded-full border border-purple-500/30 w-fit">2023 - Present</span>
                                 </div>
                                 <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">Leading a community of 200+ gaming enthusiasts. Organizing esports tournaments, game dev workshops, and bridging gaming culture with software skills.</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="text-[9px] sm:text-[10px] uppercase font-mono bg-white/5 text-slate-300 px-3 py-1 rounded-full border border-white/10">Leadership</span>
-                                    <span class="text-[9px] sm:text-[10px] uppercase font-mono bg-white/5 text-slate-300 px-3 py-1 rounded-full border border-white/10">Event Management</span>
-                                </div>
                             </div>
                         </div>
 
-                        <!-- Item 3 -->
                         <div class="relative group scroll-reveal">
                             <div class="absolute -left-[3.5rem] top-6 w-5 h-5 rounded-full bg-[#050505] border-4 border-blue-400 shadow-[0_0_15px_#60a5fa] hidden md:block"></div>
                             <div class="glass-card p-5 sm:p-6 md:p-8 hover:border-blue-400/30 transition-all">
@@ -803,37 +640,7 @@
                                     </div>
                                     <span class="text-[9px] sm:text-[10px] font-mono bg-blue-900/30 text-blue-300 px-3 py-1 rounded-full border border-blue-500/30 w-fit">2021 - Present</span>
                                 </div>
-                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Initiated self-directed learning in web tech. Mastered JS, React, Node.js through hands-on projects. Completed 20+ portfolio deployments demonstrating practical skills.</p>
-                            </div>
-                        </div>
-
-                        <!-- Item 4 -->
-                        <div class="relative group scroll-reveal">
-                            <div class="absolute -left-[3.5rem] top-6 w-5 h-5 rounded-full bg-[#050505] border-4 border-green-400 shadow-[0_0_15px_#4ade80] hidden md:block"></div>
-                            <div class="glass-card p-5 sm:p-6 md:p-8 hover:border-green-400/30 transition-all">
-                                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-bold text-white uppercase tracking-wide">AI/ML Specialization</h3>
-                                        <p class="text-green-400 font-mono text-[9px] sm:text-[10px] mt-1 uppercase tracking-widest">Advanced Study Track</p>
-                                    </div>
-                                    <span class="text-[9px] sm:text-[10px] font-mono bg-green-900/30 text-green-300 px-3 py-1 rounded-full border border-green-500/30 w-fit">2022 - Present</span>
-                                </div>
-                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Deep dive into neural networks, ML algorithms, and AI frameworks. Built chatbots, computer vision projects, and LLM integrations. Staying current with transformer architectures.</p>
-                            </div>
-                        </div>
-
-                        <!-- Item 5 -->
-                        <div class="relative group scroll-reveal">
-                            <div class="absolute -left-[3.5rem] top-6 w-5 h-5 rounded-full bg-[#050505] border-4 border-pink-400 shadow-[0_0_15px_#f472b6] hidden md:block"></div>
-                            <div class="glass-card p-5 sm:p-6 md:p-8 hover:border-pink-400/30 transition-all">
-                                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
-                                    <div>
-                                        <h3 class="text-lg sm:text-xl font-bold text-white uppercase tracking-wide">Open Source Contributor</h3>
-                                        <p class="text-pink-400 font-mono text-[9px] sm:text-[10px] mt-1 uppercase tracking-widest">GitHub Community</p>
-                                    </div>
-                                    <span class="text-[9px] sm:text-[10px] font-mono bg-pink-900/30 text-pink-300 px-3 py-1 rounded-full border border-pink-500/30 w-fit">2022 - Present</span>
-                                </div>
-                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Active contributor to open-source projects. Learning collaborative development workflows, code review processes, and community engagement to build meaningful public code.</p>
+                                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Initiated self-directed learning in web tech. Mastered JS, React, Node.js through hands-on projects.</p>
                             </div>
                         </div>
                     </div>
@@ -853,11 +660,6 @@
                             </div>
                             <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white">Web Architecture</h3>
                             <p class="text-slate-400 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed">Full-stack web application development using React, Node.js, and modern frameworks. Concept to deployment.</p>
-                            <ul class="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-mono text-slate-500 uppercase tracking-wide">
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-cyan-400"></i> Responsive UI</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-cyan-400"></i> Performance Scaling</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-cyan-400"></i> API Development</li>
-                            </ul>
                         </div>
                         
                         <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2">
@@ -866,11 +668,6 @@
                             </div>
                             <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white">AI Integration</h3>
                             <p class="text-slate-400 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed">Embedding artificial intelligence into applications. Chatbots, recommendation systems, and intelligent automation.</p>
-                            <ul class="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-mono text-slate-500 uppercase tracking-wide">
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-purple-400"></i> Custom LLMs</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-purple-400"></i> Data Processing</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-purple-400"></i> Neural Models</li>
-                            </ul>
                         </div>
 
                         <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2">
@@ -879,11 +676,6 @@
                             </div>
                             <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white">UX/UI Design</h3>
                             <p class="text-slate-400 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed">Designing intuitive, futuristic interfaces. Wireframing, prototyping, and pixel-perfect implementation logic.</p>
-                            <ul class="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-mono text-slate-500 uppercase tracking-wide">
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-blue-400"></i> Prototyping</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-blue-400"></i> Design Systems</li>
-                                <li class="flex items-center gap-2 sm:gap-3"><i class="fas fa-check text-blue-400"></i> Glassmorphism</li>
-                            </ul>
                         </div>
                     </div>
                 </section>
@@ -906,8 +698,6 @@
         
                 <!-- Terminal & AI Playground (Unified) -->
                 <section id="terminal-section" class="scroll-reveal pt-8 sm:pt-12 relative">
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.05),transparent)] opacity-50 pointer-events-none hidden sm:block"></div>
-                    
                     <div class="text-center mb-10 sm:mb-16">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Interface.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">AI Assistant, Terminal & Embedded Web</p>
@@ -926,7 +716,7 @@
                                     </div>
                                     <div class="flex-1 flex items-center bg-white/5 rounded-lg px-2 sm:px-3 py-1.5 border border-white/5">
                                         <i class="fas fa-lock text-[8px] sm:text-[10px] text-green-400 mr-2"></i>
-                                        <input type="text" id="browser-input" class="bg-transparent border-none outline-none text-[10px] sm:text-xs text-slate-300 w-full font-mono" value="https://www.google.com/search?igu=1" aria-label="Browser URL">
+                                        <input type="text" id="browser-input" class="bg-transparent border-none outline-none text-[10px] sm:text-xs text-slate-300 w-full font-mono" value="https://example.com" aria-label="Browser URL">
                                     </div>
                                     <button id="browser-go-btn" class="text-slate-400 hover:text-white transition-colors p-1"><i class="fas fa-arrow-right text-sm"></i></button>
                                 </div>
@@ -1005,14 +795,10 @@
                 <!-- Testimonials & FAQ Section -->
                 <section class="scroll-reveal pt-8 sm:pt-12 pb-12">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12">
-                        
-                        <!-- Testimonials -->
                         <div id="testimonials">
                             <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6 sm:mb-8">Endorsements.</h2>
                             <div class="grid gap-4 sm:gap-6" id="testimonials-grid"></div>
                         </div>
-
-                        <!-- FAQ -->
                         <div id="faq">
                             <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6 sm:mb-8">System Queries (FAQ).</h2>
                             <div class="grid gap-3 sm:gap-4" id="faq-container"></div>
@@ -1025,7 +811,6 @@
 
         <!-- Footer / Contact -->
         <footer id="contact" class="relative pt-20 sm:pt-32 pb-10 sm:pb-12 mt-12 border-t border-white/10 bg-[#050505] overflow-hidden">
-            <!-- Ambient Glow -->
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full sm:w-[80%] h-[300px] bg-cyan-500/10 blur-[100px] sm:blur-[150px] pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -1070,7 +855,7 @@
                                 <input type="email" name="email" placeholder="Email" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
                             </div>
                             <input type="text" name="subject" placeholder="Subject" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
-                            <textarea name="message" id="contact-message" rows="4" sm:rows="5" placeholder="Message content..." required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono resize-none placeholder-slate-500"></textarea>
+                            <textarea name="message" id="contact-message" rows="4" placeholder="Message content..." required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono resize-none placeholder-slate-500"></textarea>
                             
                             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                                 <button type="submit" class="flex-1 bg-white text-black font-bold uppercase tracking-wider py-3 sm:py-4 px-6 rounded-xl hover:bg-slate-200 transition-all text-xs sm:text-sm shadow-[0_0_20px_rgba(255,255,255,0.2)]">
@@ -1085,7 +870,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Links -->
                 <div class="flex justify-center flex-wrap gap-x-6 sm:gap-x-8 gap-y-3 sm:gap-y-4 mb-8 sm:mb-10 text-[9px] sm:text-xs font-bold uppercase tracking-widest font-mono text-slate-500">
                     <a href="#overview" class="hover:text-cyan-400 transition-colors">Architecture</a>
                     <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a>
@@ -1162,9 +946,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
     
     <script>
-        // ============================================
-        // DATABASE
-        // ============================================
+        // DATABASE (Projects, Blogs, FAQ, etc. Preserved)
         const projectsData = [ 
             { img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80", alt: "AI Sudoku Solver", title: "AI Sudoku Solver", desc: "Intelligent Sudoku solver using backtracking algorithms with Python GUI.", details: `<p>A sophisticated Sudoku solving application demonstrating advanced algorithmic problem-solving. Uses recursive backtracking with constraint propagation for optimal performance.</p><p>Features include puzzle validation, step-by-step visualization, and multiple solving strategies. Built with Python and Tkinter for the GUI.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    row, col = find\n    \n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            if solve_sudoku(board):\n                return True\n            board[row][col] = 0\n    return False`, lang: 'python' }, 
             { img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", alt: "Password Security Tool", title: "Password Strength Analyzer", desc: "Real-time password security analysis with breach checking capabilities.", details: `<p>Comprehensive password security tool providing instant feedback on password strength using multiple criteria including entropy calculation, common pattern detection, and dictionary word checking.</p><p>Integrates with Have I Been Pwned API to check for compromised passwords. Features real-time visual feedback and security recommendations.</p>`, code: `function analyzePassword(password) {\n    let score = 0;\n    const checks = {\n        length: password.length >= 12,\n        uppercase: /[A-Z]/.test(password),\n        lowercase: /[a-z]/.test(password),\n        numbers: /[0-9]/.test(password),\n        symbols: /[!@#$%^&*]/.test(password)\n    };\n    return { score, checks };\n}`, lang: 'javascript' }, 
@@ -1210,24 +992,17 @@
             { name: "Terminal", shortcut: "Open Terminal", action: () => scrollToSection('terminal-section'), icon: "fa-terminal" },
         ];
 
-        // ============================================
         // GLOBAL STATE
-        // ============================================
         let currentCodeForAI = "";
         let displayedProjects = 0;
         let displayedBlogs = 0;
-        let soundEnabled = true; 
-        let audioContext = null;
         const PROJECTS_PER_PAGE = 6;
         const BLOGS_PER_PAGE = 6;
 
-        // ============================================
         // INITIALIZATION
-        // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             setupLoader();
             setupNavbar();
-            setupInteractiveDevice();
             setupThreeJS();
             setupGSAP();
             setupCharts();
@@ -1242,7 +1017,6 @@
             setupMobileMenu();
             setupCommandPalette();
             setupTerminal();
-            setupSound();
             setupLazyLoadBrowser();
             setupAI();
             setupContactForm();
@@ -1250,88 +1024,21 @@
             setupToTopButton();
         });
 
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
+        // UTILITIES
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
-                // Adjust for mobile navbar
                 const isMobile = window.innerWidth < 1024;
                 const offset = isMobile ? 80 : 0;
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = section.getBoundingClientRect().top;
-                const elementPosition = elementRect - bodyRect;
-                const offsetPosition = elementPosition - offset;
-
-                window.scrollTo({
-                     top: offsetPosition,
-                     behavior: "smooth"
-                });
-                playSound('navigate');
+                const offsetPosition = (elementRect - bodyRect) - offset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
             }
         }
 
-        function playSound(type) {
-            if (!soundEnabled) return;
-            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioContext.state === 'suspended') audioContext.resume();
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            switch(type) {
-                case 'click':
-                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                    oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.05);
-                    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.1);
-                    break;
-                case 'navigate':
-                    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-                    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.1);
-                    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.15);
-                    break;
-                case 'success':
-                    oscillator.frequency.setValueAtTime(523, audioContext.currentTime);
-                    oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1);
-                    oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.2);
-                    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.3);
-                    break;
-                case 'initialize':
-                    const notes = [440, 523.25, 659.25, 783.99, 987.77];
-                    let time = audioContext.currentTime;
-                    notes.forEach((freq, i) => {
-                        const osc = audioContext.createOscillator();
-                        const gain = audioContext.createGain();
-                        osc.connect(gain);
-                        gain.connect(audioContext.destination);
-                        osc.frequency.setValueAtTime(freq, time + i * 0.09);
-                        osc.type = 'sine';
-                        gain.gain.setValueAtTime(0.1, time + i * 0.09);
-                        gain.gain.exponentialRampToValueAtTime(0.001, time + i * 0.09 + 1.1);
-                        osc.start(time + i * 0.09);
-                        osc.stop(time + i * 0.09 + 1.3);
-                    });
-                    break;
-            }
-        }
-
-        // ============================================
         // SETUP FUNCTIONS
-        // ============================================
         function setupLoader() {
-            playSound('initialize');
             const loaderOverlay = document.getElementById('loader-overlay');
             if (!loaderOverlay) return;
             const loaderPercentage = document.getElementById('loader-percentage');
@@ -1339,7 +1046,7 @@
             
             let currentPercentage = 0;
             const interval = setInterval(() => {
-                currentPercentage += 2;
+                currentPercentage += 4; // Faster load
                 if(loaderPercentage) loaderPercentage.textContent = `${currentPercentage}%`;
                 if(loaderProgressBar) loaderProgressBar.style.width = `${currentPercentage}%`;
                 
@@ -1349,7 +1056,7 @@
                         loaderOverlay.style.opacity = '0';
                         loaderOverlay.style.pointerEvents = 'none';
                         setTimeout(() => document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible')), 200);
-                    }, 400);
+                    }, 200);
                 }
             }, 15);
         }
@@ -1367,129 +1074,10 @@
             });
         }
 
-        // Upgraded Physics-based 3D Interactive Core with Touch Support & Dynamic Reactions
-        function setupInteractiveDevice() {
-            const container = document.getElementById('device-container');
-            const core = document.getElementById('device-core');
-            const glare = document.getElementById('device-glare');
-            const root = document.documentElement;
-            const innerOrb = document.getElementById('inner-orb-container');
-            const coreGlow = document.getElementById('core-glow');
-            const hoverField = document.getElementById('hover-field');
-            const coreShell = document.getElementById('core-shell');
-            
-            if (!container || !core) return;
-
-            let targetRotX = 0;
-            let targetRotY = 0;
-            let currentRotX = 0;
-            let currentRotY = 0;
-            let isHovering = false;
-            let isTouching = false;
-            let animationFrameId;
-
-            // Activate Energy State
-            const activateCore = () => {
-                root.style.setProperty('--ring-speed-1', '2s');
-                root.style.setProperty('--ring-speed-2', '1.5s');
-                root.style.setProperty('--ring-speed-3', '1s');
-                
-                if (innerOrb) innerOrb.style.transform = 'scale(1.25) translateZ(8rem)';
-                if (coreGlow) coreGlow.style.backgroundColor = 'rgba(168, 85, 247, 0.2)'; // Turns purple
-                if (hoverField) {
-                    hoverField.style.opacity = '0.8';
-                    hoverField.style.transform = 'translate(-50%, -50%) scale(1.2)';
-                }
-                if (coreShell) {
-                    coreShell.style.boxShadow = '0 0 80px rgba(168,85,247,0.5) inset, 0 0 50px rgba(168,85,247,0.8)';
-                    coreShell.style.borderColor = 'rgba(168,85,247,0.6)';
-                }
-                playSound('click');
-            };
-
-            // Deactivate Energy State
-            const deactivateCore = () => {
-                root.style.setProperty('--ring-speed-1', '15s');
-                root.style.setProperty('--ring-speed-2', '10s');
-                root.style.setProperty('--ring-speed-3', '5s');
-                
-                if (innerOrb) innerOrb.style.transform = 'scale(1) translateZ(6rem)';
-                if (coreGlow) coreGlow.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
-                if (hoverField) {
-                    hoverField.style.opacity = '0.3';
-                    hoverField.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-                if (coreShell) {
-                    coreShell.style.boxShadow = '0 0 60px rgba(34,211,238,0.2) inset, 0 0 30px rgba(34,211,238,0.4)';
-                    coreShell.style.borderColor = 'rgba(34,211,238,0.3)';
-                }
-            };
-
-            const handleMove = (clientX, clientY) => {
-                const rect = container.getBoundingClientRect();
-                const x = clientX - rect.left - rect.width / 2;
-                const y = clientY - rect.top - rect.height / 2;
-                
-                // Allow up to 60 degrees of fluid tilt
-                targetRotX = (y / rect.height) * -60;
-                targetRotY = (x / rect.width) * 60;
-            };
-
-            // Mouse Events
-            container.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
-            container.addEventListener('mouseenter', () => { isHovering = true; activateCore(); });
-            container.addEventListener('mouseleave', () => {
-                isHovering = false;
-                targetRotX = 0;
-                targetRotY = 0;
-                deactivateCore();
-            });
-
-            // Mobile Touch Events mapped to Physics
-            container.addEventListener('touchmove', (e) => {
-                handleMove(e.touches[0].clientX, e.touches[0].clientY);
-            }, { passive: true });
-            
-            container.addEventListener('touchstart', (e) => {
-                isTouching = true;
-                handleMove(e.touches[0].clientX, e.touches[0].clientY);
-                activateCore();
-            }, { passive: true });
-
-            container.addEventListener('touchend', () => {
-                isTouching = false;
-                targetRotX = 0;
-                targetRotY = 0;
-                deactivateCore();
-            }, { passive: true });
-
-            // Smooth Lerp animation loop (Physics)
-            const updateDevice = () => {
-                // Spring inertia formula
-                currentRotX += (targetRotX - currentRotX) * 0.1;
-                currentRotY += (targetRotY - currentRotY) * 0.1;
-                
-                // Apply rotation
-                core.style.transform = `rotateX(${currentRotX}deg) rotateY(${currentRotY}deg)`;
-                
-                // Dynamic Glare
-                if (glare) {
-                    glare.style.transform = `translate(${currentRotY * -1.5}px, ${currentRotX * 1.5}px)`;
-                    const tiltAmount = Math.max(Math.abs(currentRotX), Math.abs(currentRotY));
-                    glare.style.opacity = 0.3 + (tiltAmount / 100);
-                }
-
-                animationFrameId = requestAnimationFrame(updateDevice);
-            };
-
-            updateDevice();
-        }
-
         function setupGSAP() {
             if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
             gsap.registerPlugin(ScrollTrigger);
             
-            // Background Parallax
             gsap.utils.toArray('.parallax-bg').forEach(bg => {
                 const speed = bg.getAttribute('data-speed');
                 gsap.to(bg, {
@@ -1499,7 +1087,6 @@
                 });
             });
 
-            // Standard Reveals
             gsap.utils.toArray('.scroll-reveal').forEach(section => {
                 gsap.fromTo(section, 
                     { opacity: 0, y: 50 },
@@ -1511,77 +1098,39 @@
         }
 
         function setupCharts() {
-            // Activity Chart
             const activityCtx = document.getElementById('activityChart');
             if (activityCtx) {
                 new Chart(activityCtx, {
                     type: 'line',
                     data: {
                         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                        datasets: [{
-                            label: 'Hours', data: [4, 6, 5, 8, 7, 3, 5],
-                            borderColor: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.1)',
-                            fill: true, tension: 0.4, borderWidth: 2, pointRadius: 0
-                        }]
+                        datasets: [{ label: 'Hours', data: [4, 6, 5, 8, 7, 3, 5], borderColor: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.1)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 0 }]
                     },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            y: { display: false, beginAtZero: true },
-                            x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } }
-                        }
-                    }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } } } }
                 });
             }
             
-            // Language Chart
             const languageCtx = document.getElementById('languageChart');
             if (languageCtx) {
                 new Chart(languageCtx, {
                     type: 'doughnut',
                     data: {
                         labels: ['Python', 'JavaScript', 'Java', 'C++', 'Other'],
-                        datasets: [{
-                            data: [35, 30, 18, 12, 5],
-                            backgroundColor: ['#22d3ee', '#a855f7', '#3b82f6', '#ec4899', '#64748b'],
-                            borderWidth: 0
-                        }]
+                        datasets: [{ data: [35, 30, 18, 12, 5], backgroundColor: ['#22d3ee', '#a855f7', '#3b82f6', '#ec4899', '#64748b'], borderWidth: 0 }]
                     },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10, family: 'monospace' } } } },
-                        cutout: '65%'
-                    }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10, family: 'monospace' } } } }, cutout: '65%' }
                 });
             }
 
-            // Health Chart
             const healthCtx = document.getElementById('healthChart');
             if (healthCtx) {
                 new Chart(healthCtx, {
                     type: 'radar',
                     data: {
-                        labels: ['Code Quality', 'Docs', 'Testing', 'Performance', 'Security'],
-                        datasets: [{
-                            label: 'Score', data: [85, 70, 75, 90, 80],
-                            backgroundColor: 'rgba(74, 222, 128, 0.2)', borderColor: '#4ade80',
-                            pointBackgroundColor: '#4ade80', pointBorderColor: '#4ade80'
-                        }]
+                        labels: ['Quality', 'Docs', 'Testing', 'Perf', 'Security'],
+                        datasets: [{ label: 'Score', data: [85, 70, 75, 90, 80], backgroundColor: 'rgba(74, 222, 128, 0.2)', borderColor: '#4ade80', pointBackgroundColor: '#4ade80' }]
                     },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            r: {
-                                beginAtZero: true, max: 100,
-                                grid: { color: 'rgba(255,255,255,0.05)' },
-                                angleLines: { color: 'rgba(255,255,255,0.05)' },
-                                pointLabels: { color: '#94a3b8', font: { size: 9, family: 'monospace' } },
-                                ticks: { display: false }
-                            }
-                        }
-                    }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { color: 'rgba(255,255,255,0.05)' }, pointLabels: { color: '#94a3b8', font: { size: 9, family: 'monospace' } }, ticks: { display: false } } } }
                 });
             }
         }
@@ -1593,10 +1142,10 @@
                 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
                 
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                const count = window.innerWidth < 768 ? 100 : 300; // Reduced count for mobile performance
+                const count = window.innerWidth < 768 ? 80 : 150; // Optimized for mobile
                 const posArray = new Float32Array(count * 3);
                 
                 for (let i = 0; i < count * 3; i++) posArray[i] = (Math.random() - 0.5) * 20;
@@ -1610,13 +1159,16 @@
                 camera.position.z = 4;
                 
                 let mouseY = 0;
-                window.addEventListener('scroll', () => { mouseY = window.scrollY / document.body.scrollHeight; });
+                window.addEventListener('scroll', () => { mouseY = window.scrollY / document.body.scrollHeight; }, {passive: true});
                 
                 const animate = () => {
                     requestAnimationFrame(animate);
-                    particlesMesh.rotation.y += 0.0005;
-                    particlesMesh.position.y = mouseY * 3 - 1.5;
-                    renderer.render(scene, camera);
+                    // Performance enhancement: Only render if canvas is likely visible
+                    if (window.scrollY < window.innerHeight * 1.5) {
+                        particlesMesh.rotation.y += 0.0005;
+                        particlesMesh.position.y = mouseY * 3 - 1.5;
+                        renderer.render(scene, camera);
+                    }
                 };
                 animate();
                 
@@ -1659,7 +1211,6 @@
                     <div class="hidden project-code">${escapedCode}</div>
                     <div class="hidden project-lang">${p.lang}</div>
                 `;
-                card.addEventListener('click', () => playSound('click'));
                 container.appendChild(card);
             });
             displayedProjects += projectsToLoad.length;
@@ -1693,7 +1244,6 @@
                         <span class="text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-2 group-hover:gap-3 transition-all">Read Article <i class="fas fa-arrow-right"></i></span>
                     </div>
                 `;
-                item.addEventListener('click', () => playSound('click'));
                 container.appendChild(item);
             });
             displayedBlogs += blogsToLoad.length;
@@ -1703,23 +1253,16 @@
         function populateTestimonials() {
             const container = document.getElementById('testimonials-grid');
             if (!container) return;
-            
             testimonialsData.forEach(t => {
                 const card = document.createElement('div');
                 card.className = 'glass-card p-5 sm:p-6 flex flex-col border border-white/5';
-                
                 card.innerHTML = `
                     <div class="flex items-center gap-3 sm:gap-4 mb-4 border-b border-white/5 pb-4">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg sm:text-xl font-mono shadow-lg">${t.initial}</div>
-                        <div>
-                            <h4 class="font-bold text-white uppercase tracking-wide text-xs sm:text-sm">${t.name}</h4>
-                            <p class="text-[9px] sm:text-[10px] text-slate-500 font-mono uppercase mt-0.5">${t.title}</p>
-                        </div>
+                        <div><h4 class="font-bold text-white uppercase tracking-wide text-xs sm:text-sm">${t.name}</h4><p class="text-[9px] sm:text-[10px] text-slate-500 font-mono uppercase mt-0.5">${t.title}</p></div>
                     </div>
                     <p class="text-slate-300 italic flex-grow text-xs sm:text-sm leading-relaxed mb-4">"${t.quote}"</p>
-                    <div class="flex gap-1 text-[10px]">
-                        ${Array(5).fill('<i class="fas fa-star text-yellow-500"></i>').join('')}
-                    </div>
+                    <div class="flex gap-1 text-[10px]">${Array(5).fill('<i class="fas fa-star text-yellow-500"></i>').join('')}</div>
                 `;
                 container.appendChild(card);
             });
@@ -1728,7 +1271,6 @@
         function populateFAQ() {
             const container = document.getElementById('faq-container');
             if (!container) return;
-            
             faqData.forEach(item => {
                 const faqItem = document.createElement('div');
                 faqItem.className = 'faq-item glass-card p-0 overflow-hidden border border-white/5';
@@ -1737,18 +1279,12 @@
                         <span class="font-bold text-white tracking-wide text-xs sm:text-sm">${item.question}</span>
                         <i class="fas fa-chevron-down faq-icon text-cyan-400 shrink-0 ml-4 transition-transform text-sm"></i>
                     </button>
-                    <div class="faq-answer">
-                        <p class="p-4 sm:p-6 pt-0 text-slate-400 leading-relaxed text-xs sm:text-sm border-l-2 border-cyan-500/30 ml-4 sm:ml-6 pl-4">${item.answer}</p>
-                    </div>
+                    <div class="faq-answer"><p class="p-4 sm:p-6 pt-0 text-slate-400 leading-relaxed text-xs sm:text-sm border-l-2 border-cyan-500/30 ml-4 sm:ml-6 pl-4">${item.answer}</p></div>
                 `;
                 container.appendChild(faqItem);
             });
-            
             document.querySelectorAll('.faq-question').forEach(button => {
-                button.addEventListener('click', () => {
-                    playSound('click');
-                    button.parentElement.classList.toggle('open');
-                });
+                button.addEventListener('click', () => button.parentElement.classList.toggle('open'));
             });
         }
 
@@ -1760,7 +1296,7 @@
             const btn = document.getElementById('command-palette-btn');
             if (!palette) return;
             
-            const openPalette = () => { palette.classList.remove('hidden'); setTimeout(() => { palette.classList.remove('opacity-0'); input.focus(); }, 10); playSound('navigate'); };
+            const openPalette = () => { palette.classList.remove('hidden'); setTimeout(() => { palette.classList.remove('opacity-0'); input.focus(); }, 10); };
             const closePalette = () => { palette.classList.add('opacity-0'); setTimeout(() => palette.classList.add('hidden'), 200); };
             
             const renderCommands = (filter = '') => {
@@ -1793,15 +1329,7 @@
             if (!input || !output || !form) return;
             
             const terminalCommands = {
-                help: () => `Available commands:
-  about     - Display system info
-  skills    - Show technical skills
-  projects  - List projects count
-  contact   - Display contact info
-  clear     - Clear terminal
-  whoami    - Display user info
-  date      - Show current date/time
-  neofetch  - Display system info`,
+                help: () => `Available commands:\n  about     - Display system info\n  skills    - Show technical skills\n  projects  - List projects count\n  contact   - Display contact info\n  clear     - Clear terminal\n  whoami    - Display user info\n  date      - Show current date/time\n  neofetch  - Display system info`,
                 about: () => `AURA_OS v2.0\n====================\nUser: Afnad Alam Nidul\nRole: CSE Student & AI Developer\nLocation: Dhaka, Bangladesh\nStatus: Online`,
                 skills: () => `Technical Skills:\n==================\nLanguages:\n  Python [=========-] 92%\n  JavaScript [========-] 88%\n  Java [========--] 82%\n  C/C++ [=======---] 78%\n\nFrameworks:\n  React, Node.js, TailwindCSS\n\nAI/ML:\n  PyTorch, TensorFlow`,
                 projects: () => `Project Statistics:\n===================\nTotal Projects: ${projectsData.length}\nCategories:\n  - Web Development\n  - AI/ML Applications\n  - Tools & Utilities`,
@@ -1836,26 +1364,7 @@ Memory: 32GB DDR5`,
                     output.innerHTML += `<div class="text-pink-400">Command not found: ${cmd}. Type 'help'.</div>`;
                 }
                 output.scrollTop = output.scrollHeight;
-                playSound('click');
             });
-        }
-
-        function setupSound() {
-            const toggle = document.getElementById('sound-toggle');
-            const icon = document.getElementById('sound-icon');
-            if (!toggle) return;
-            toggle.addEventListener('click', () => {
-                soundEnabled = !soundEnabled;
-                if (soundEnabled) {
-                    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    if (audioContext.state === 'suspended') audioContext.resume();
-                    icon.className = 'fas fa-volume-high text-sm sm:text-base';
-                    playSound('success');
-                } else {
-                    icon.className = 'fas fa-volume-xmark text-sm sm:text-base';
-                }
-            });
-            document.querySelectorAll('button, a[href^="#"]').forEach(el => el.addEventListener('click', () => { if (soundEnabled) playSound('click'); }));
         }
 
         function setupModals() {
@@ -1870,10 +1379,7 @@ Memory: 32GB DDR5`,
             const closeModal = (modal) => {
                 if (!modal) return;
                 modal.querySelector('.modal-content')?.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = '';
-                }, 300);
+                setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
             };
             
             document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', (e) => closeModal(e.target.closest('.fixed[role="dialog"]') || e.target.closest('.fixed'))));
@@ -1910,9 +1416,8 @@ Memory: 32GB DDR5`,
             const input = document.getElementById('browser-input');
             const goBtn = document.getElementById('browser-go-btn');
             const loadingOverlay = document.getElementById('browser-loading');
-            const playgroundSection = document.getElementById('playground');
             
-            if (!iframe || !input || !goBtn || !loadingOverlay || !playgroundSection) return;
+            if (!iframe || !input || !goBtn || !loadingOverlay) return;
             
             const navigateTo = (url) => {
                 if (!url) return;
@@ -1921,20 +1426,6 @@ Memory: 32GB DDR5`,
                 loadingOverlay.classList.remove('invisible', 'opacity-0');
                 iframe.src = safeUrl;
             };
-            
-            if ('IntersectionObserver' in window) {
-                const browserObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => navigateTo(input.value), 300);
-                            observer.unobserve(playgroundSection);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                browserObserver.observe(playgroundSection);
-            } else {
-                navigateTo(input.value);
-            }
             
             iframe.onload = () => loadingOverlay.classList.add('invisible', 'opacity-0');
             goBtn.addEventListener('click', () => navigateTo(input.value));
@@ -1991,9 +1482,7 @@ Memory: 32GB DDR5`,
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            entry.target.querySelectorAll('.skill-fill').forEach(fill => {
-                                setTimeout(() => { fill.style.width = fill.getAttribute('data-width') + '%'; }, 100);
-                            });
+                            entry.target.querySelectorAll('.skill-fill').forEach(fill => { setTimeout(() => { fill.style.width = fill.getAttribute('data-width') + '%'; }, 100); });
                             observer.unobserve(entry.target);
                         }
                     });
@@ -2036,15 +1525,9 @@ Memory: 32GB DDR5`,
             try {
                 let text = ""; 
                 if (typeof puter !== 'undefined' && puter.ai && puter.auth) {
-                    if (await puter.auth.isSignedIn()) {
-                        const resp = await puter.ai.chat(prompt);
-                        text = resp.message.content;
-                    } else {
-                        text = getMockAIResponse(prompt);
-                    }
-                } else {
-                    text = getMockAIResponse(prompt);
-                }
+                    if (await puter.auth.isSignedIn()) { text = (await puter.ai.chat(prompt)).message.content; } 
+                    else { text = getMockAIResponse(prompt); }
+                } else { text = getMockAIResponse(prompt); }
                 const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-purple-400 bg-white/10 px-1 rounded font-mono text-[10px]">$1</code>');
                 
                 if (outputElement.id === 'ai-chat-output') {
@@ -2078,13 +1561,7 @@ Memory: 32GB DDR5`,
             
             aiBtn?.addEventListener('click', () => {
                 const text = aiInput.value.trim(); if (!text) return;
-                
-                const navCommands = {
-                    'contact': 'contact', 'about': 'overview', 'skills': 'skills',
-                    'projects': 'projects', 'blog': 'blog', 'journey': 'experience',
-                    'hardware': 'hardware-hud', 'terminal': 'terminal-section'
-                };
-                
+                const navCommands = { 'contact': 'contact', 'about': 'overview', 'skills': 'skills', 'projects': 'projects', 'blog': 'blog', 'journey': 'experience', 'hardware': 'hardware-hud', 'terminal': 'terminal-section' };
                 const lowerText = text.toLowerCase();
                 let navigated = false;
                 
@@ -2092,8 +1569,7 @@ Memory: 32GB DDR5`,
                     if (lowerText.includes('go to ' + cmd) || lowerText.includes('navigate to ' + cmd) || lowerText.includes('open ' + cmd) || lowerText === cmd) {
                         aiOutput.innerHTML += `<div class="flex justify-end mt-2"><div class="bg-white/10 text-white py-2 px-3 sm:px-4 rounded-2xl rounded-tr-none max-w-[90%] sm:max-w-[85%] border border-white/20">${text}</div></div>`;
                         aiOutput.innerHTML += `<div class="flex justify-start mt-2"><div class="bg-cyan-500/10 text-slate-300 py-2 px-3 sm:px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20"><span class="text-cyan-400 block mb-1 text-[8px] sm:text-[9px] uppercase font-bold">AURA:</span>Establishing uplink to ${cmd.toUpperCase()} sector...</div></div>`;
-                        setTimeout(() => scrollToSection(section), 500);
-                        navigated = true; break;
+                        setTimeout(() => scrollToSection(section), 500); navigated = true; break;
                     }
                 }
                 
@@ -2124,21 +1600,21 @@ Memory: 32GB DDR5`,
                 const status = document.getElementById('form-status');
                 status.innerHTML = '<span class="text-cyan-400"><i class="fas fa-spinner fa-spin mr-2"></i>Transmitting...</span>';
                 fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() })
-                .then(() => { status.innerHTML = '<span class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Transmission successful!</span>'; form.reset(); playSound('success'); })
+                .then(() => { status.innerHTML = '<span class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Transmission successful!</span>'; form.reset(); })
                 .catch(() => status.innerHTML = '<span class="text-pink-400"><i class="fas fa-exclamation-circle mr-2"></i>Failed to send</span>')
                 .finally(() => setTimeout(() => { status.innerHTML = ''; }, 5000));
             });
         }
         
         function setupLoadMore() {
-            document.getElementById('load-more-projects')?.addEventListener('click', () => { playSound('click'); populateProjects(false); });
-            document.getElementById('load-more-blog')?.addEventListener('click', () => { playSound('click'); populateBlog(false); });
+            document.getElementById('load-more-projects')?.addEventListener('click', () => populateProjects(false));
+            document.getElementById('load-more-blog')?.addEventListener('click', () => populateBlog(false));
         }
 
         function setupToTopButton() {
             const btn = document.getElementById('to-top-btn');
             window.addEventListener('scroll', () => { window.scrollY > 400 ? btn.classList.remove('opacity-0', 'invisible', 'scale-90') : btn.classList.add('opacity-0', 'invisible', 'scale-90'); });
-            btn?.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); playSound('navigate'); });
+            btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         }
     </script>
 </body>
