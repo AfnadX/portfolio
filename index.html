@@ -1658,12 +1658,12 @@ Memory: 32GB DDR5`,
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             try {
                 let text = ""; 
-                // FIXED: Puter JS call was occasionally throwing models error, utilizing the default model is safer
+                // FIXED: Explicitly specify Gemini model for Puter.js and handle response safely
                 if (typeof puter !== 'undefined' && puter.ai) {
                     try {
                         const fullPrompt = `${AURA_SYSTEM_PROMPT}\n\nUser Question/Command: ${prompt}`;
-                        const response = await puter.ai.chat(fullPrompt);
-                        text = response.message.content;
+                        const response = await puter.ai.chat(fullPrompt, { model: 'gemini-2.5-flash' });
+                        text = typeof response === 'string' ? response : (response?.message?.content || response?.text || getMockAIResponse(prompt));
                     } catch(aiError) {
                         console.warn("AI Generation Error (Fallback to local):", aiError);
                         text = getMockAIResponse(prompt);
