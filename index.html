@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>Afnad Alam Nidul - CSE Student & AI Developer | East West University</title>
-    <meta name="description" content="Afnad Alam Nidul is a Computer Science student at East West University specializing in AI development, full-stack web applications, and intelligent systems. Explore his portfolio, projects, and technical expertise.">
+    <meta name="description" content="Afnad Alam Nidul is a Computer Science engineer specializing in AI development, full-stack web applications, and intelligent systems. Explore his portfolio, projects, and technical expertise.">
     <meta name="keywords" content="Afnad Alam Nidul, Afnad, Portfolio, CSE Student, East West University, Java, C++, Python, JavaScript, AI Developer, Machine Learning, Full Stack Developer, Dhaka, Bangladesh">
     <meta name="author" content="Afnad Alam Nidul">
     <meta name="robots" content="index, follow">
@@ -82,6 +82,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Performance Optimizations - Removed content-visibility constraint to fix scroll load issues */
+        .will-change-transform { will-change: transform; }
+
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: radial-gradient(circle at 15% 50%, rgba(34, 211, 238, 0.03), transparent 25%),
@@ -89,15 +92,21 @@
             z-index: -2; pointer-events: none;
         }
 
+        /* Upgraded Glass Card */
         .glass-card { 
-            background: #18181b; border: 1px solid var(--glass-border); 
-            border-radius: 2rem; position: relative; overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: linear-gradient(145deg, #18181b 0%, #09090b 100%);
+            border: 1px solid var(--glass-border); 
+            border-radius: 1.5rem; 
+            position: relative; 
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         @media (hover: hover) {
-            .glass-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.4); transform: translateY(-4px); }
+            .glass-card:hover { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 10px 40px rgba(34, 211, 238, 0.15); transform: translateY(-4px); }
         }
 
+        /* CSS Scroll Reveal (Intersection Observer Handles this efficiently) */
         .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
         
@@ -116,10 +125,9 @@
 
         .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.5), rgba(168,85,247,0.5), transparent); }
         .skill-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
-        .skill-fill { height: 100%; background: linear-gradient(90deg, #22d3ee, #a855f7); transition: width 1.2s ease; }
+        .skill-fill { height: 100%; background: linear-gradient(90deg, #22d3ee, #a855f7); transition: width 1.2s ease; width: 0; }
 
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; mix-blend-mode: screen; }
-        #loader-overlay { position: fixed; inset: 0; z-index: 10000; background: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
         
         .faq-answer { max-height: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0, 1, 0, 1); opacity: 0.5; }
         .faq-item.open .faq-answer { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
@@ -127,21 +135,17 @@
 
         .terminal-container { background: #09090b; border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; }
         .bento-grid > * { contain: layout style; }
+        
+        .crisp-text {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
     </style>
 </head>
 <body class="antialiased text-slate-200">
 
     <div class="relative w-full overflow-hidden flex flex-col min-h-screen">
-
-        <!-- Loader -->
-        <div id="loader-overlay">
-            <div class="w-12 h-12 rounded-full border-t-2 border-r-2 border-cyan-400 animate-spin mb-6 shadow-[0_0_15px_rgba(34,211,238,0.5)]"></div>
-            <div class="font-sans text-4xl sm:text-6xl font-bold mb-4 tracking-tighter text-white" id="loader-percentage">0%</div>
-            <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div id="loader-progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-purple-500" style="width: 0%;"></div>
-            </div>
-            <div class="mt-6 text-xs text-slate-500 font-mono tracking-widest uppercase text-center px-4">Initializing AURA System</div>
-        </div>
 
         <!-- 3D Background -->
         <canvas id="bg-canvas"></canvas>
@@ -204,87 +208,156 @@
 
         <main>
             <!-- Hero Section -->
-            <section id="home" class="relative min-h-[100dvh] flex items-center justify-center pt-28 pb-16 lg:pt-20 lg:pb-0 overflow-hidden">
+            <section id="home" class="relative min-h-screen flex items-center justify-center pt-32 pb-16 overflow-hidden">
                 <div class="absolute inset-0 z-0 pointer-events-none">
                     <div class="absolute top-1/4 left-1/4 w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-cyan-500/15 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen parallax-bg" data-speed="0.5"></div>
                     <div class="absolute bottom-1/4 right-1/4 w-[70vw] md:w-[50vw] h-[70vw] md:h-[50vw] bg-purple-600/15 rounded-full blur-[100px] md:blur-[150px] mix-blend-screen parallax-bg" data-speed="-0.3"></div>
                 </div>
 
-                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center w-full">
+                <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
                     
-                    <!-- Hero Text (Name Highlighted) -->
-                    <div class="flex flex-col items-center lg:items-start text-center lg:text-left scroll-reveal mt-4 lg:mt-0">
-                        <div id="availability-pill" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6 sm:mb-8 shadow-lg">
-                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <!-- Hero Text -->
+                    <div class="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left scroll-reveal">
+                        <div id="availability-pill" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6 shadow-lg">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
                             <span class="text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-slate-300">System Online — Available</span>
                         </div>
                         
-                        <p class="text-slate-400 font-mono tracking-widest uppercase text-xs sm:text-sm mb-2">Hello, I am</p>
-                        <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-white mb-2 pb-2 leading-none">
+                        <p class="text-cyan-400 font-mono tracking-widest uppercase text-xs sm:text-sm mb-3 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]">SYSTEM INITIALIZED // GREETINGS, I AM</p>
+                        <h1 class="text-[clamp(3.5rem,8vw,8rem)] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-white mb-2 pb-2 leading-none drop-shadow-2xl">
                             AFNAD
                         </h1>
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
-                            Intelligence. <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Upgraded.</span>
+                        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-6 tracking-wide drop-shadow-md">
+                            Intelligence. <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Engineered.</span>
                         </h2>
                         
-                        <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-lg mb-8 sm:mb-10 leading-relaxed px-2 lg:px-0">
-                            Computer Science student architecting intelligent systems bridging human intent with machine execution.<br/>
-                            <span class="text-cyan-400 font-mono text-xs sm:text-sm mt-3 block"><span class="typing-text"></span><span class="cursor-blink"></span></span>
+                        <p class="text-base sm:text-lg text-slate-300 max-w-lg mb-8 leading-relaxed font-light">
+                            Computer Science engineer architecting resilient AI ecosystems and full-stack architectures that bridge human intent with flawless machine execution.<br/>
+                            <span class="text-cyan-400 font-mono text-xs sm:text-sm mt-4 block font-medium"><span class="typing-text"></span><span class="cursor-blink"></span></span>
                         </p>
 
                         <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4 sm:px-0">
                             <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-bold text-sm sm:text-base hover:bg-slate-200 hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                                 Explore Work <i class="fas fa-chevron-right text-xs sm:text-sm"></i>
                             </a>
-                            <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-full bg-zinc-900 text-white font-bold text-sm sm:text-base border border-white/10 hover:bg-white/10 transition-all flex items-center justify-center gap-2 group">
-                                Get in Touch
-                            </a>
+                            <button class="ai-quick-action w-full sm:w-auto px-8 py-4 rounded-full bg-zinc-900 text-white font-bold text-sm sm:text-base border border-purple-500/30 hover:border-cyan-400 hover:bg-white/5 transition-all flex items-center justify-center gap-2 group" data-prompt="Give me a 2 sentence summary of Afnad's expertise and what he is currently looking for.">
+                                <i class="fas fa-robot text-cyan-400 group-hover:text-purple-400 transition-colors"></i> Ask AURA
+                            </button>
                         </div>
                         
                         <!-- Stats -->
                         <div id="hero-stats" class="mt-10 sm:mt-14 grid grid-cols-2 sm:flex sm:flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 opacity-0 transform translate-y-5 transition-all duration-1000 w-full px-4 sm:px-0">
                             <div class="text-center sm:text-left sm:border-l sm:border-white/10 sm:pl-4">
-                                <div class="text-2xl sm:text-3xl font-bold text-white" id="projects-count" data-target="20">0</div>
-                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Projects</div>
+                                <div class="text-2xl sm:text-3xl font-bold text-white drop-shadow-md" id="projects-count" data-target="20">0</div>
+                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Projects Live</div>
                             </div>
                             <div class="text-center sm:text-left sm:border-l sm:border-white/10 sm:pl-4">
-                                <div class="text-2xl sm:text-3xl font-bold text-white" id="tech-count" data-target="15">0</div>
-                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Technologies</div>
+                                <div class="text-2xl sm:text-3xl font-bold text-white drop-shadow-md" id="tech-count" data-target="15">0</div>
+                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Core Techs</div>
                             </div>
                             <div class="text-center sm:text-left sm:border-l sm:border-white/10 sm:pl-4">
-                                <div class="text-2xl sm:text-3xl font-bold text-white" id="experience-years" data-target="3">0</div>
+                                <div class="text-2xl sm:text-3xl font-bold text-white drop-shadow-md" id="experience-years" data-target="3">0</div>
                                 <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Years Active</div>
                             </div>
                             <div class="text-center sm:text-left sm:border-l sm:border-white/10 sm:pl-4">
-                                <div class="text-2xl sm:text-3xl font-bold text-white" id="commits-count" data-target="800">0</div>
-                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Commits</div>
+                                <div class="text-2xl sm:text-3xl font-bold text-white drop-shadow-md" id="commits-count" data-target="800">0</div>
+                                <div class="text-[9px] sm:text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">Code Commits</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Holographic Neural Core Visual -->
-                    <div class="h-[350px] sm:h-[450px] lg:h-[550px] flex items-center justify-center relative scroll-reveal w-full">
-                        <div id="neural-core" class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 flex items-center justify-center animate-float transition-transform duration-500 ease-out">
+                    <!-- Futuristic 3D Glass Dashboard Visual -->
+                    <div class="flex-1 w-full flex items-center justify-center relative scroll-reveal crisp-text py-10" style="perspective: 1200px;">
+                        <div class="relative w-full max-w-sm lg:max-w-md animate-float flex justify-center items-center will-change-transform" style="transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-15deg);">
+                            
                             <!-- Background Glow -->
-                            <div class="absolute inset-0 bg-cyan-500/20 rounded-full blur-[60px] mix-blend-screen pointer-events-none"></div>
-                            
-                            <!-- Outer Rotating Ring -->
-                            <div class="absolute inset-0 border-[2px] border-dashed border-cyan-500/30 rounded-full animate-spin-slow"></div>
-                            
-                            <!-- Middle Rotating Ring (Reverse) -->
-                            <div class="absolute inset-8 border border-purple-500/40 rounded-full animate-spin-reverse">
-                                <div class="absolute top-0 left-1/2 w-3 h-3 bg-purple-400 rounded-full shadow-[0_0_15px_#c084fc] -translate-x-1/2 -translate-y-1/2"></div>
-                            </div>
-                            
-                            <!-- Inner Data Ring -->
-                            <div class="absolute inset-16 border-t-2 border-l-2 border-white/20 rounded-full animate-spin" style="animation-duration: 8s;"></div>
+                            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-[80px] rounded-full -z-10"></div>
 
-                            <!-- Central Diamond Core -->
-                            <div class="relative w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-cyan-900 to-purple-900 border border-cyan-400/50 flex items-center justify-center rotate-45 animate-pulse-glow shadow-2xl backdrop-blur-md overflow-hidden">
-                                <!-- Core Energy -->
-                                <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.8),transparent_70%)] opacity-30 animate-ping" style="animation-duration: 3s;"></div>
-                                <!-- Floating Node -->
-                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-sm shadow-[0_0_30px_#fff] -rotate-45 relative z-10"></div>
+                            <!-- Main Interface Panel -->
+                            <div class="w-full bg-[#0a0a0c]/85 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden relative" style="transform: translateZ(20px);">
+                                <!-- Top Bar -->
+                                <div class="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500/90 shadow-[0_0_5px_rgba(239,68,68,0.5)]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500/90 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500/90 shadow-[0_0_5px_rgba(34,197,94,0.5)]"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-mono tracking-widest font-semibold">AURA_OS // AI_CORE</span>
+                                </div>
+                                
+                                <!-- Editor / Terminal Content -->
+                                <div class="p-5 sm:p-6 font-mono text-[11px] sm:text-sm text-slate-200 text-left" style="text-shadow: 0 0 2px rgba(255,255,255,0.1);">
+                                    <div class="flex gap-2 mb-1.5">
+                                        <span class="text-pink-400 font-semibold drop-shadow-sm">import</span>
+                                        <span class="text-cyan-300 font-semibold">torch</span>
+                                    </div>
+                                    <div class="flex gap-2 mb-3">
+                                        <span class="text-pink-400 font-semibold drop-shadow-sm">import</span>
+                                        <span class="text-cyan-300 font-semibold">neural_networks</span>
+                                    </div>
+                                    <div class="mb-1.5">
+                                        <span class="text-purple-400 font-semibold drop-shadow-sm">class</span>
+                                        <span class="text-yellow-300 font-bold tracking-wide">AuraIntelligence</span><span class="text-slate-300">(Model):</span>
+                                    </div>
+                                    <div class="pl-4 mb-1.5">
+                                        <span class="text-purple-400 font-semibold drop-shadow-sm">def</span>
+                                        <span class="text-blue-300 font-semibold">__init__</span><span class="text-slate-300">(self):</span>
+                                    </div>
+                                    <div class="pl-8 mb-1.5">
+                                        <span class="text-slate-300">self.intent =</span>
+                                        <span class="text-green-300 font-medium">"Execute with precision"</span>
+                                    </div>
+                                    <div class="pl-8 mb-3">
+                                        <span class="text-slate-300">self.skills = [</span>
+                                        <span class="text-green-300 font-medium">'AI'</span><span class="text-slate-300">, </span>
+                                        <span class="text-green-300 font-medium">'FullStack'</span><span class="text-slate-300">]</span>
+                                    </div>
+                                    <div class="mt-5 flex items-center gap-2 border-t border-white/5 pt-4">
+                                        <span class="text-cyan-400 font-bold drop-shadow-[0_0_5px_#22d3ee]">❯</span>
+                                        <span class="text-white font-medium">Initializing cognitive engines</span><span class="cursor-blink"></span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bottom Status Bar -->
+                                <div class="px-4 py-3 bg-white/5 border-t border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-microchip text-cyan-400 animate-pulse drop-shadow-[0_0_5px_#22d3ee]"></i>
+                                        <span class="text-[10px] text-slate-300 font-mono font-semibold">SYSTEM_OPTIMIZED</span>
+                                    </div>
+                                    <div class="flex gap-1">
+                                        <span class="w-1.5 h-4 bg-cyan-400/50 rounded-full animate-pulse"></span>
+                                        <span class="w-1.5 h-4 bg-cyan-400/80 rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                                        <span class="w-1.5 h-4 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_5px_#22d3ee]" style="animation-delay: 0.4s"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Element 1: Graph -->
+                            <div class="absolute -right-4 sm:-right-12 top-10 w-24 sm:w-32 bg-[#18181b]/95 backdrop-blur-xl border border-white/10 rounded-xl p-3 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float" style="transform: translateZ(40px); animation-delay: 1.5s;">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i class="fas fa-chart-bar text-purple-400 text-xs drop-shadow-[0_0_5px_#c084fc]"></i>
+                                    <span class="text-[8px] font-mono text-slate-300 uppercase font-bold">Load Stats</span>
+                                </div>
+                                <div class="flex items-end gap-1 h-10">
+                                    <div class="w-1/4 bg-purple-500/40 h-[40%] rounded-t-sm"></div>
+                                    <div class="w-1/4 bg-purple-500/60 h-[70%] rounded-t-sm"></div>
+                                    <div class="w-1/4 bg-purple-500/80 h-[50%] rounded-t-sm"></div>
+                                    <div class="w-1/4 bg-purple-400 h-[90%] rounded-t-sm shadow-[0_0_8px_#c084fc]"></div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Element 2: AI Node -->
+                            <div class="absolute -left-2 sm:-left-10 bottom-12 w-auto bg-[#18181b]/95 backdrop-blur-xl border border-cyan-500/40 rounded-full px-4 py-2 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center gap-3" style="transform: translateZ(30px); animation-delay: 0.7s;">
+                                <div class="relative flex h-3 w-3">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+                                </div>
+                                <span class="text-[10px] font-mono text-cyan-100 tracking-wider font-bold">AI_READY</span>
+                            </div>
+
+                            <!-- Floating Element 3: Database -->
+                            <div class="absolute left-10 -top-8 w-12 h-12 bg-[#18181b]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center justify-center" style="transform: translateZ(10px); animation-delay: 2.2s;">
+                                <i class="fas fa-database text-lg text-slate-200"></i>
                             </div>
                         </div>
                     </div>
@@ -303,24 +376,24 @@
                 
                 <div class="flex whitespace-nowrap animate-marquee">
                     <div class="flex items-center gap-8 sm:gap-12 px-4 sm:px-6">
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">AI DEVELOPER</span>
-                        <i class="fas fa-sparkles text-cyan-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">FULL-STACK</span>
-                        <i class="fas fa-layer-group text-purple-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">MACHINE LEARNING</span>
-                        <i class="fas fa-brain text-cyan-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">SOFTWARE ENGINEER</span>
-                        <i class="fas fa-code text-purple-500/30 text-xl sm:text-2xl"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">AI DEVELOPER</span>
+                        <i class="fas fa-sparkles text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">FULL-STACK</span>
+                        <i class="fas fa-layer-group text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">MACHINE LEARNING</span>
+                        <i class="fas fa-brain text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">SOFTWARE ENGINEER</span>
+                        <i class="fas fa-code text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
                     </div>
                     <div class="flex items-center gap-8 sm:gap-12 px-4 sm:px-6">
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">AI DEVELOPER</span>
-                        <i class="fas fa-sparkles text-cyan-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">FULL-STACK</span>
-                        <i class="fas fa-layer-group text-purple-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">MACHINE LEARNING</span>
-                        <i class="fas fa-brain text-cyan-500/30 text-xl sm:text-2xl"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/5 uppercase tracking-widest">SOFTWARE ENGINEER</span>
-                        <i class="fas fa-code text-purple-500/30 text-xl sm:text-2xl"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">AI DEVELOPER</span>
+                        <i class="fas fa-sparkles text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">FULL-STACK</span>
+                        <i class="fas fa-layer-group text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">MACHINE LEARNING</span>
+                        <i class="fas fa-brain text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">SOFTWARE ENGINEER</span>
+                        <i class="fas fa-code text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
                     </div>
                 </div>
             </div>
@@ -329,12 +402,17 @@
                 
                 <!-- About Section (Bento Grid) -->
                 <section id="overview" class="scroll-reveal bento-grid">
-                    <div class="mb-10 sm:mb-12 text-center md:text-left">
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-                            Engineered for <br class="hidden sm:block"/>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">impossible realities.</span>
-                        </h2>
-                        <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto md:mx-0">A closer look at the architecture of my digital identity and toolsets.</p>
+                    <div class="mb-10 sm:mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+                                Engineered for <br class="hidden sm:block"/>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">impossible realities.</span>
+                            </h2>
+                            <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto md:mx-0">A closer look at the architecture of my digital identity and toolsets.</p>
+                        </div>
+                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 font-mono text-xs uppercase tracking-widest transition-all hidden md:flex items-center gap-2" data-prompt="Analyze Afnad's architecture stack and provide a brief professional opinion on how market-ready it is.">
+                            <i class="fas fa-brain"></i> AI Analysis
+                        </button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 auto-rows-auto md:auto-rows-[300px]">
@@ -407,13 +485,18 @@
                 <section id="hardware-hud" class="scroll-reveal relative pt-8 sm:pt-12">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] bg-cyan-900/10 blur-[150px] -z-10 pointer-events-none hidden sm:block"></div>
                     
-                    <div class="text-center mb-10 sm:mb-16">
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Hardware Config.</h2>
-                        <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Development Workstation Metrics</p>
+                    <div class="text-center mb-10 sm:mb-16 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="md:text-left">
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Hardware Config.</h2>
+                            <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Development Workstation Metrics</p>
+                        </div>
+                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 font-mono text-xs uppercase tracking-widest transition-all hidden md:flex items-center gap-2" data-prompt="Review Afnad's hardware specs (RX 7600, RTX 5050, Ryzen 7, 32GB RAM). Tell me how good this rig is for running local AI models and heavy Full Stack workloads.">
+                            <i class="fas fa-microchip"></i> AI Rig Check
+                        </button>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-cyan-400 hover:-translate-y-2 transition-transform">
+                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-cyan-400">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
                                     <h3 class="text-lg sm:text-xl font-bold text-white">Primary GPU</h3>
@@ -434,7 +517,7 @@
                             </div>
                         </div>
                         
-                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-purple-500 hover:-translate-y-2 transition-transform">
+                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-purple-500">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
                                     <h3 class="text-lg sm:text-xl font-bold text-white">Secondary GPU</h3>
@@ -455,7 +538,7 @@
                             </div>
                         </div>
 
-                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-white hover:-translate-y-2 transition-transform">
+                        <div class="glass-card p-6 sm:p-8 border-t-4 border-t-white">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
                                     <h3 class="text-lg sm:text-xl font-bold text-white">System Config</h3>
@@ -696,82 +779,96 @@
                     </div>
                 </section>
         
-                <!-- Terminal & AI Playground (Unified) -->
+                <!-- System Interface (Browser + Terminal + AI) Upgraded Layout -->
                 <section id="terminal-section" class="scroll-reveal pt-8 sm:pt-12 relative">
-                    <div class="text-center mb-10 sm:mb-16">
-                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Interface.</h2>
-                        <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">AI Assistant, Terminal & Embedded Web</p>
+                    <div class="text-center mb-10 sm:mb-16 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="md:text-left">
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Interface.</h2>
+                            <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Advanced OS Environment</p>
+                        </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 relative z-10">
-                        <!-- Browser / Terminal Stack -->
-                        <div class="space-y-4 sm:space-y-6 flex flex-col">
-                            <!-- Embedded Browser -->
-                            <div class="glass-card flex flex-col h-[250px] sm:h-[350px] border border-cyan-500/20">
-                                <div class="bg-[#09090b] px-3 sm:px-4 py-2 sm:py-3 flex items-center gap-2 sm:gap-3 border-b border-white/5">
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6 relative z-10">
+                        <!-- Left Stack: Browser / Terminal (7 columns) -->
+                        <div class="xl:col-span-7 flex flex-col gap-4 sm:gap-6">
+                            <!-- Embedded Browser (Enhanced styling) -->
+                            <div class="glass-card flex flex-col h-[400px] sm:h-[500px] border border-cyan-500/20 shadow-2xl">
+                                <!-- Safari/Chrome style top bar -->
+                                <div class="bg-[#18181b] px-3 sm:px-4 py-3 flex items-center gap-3 sm:gap-4 border-b border-white/10">
                                     <div class="flex gap-1.5 hidden sm:flex">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-                                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
-                                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56] shadow-sm"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-sm"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f] shadow-sm"></div>
                                     </div>
-                                    <div class="flex-1 flex items-center bg-white/5 rounded-lg px-2 sm:px-3 py-1.5 border border-white/5">
-                                        <i class="fas fa-lock text-[8px] sm:text-[10px] text-green-400 mr-2"></i>
-                                        <input type="text" id="browser-input" class="bg-transparent border-none outline-none text-[10px] sm:text-xs text-slate-300 w-full font-mono" value="https://example.com" aria-label="Browser URL">
+                                    <div class="flex gap-2 text-slate-400">
+                                        <i class="fas fa-chevron-left text-sm hover:text-white cursor-pointer transition-colors"></i>
+                                        <i class="fas fa-chevron-right text-sm hover:text-white cursor-pointer transition-colors opacity-50"></i>
+                                        <i class="fas fa-rotate-right text-sm hover:text-white cursor-pointer transition-colors ml-1"></i>
+                                    </div>
+                                    <div class="flex-1 flex items-center bg-[#09090b] rounded-md px-3 py-1.5 border border-white/10 shadow-inner">
+                                        <i class="fas fa-lock text-[10px] text-slate-500 mr-2"></i>
+                                        <input type="text" id="browser-input" class="bg-transparent border-none outline-none text-[11px] sm:text-xs text-slate-300 w-full font-mono" value="https://www.google.com/webhp?igu=1" aria-label="Browser URL">
                                     </div>
                                     <button id="browser-go-btn" class="text-slate-400 hover:text-white transition-colors p-1"><i class="fas fa-arrow-right text-sm"></i></button>
                                 </div>
-                                <div class="relative flex-1 bg-[#050505]">
-                                    <div class="absolute inset-0 bg-black/80 flex items-center justify-center z-20 opacity-0 invisible transition-all duration-300" id="browser-loading">
-                                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-t-2 border-r-2 border-cyan-400 animate-spin"></div>
+                                <div class="relative flex-1 bg-white">
+                                    <div class="absolute inset-0 bg-[#050505] flex items-center justify-center z-20 transition-all duration-300" id="browser-loading">
+                                        <div class="flex flex-col items-center gap-4">
+                                            <div class="w-8 h-8 rounded-full border-t-2 border-r-2 border-cyan-400 animate-spin"></div>
+                                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Connecting...</span>
+                                        </div>
                                     </div>
-                                    <iframe id="browser-iframe" title="Embedded Web Browser" class="absolute inset-0 w-full h-full border-none z-10 opacity-60 contrast-125 saturate-50 mix-blend-screen" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                                    <!-- Google Iframe -->
+                                    <iframe id="browser-iframe" title="Embedded Web Browser" loading="lazy" class="absolute inset-0 w-full h-full border-none z-10 rounded-b-[1.5rem]" src="https://www.google.com/webhp?igu=1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
                                 </div>
                             </div>
 
                             <!-- Terminal -->
-                            <div class="terminal-container flex flex-col flex-1 min-h-[200px] sm:min-h-[250px]">
-                                <div class="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-[#050505] border-b border-white/5">
-                                    <span class="font-mono text-[10px] sm:text-xs text-slate-500"><i class="fas fa-terminal mr-2 text-cyan-400"></i> aura@terminal:~</span>
+                            <div class="terminal-container flex flex-col flex-1 min-h-[250px] sm:min-h-[300px] shadow-2xl">
+                                <div class="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-[#18181b] border-b border-white/5 rounded-t-[1.5rem]">
+                                    <span class="font-mono text-[10px] sm:text-xs text-slate-400 flex items-center"><i class="fas fa-terminal mr-2 text-cyan-400"></i> user@aura-system: ~</span>
                                 </div>
-                                <div id="terminal-output" class="flex-1 overflow-y-auto p-3 sm:p-4 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed">
-                                    <div class="text-white font-bold mb-1">AURA_OS v2.0 - System Terminal</div>
-                                    <div class="text-slate-500 mb-4">Type 'help' for available commands</div>
+                                <div id="terminal-output" class="flex-1 overflow-y-auto p-4 sm:p-5 font-mono text-[11px] sm:text-xs text-slate-300 leading-relaxed bg-[#09090b]">
+                                    <div class="text-white font-bold mb-1 tracking-wide">AURA_OS v2.0 - Deep System Interface</div>
+                                    <div class="text-slate-500 mb-4 tracking-wider">Type 'help' for available commands</div>
                                 </div>
-                                <form id="terminal-form" class="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-[#050505] border-t border-white/5">
-                                    <span class="text-cyan-400 font-mono text-xs sm:text-sm">❯</span>
-                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-[10px] sm:text-xs font-mono text-white placeholder-slate-600" placeholder="Enter command..." autocomplete="off">
+                                <form id="terminal-form" class="flex items-center gap-2 px-4 py-3 bg-[#050505] border-t border-white/10 rounded-b-[1.5rem]">
+                                    <span class="text-cyan-400 font-mono text-sm">❯</span>
+                                    <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm font-mono text-white placeholder-slate-600" placeholder="Enter command..." autocomplete="off">
                                 </form>
                             </div>
                         </div>
 
-                        <!-- AI Interface -->
-                        <div id="playground" class="glass-card flex flex-col h-[450px] sm:h-full sm:min-h-[600px] border border-purple-500/20">
-                            <div class="p-3 sm:p-4 border-b border-white/5 flex items-center gap-3 sm:gap-4 bg-[#09090b]">
-                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0">
-                                    <i class="fas fa-robot text-purple-400 text-base sm:text-lg"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-white text-xs sm:text-sm tracking-wide uppercase">AURA Intelligence</h4>
-                                    <p class="text-[9px] sm:text-[10px] text-green-400 flex items-center gap-1.5 font-mono mt-0.5">
-                                        <span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span></span>
-                                        ONLINE CORE
-                                    </p>
-                                </div>
-                            </div>
-                            <div id="ai-chat-output" class="flex-1 p-3 sm:p-5 space-y-3 sm:space-y-4 overflow-y-auto text-[10px] sm:text-xs font-mono bg-[#050505]/50">
-                                <div class="flex justify-start">
-                                    <div class="bg-purple-500/10 text-slate-300 py-2 sm:py-3 px-3 sm:px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-purple-500/20">
-                                        <span class="text-purple-400 block mb-1 text-[8px] sm:text-[9px] uppercase font-bold">System:</span>
-                                        Greetings. I am Afnad's AI assistant. Ask me about his skills, projects, or command me to navigate to sections (e.g. "go to contact").
+                        <!-- Right Stack: AI Interface (5 columns) -->
+                        <div class="xl:col-span-5">
+                            <div id="playground" class="glass-card flex flex-col h-[500px] sm:h-[600px] xl:h-full border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.1)]">
+                                <div class="p-4 sm:p-5 border-b border-white/10 flex items-center gap-4 bg-[#18181b]">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0 shadow-lg">
+                                        <i class="fas fa-robot text-purple-400 text-lg sm:text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white text-sm sm:text-base tracking-wide uppercase">AURA Intelligence</h4>
+                                        <p class="text-[9px] sm:text-[10px] text-green-400 flex items-center gap-1.5 font-mono mt-1">
+                                            <span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span></span>
+                                            ONLINE (Puter.js Connected)
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="p-3 sm:p-4 border-t border-white/5 bg-[#09090b]">
-                                <div class="flex items-center gap-2 bg-zinc-900 p-1 sm:p-1.5 rounded-xl border border-white/10">
-                                    <textarea id="ai-chat-input" rows="1" class="flex-1 bg-transparent border-none outline-none px-2 sm:px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono text-white placeholder-slate-500 resize-none" placeholder="Message AURA..."></textarea>
-                                    <button id="ai-chat-btn" class="w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-lg bg-white text-black flex items-center justify-center hover:scale-105 transition-transform">
-                                        <i class="fas fa-paper-plane text-xs sm:text-sm"></i>
-                                    </button>
+                                <div id="ai-chat-output" class="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto text-xs sm:text-sm font-mono bg-gradient-to-b from-[#050505] to-[#09090b]">
+                                    <div class="flex justify-start">
+                                        <div class="bg-purple-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-purple-500/20 shadow-sm leading-relaxed">
+                                            <span class="text-purple-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">System:</span>
+                                            Greetings. I am AURA, Afnad's deeply integrated AI representation powered by puter.js.<br><br>I know his full portfolio, tech stack, and background. Ask me anything, or command me to navigate the site.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-white/10 bg-[#18181b]">
+                                    <div class="flex items-center gap-2 bg-[#050505] p-1.5 rounded-xl border border-white/10 shadow-inner">
+                                        <textarea id="ai-chat-input" rows="1" class="flex-1 bg-transparent border-none outline-none px-3 py-2 text-xs sm:text-sm font-mono text-white placeholder-slate-500 resize-none" placeholder="Message AURA..."></textarea>
+                                        <button id="ai-chat-btn" class="w-10 h-10 shrink-0 rounded-lg bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-400 transition-colors shadow-lg">
+                                            <i class="fas fa-paper-plane text-sm"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -901,12 +998,46 @@
     
     </div> <!-- End strict overflow wrapper -->
 
+    <!-- Global Floating AI Button -->
+    <button id="global-ai-fab" aria-label="Open Global AI Assistant" class="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-transform duration-300 z-40 hover:scale-110">
+        <i class="fas fa-robot text-lg sm:text-xl"></i>
+    </button>
+
     <!-- To Top Button -->
     <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white text-black flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-500 opacity-0 invisible scale-90 z-40 hover:scale-110">
         <i class="fas fa-arrow-up text-sm sm:text-lg"></i>
     </button>
     
     <!-- Modals -->
+    <!-- Global AI Modal -->
+    <div id="ai-global-modal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm close-modal transition-opacity duration-300"></div>
+        <div class="absolute bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-[500px] h-[85vh] sm:h-[600px] bg-[#09090b] border border-cyan-500/30 sm:rounded-2xl shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col transform scale-95 opacity-0 transition-all duration-300 modal-content">
+            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-[#18181b] sm:rounded-t-2xl">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-robot text-cyan-400 text-xl"></i>
+                    <span class="font-bold text-white font-mono uppercase tracking-wider text-sm">AURA // Global Net</span>
+                </div>
+                <button class="close-modal text-slate-400 hover:text-white"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <div id="global-ai-output" class="flex-1 p-4 overflow-y-auto space-y-4 font-mono text-xs sm:text-sm bg-[#050505]">
+                <div class="flex justify-start">
+                    <div class="bg-cyan-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none border border-cyan-500/20 leading-relaxed shadow-sm">
+                        <span class="text-cyan-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">System:</span>
+                        AURA uplink established. I can analyze Afnad's projects, verify his skills, or answer detailed questions. How can I assist?
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-white/10 bg-[#18181b] sm:rounded-b-2xl">
+                <div class="flex gap-2 bg-[#050505] p-1.5 rounded-xl border border-white/10 shadow-inner">
+                    <input type="text" id="global-ai-input" class="flex-1 bg-transparent border-none rounded-xl px-3 py-2 text-white font-mono text-xs sm:text-sm outline-none placeholder-slate-500" placeholder="Query AURA...">
+                    <button id="global-ai-send" class="w-10 h-10 rounded-lg bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-400 transition-colors shadow-lg"><i class="fas fa-paper-plane text-sm"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 z-[70] hidden" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-xl close-modal transition-opacity duration-300"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl transform scale-95 opacity-0 transition-all duration-500 modal-content p-0">
@@ -946,7 +1077,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
     
     <script>
-        // DATABASE (Projects, Blogs, FAQ, etc. Preserved)
+        // DATABASE
         const projectsData = [ 
             { img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80", alt: "AI Sudoku Solver", title: "AI Sudoku Solver", desc: "Intelligent Sudoku solver using backtracking algorithms with Python GUI.", details: `<p>A sophisticated Sudoku solving application demonstrating advanced algorithmic problem-solving. Uses recursive backtracking with constraint propagation for optimal performance.</p><p>Features include puzzle validation, step-by-step visualization, and multiple solving strategies. Built with Python and Tkinter for the GUI.</p>`, code: `def solve_sudoku(board):\n    find = find_empty(board)\n    if not find:\n        return True\n    row, col = find\n    \n    for i in range(1, 10):\n        if valid(board, i, (row, col)):\n            board[row][col] = i\n            if solve_sudoku(board):\n                return True\n            board[row][col] = 0\n    return False`, lang: 'python' }, 
             { img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", alt: "Password Security Tool", title: "Password Strength Analyzer", desc: "Real-time password security analysis with breach checking capabilities.", details: `<p>Comprehensive password security tool providing instant feedback on password strength using multiple criteria including entropy calculation, common pattern detection, and dictionary word checking.</p><p>Integrates with Have I Been Pwned API to check for compromised passwords. Features real-time visual feedback and security recommendations.</p>`, code: `function analyzePassword(password) {\n    let score = 0;\n    const checks = {\n        length: password.length >= 12,\n        uppercase: /[A-Z]/.test(password),\n        lowercase: /[a-z]/.test(password),\n        numbers: /[0-9]/.test(password),\n        symbols: /[!@#$%^&*]/.test(password)\n    };\n    return { score, checks };\n}`, lang: 'javascript' }, 
@@ -999,9 +1130,18 @@
         const PROJECTS_PER_PAGE = 6;
         const BLOGS_PER_PAGE = 6;
 
+        // HIGHLY CONTEXTUAL AI PROMPT FOR PUTER.JS
+        const AURA_SYSTEM_PROMPT = `You are AURA, an advanced AI assistant deeply integrated into the portfolio website of Afnad Alam Nidul. 
+Afnad is a Computer Science Engineering (CSE) student at East West University in Dhaka, Bangladesh, and an AI Developer. 
+He specializes in Python, JavaScript, React, Node.js, C++, AI/ML (PyTorch, TensorFlow), and scalable architectures. 
+His notable projects include an AI Sudoku Solver, Password Strength Analyzer, Algorithm Visualizer, and full-stack web apps. 
+He uses an RX 7600 and RTX 5050 for development. 
+Your goal is to answer questions about Afnad intelligently, concisely, and professionally. Always stay in character as AURA.`;
+
         // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
-            setupLoader();
+            // FIXED: Removed force "add visible" to let Intersection Observer handle scroll revealing efficiently
+            
             setupNavbar();
             setupThreeJS();
             setupGSAP();
@@ -1037,30 +1177,6 @@
             }
         }
 
-        // SETUP FUNCTIONS
-        function setupLoader() {
-            const loaderOverlay = document.getElementById('loader-overlay');
-            if (!loaderOverlay) return;
-            const loaderPercentage = document.getElementById('loader-percentage');
-            const loaderProgressBar = document.getElementById('loader-progress-bar');
-            
-            let currentPercentage = 0;
-            const interval = setInterval(() => {
-                currentPercentage += 4; // Faster load
-                if(loaderPercentage) loaderPercentage.textContent = `${currentPercentage}%`;
-                if(loaderProgressBar) loaderProgressBar.style.width = `${currentPercentage}%`;
-                
-                if (currentPercentage >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        loaderOverlay.style.opacity = '0';
-                        loaderOverlay.style.pointerEvents = 'none';
-                        setTimeout(() => document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible')), 200);
-                    }, 200);
-                }
-            }, 15);
-        }
-
         function setupNavbar() {
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
@@ -1071,7 +1187,7 @@
                     navbar.classList.remove('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5', 'py-3');
                     navbar.classList.add('py-4', 'sm:py-6', 'bg-transparent');
                 }
-            });
+            }, { passive: true });
         }
 
         function setupGSAP() {
@@ -1087,17 +1203,13 @@
                 });
             });
 
-            gsap.utils.toArray('.scroll-reveal').forEach(section => {
-                gsap.fromTo(section, 
-                    { opacity: 0, y: 50 },
-                    { opacity: 1, y: 0, duration: 1, ease: "power2.out",
-                      scrollTrigger: { trigger: section, start: "top 85%", toggleActions: "play none none none" }
-                    }
-                );
-            });
+            // FIXED: Removed conflicting GSAP targeting of .scroll-reveal here
         }
 
         function setupCharts() {
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.font.family = 'monospace';
+            
             const activityCtx = document.getElementById('activityChart');
             if (activityCtx) {
                 new Chart(activityCtx, {
@@ -1106,7 +1218,7 @@
                         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                         datasets: [{ label: 'Hours', data: [4, 6, 5, 8, 7, 3, 5], borderColor: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.1)', fill: true, tension: 0.4, borderWidth: 2, pointRadius: 0 }]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } } } }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } } }
                 });
             }
             
@@ -1118,7 +1230,7 @@
                         labels: ['Python', 'JavaScript', 'Java', 'C++', 'Other'],
                         datasets: [{ data: [35, 30, 18, 12, 5], backgroundColor: ['#22d3ee', '#a855f7', '#3b82f6', '#ec4899', '#64748b'], borderWidth: 0 }]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10, family: 'monospace' } } } }, cutout: '65%' }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 10 } } } }, cutout: '65%' }
                 });
             }
 
@@ -1130,7 +1242,7 @@
                         labels: ['Quality', 'Docs', 'Testing', 'Perf', 'Security'],
                         datasets: [{ label: 'Score', data: [85, 70, 75, 90, 80], backgroundColor: 'rgba(74, 222, 128, 0.2)', borderColor: '#4ade80', pointBackgroundColor: '#4ade80' }]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { color: 'rgba(255,255,255,0.05)' }, pointLabels: { color: '#94a3b8', font: { size: 9, family: 'monospace' } }, ticks: { display: false } } } }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { color: 'rgba(255,255,255,0.05)' }, pointLabels: { font: { size: 9 } }, ticks: { display: false } } } }
                 });
             }
         }
@@ -1145,7 +1257,7 @@
                 const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
                 
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                const count = window.innerWidth < 768 ? 80 : 150; // Optimized for mobile
+                const count = window.innerWidth < 768 ? 80 : 150; 
                 const posArray = new Float32Array(count * 3);
                 
                 for (let i = 0; i < count * 3; i++) posArray[i] = (Math.random() - 0.5) * 20;
@@ -1159,11 +1271,19 @@
                 camera.position.z = 4;
                 
                 let mouseY = 0;
-                window.addEventListener('scroll', () => { mouseY = window.scrollY / document.body.scrollHeight; }, {passive: true});
+                let isScrolling = false;
+                window.addEventListener('scroll', () => { 
+                    if (!isScrolling) {
+                        window.requestAnimationFrame(() => {
+                            mouseY = window.scrollY / document.body.scrollHeight; 
+                            isScrolling = false;
+                        });
+                        isScrolling = true;
+                    }
+                }, {passive: true});
                 
                 const animate = () => {
                     requestAnimationFrame(animate);
-                    // Performance enhancement: Only render if canvas is likely visible
                     if (window.scrollY < window.innerHeight * 1.5) {
                         particlesMesh.rotation.y += 0.0005;
                         particlesMesh.position.y = mouseY * 3 - 1.5;
@@ -1177,7 +1297,7 @@
                     camera.updateProjectionMatrix();
                     renderer.setSize(window.innerWidth, window.innerHeight);
                 });
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("ThreeJS Setup Error", e); }
         }
         
         function populateProjects(initialLoad = false) {
@@ -1240,7 +1360,7 @@
                         <div class="hidden blog-content">${b.content}</div>
                         <div class="hidden blog-meta">${b.date} • ${readTime} min read</div>
                     </div>
-                    <div class="mt-6 sm:mt-8 pt-4 border-t border-white/5">
+                    <div class="mt-6 sm:mt-8 pt-4 border-t border-white/5 flex justify-between items-center">
                         <span class="text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-2 group-hover:gap-3 transition-all">Read Article <i class="fas fa-arrow-right"></i></span>
                     </div>
                 `;
@@ -1345,11 +1465,11 @@
     ╰──────────────╯
 User: Afnad Alam Nidul
 Host: aura.spatial.node
-OS: Windows 11 / WSL2
+OS: AURA Deep Systems
 CPU: AMD Ryzen 7
 GPU: RX 7600 / RTX 5050
 Memory: 32GB DDR5`,
-                clear: () => { output.innerHTML = '<div class="text-white font-bold mb-1">AURA_OS v2.0 - Terminal Cleared</div>'; return null; }
+                clear: () => { output.innerHTML = '<div class="text-white font-bold mb-1 tracking-wide">AURA_OS v2.0 - Deep System Interface</div><div class="text-slate-500 mb-4 tracking-wider">Type \'help\' for available commands</div>'; return null; }
             };
             
             form.addEventListener('submit', (e) => {
@@ -1409,6 +1529,8 @@ Memory: 32GB DDR5`,
                     openModal('blog-modal');
                 }
             });
+
+            window.openAIGlobalModal = () => openModal('ai-global-modal');
         }
 
         function setupLazyLoadBrowser() {
@@ -1449,13 +1571,23 @@ Memory: 32GB DDR5`,
             type();
         }
 
+        // FIXED: Rebuilt observer logic so items seamlessly trigger when scrolled into view
         function setupScrollAnimations() {
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(e => {
                         if (e.isIntersecting) {
-                            e.target.classList.add('visible');
-                            if (e.target.id === 'hero-stats') animateCounters(e.target);
+                            if (e.target.classList.contains('scroll-reveal')) {
+                                e.target.classList.add('visible');
+                                observer.unobserve(e.target);
+                            }
+                            if (e.target.id === 'hero-stats') {
+                                // Apply proper Tailwind classes to reveal stats
+                                e.target.classList.remove('opacity-0', 'translate-y-5');
+                                e.target.classList.add('opacity-100', 'translate-y-0');
+                                animateCounters(e.target);
+                                observer.unobserve(e.target);
+                            }
                         }
                     });
                 }, { threshold: 0.1 });
@@ -1512,26 +1644,38 @@ Memory: 32GB DDR5`,
         function getMockAIResponse(prompt) {
             const p = prompt.toLowerCase().trim();
             if (p.includes("hello") || p.includes("hi")) return "Hello! I'm AURA, Afnad's intelligent companion. How can I assist you?";
-            if (p.includes("skill") || p.includes("tech")) return "Afnad is highly skilled in Python (92%), JavaScript (88%), React, Node.js, Java, C++, and AI tools like PyTorch.";
+            if (p.includes("skill") || p.includes("tech") || p.includes("stack")) return "Afnad is highly skilled in Python (92%), JavaScript (88%), React, Node.js, Java, C++, and AI tools like PyTorch.";
             if (p.includes("project") || p.includes("built")) return "Notable projects include an AI Sudoku Solver, Password Analyzer, Weather Intelligence app, and a full E-Commerce backend.";
             if (p.includes("contact") || p.includes("email")) return "Reach Afnad at 2024-3-60-229@std.ewubd.edu or +880 1883 423 390. He is open to opportunities.";
+            if (p.includes("rig") || p.includes("hardware")) return "Afnad utilizes an AMD Ryzen 7, 32GB DDR5 RAM, with a primary RX 7600 and a secondary RTX 5050 - excellent for dual-purpose Full Stack dev and local AI inference.";
             if (p.includes("refine")) return "Here's a polished version: \"" + prompt.replace(/refine this professional message: /i, '').replace(/refine this message professionally: /i, '').trim() + "\"";
-            return "I am operating in offline mode. Afnad is a passionate CSE student and AI developer from East West University. Feel free to explore the Projects or Contact sections.";
+            return "I am currently running in offline fallback mode. Afnad is a passionate CSE student and AI developer. Feel free to explore the Projects or Contact sections.";
         }
 
         async function callAI(prompt, outputElement, button) {
             const originalHTML = button.innerHTML;
-            button.disabled = true; button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            button.disabled = true; 
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             try {
                 let text = ""; 
-                if (typeof puter !== 'undefined' && puter.ai && puter.auth) {
-                    if (await puter.auth.isSignedIn()) { text = (await puter.ai.chat(prompt)).message.content; } 
-                    else { text = getMockAIResponse(prompt); }
-                } else { text = getMockAIResponse(prompt); }
-                const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-purple-400 bg-white/10 px-1 rounded font-mono text-[10px]">$1</code>');
+                // FIXED: Puter JS call was occasionally throwing models error, utilizing the default model is safer
+                if (typeof puter !== 'undefined' && puter.ai) {
+                    try {
+                        const fullPrompt = `${AURA_SYSTEM_PROMPT}\n\nUser Question/Command: ${prompt}`;
+                        const response = await puter.ai.chat(fullPrompt);
+                        text = response.message.content;
+                    } catch(aiError) {
+                        console.warn("AI Generation Error (Fallback to local):", aiError);
+                        text = getMockAIResponse(prompt);
+                    }
+                } else { 
+                    text = getMockAIResponse(prompt); 
+                }
                 
-                if (outputElement.id === 'ai-chat-output') {
-                    outputElement.innerHTML += `<div class="flex justify-start mt-2"><div class="bg-purple-500/10 text-slate-300 py-2 sm:py-3 px-3 sm:px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-purple-500/20"><span class="text-purple-400 block mb-1 text-[8px] sm:text-[9px] uppercase font-bold">AURA:</span>${formatted}</div></div>`;
+                const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-cyan-400 bg-white/10 px-1 rounded font-mono text-[10px]">$1</code>');
+                
+                if (outputElement.id === 'ai-chat-output' || outputElement.id === 'global-ai-output') {
+                    outputElement.innerHTML += `<div class="flex justify-start mt-3"><div class="bg-cyan-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20 shadow-sm leading-relaxed"><span class="text-cyan-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">AURA:</span>${formatted}</div></div>`;
                     outputElement.scrollTop = outputElement.scrollHeight;
                 } else if (outputElement.id === 'form-status') {
                     document.getElementById('contact-message').value = text.replace(/"/g, '');
@@ -1541,9 +1685,9 @@ Memory: 32GB DDR5`,
                     outputElement.innerHTML = formatted; outputElement.classList.remove('hidden');
                 }
             } catch (e) {
-                if(outputElement.id === 'ai-chat-output') {
+                if(outputElement.id === 'ai-chat-output' || outputElement.id === 'global-ai-output') {
                     const fb = getMockAIResponse(prompt);
-                    outputElement.innerHTML += `<div class="flex justify-start mt-2"><div class="bg-purple-500/10 text-slate-300 py-2 sm:py-3 px-3 sm:px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-purple-500/20"><span class="text-purple-400 block mb-1 text-[8px] sm:text-[9px] uppercase font-bold">AURA:</span>${fb}</div></div>`;
+                    outputElement.innerHTML += `<div class="flex justify-start mt-3"><div class="bg-cyan-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20 shadow-sm leading-relaxed"><span class="text-cyan-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">AURA:</span>${fb}</div></div>`;
                     outputElement.scrollTop = outputElement.scrollHeight;
                 }
                 else if(outputElement.id !== 'form-status') outputElement.innerHTML = `<div class="text-pink-400 text-xs sm:text-sm mt-2">Error connecting to intelligence network.</div>`;
@@ -1552,35 +1696,69 @@ Memory: 32GB DDR5`,
             }
         }
 
+        function handleAIChat(inputElement, outputElement, btnElement) {
+            const text = inputElement.value.trim(); if (!text) return;
+            const navCommands = { 'contact': 'contact', 'about': 'overview', 'skills': 'skills', 'projects': 'projects', 'blog': 'blog', 'journey': 'experience', 'hardware': 'hardware-hud', 'terminal': 'terminal-section' };
+            const lowerText = text.toLowerCase();
+            let navigated = false;
+            
+            for (const [cmd, section] of Object.entries(navCommands)) {
+                if (lowerText.includes('go to ' + cmd) || lowerText.includes('navigate to ' + cmd) || lowerText.includes('open ' + cmd) || lowerText === cmd) {
+                    outputElement.innerHTML += `<div class="flex justify-end mt-3"><div class="bg-white/10 text-white py-2.5 px-4 rounded-2xl rounded-tr-none max-w-[90%] sm:max-w-[85%] border border-white/20">${text}</div></div>`;
+                    outputElement.innerHTML += `<div class="flex justify-start mt-3"><div class="bg-cyan-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20 shadow-sm"><span class="text-cyan-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">AURA:</span>Establishing uplink to ${cmd.toUpperCase()} sector...</div></div>`;
+                    setTimeout(() => {
+                        scrollToSection(section);
+                        if (outputElement.id === 'global-ai-output') {
+                            document.querySelector('#ai-global-modal .close-modal').click();
+                        }
+                    }, 800); 
+                    navigated = true; break;
+                }
+            }
+            
+            if (!navigated) {
+                outputElement.innerHTML += `<div class="flex justify-end mt-3"><div class="bg-white/10 text-white py-2.5 px-4 rounded-2xl rounded-tr-none max-w-[90%] sm:max-w-[85%] border border-white/20">${text}</div></div>`;
+                callAI(text, outputElement, btnElement);
+            }
+            inputElement.value = ''; outputElement.scrollTop = outputElement.scrollHeight;
+        }
+
         function setupAI() {
             const aiInput = document.getElementById('ai-chat-input');
             const aiBtn = document.getElementById('ai-chat-btn');
             const aiOutput = document.getElementById('ai-chat-output');
+            
+            aiBtn?.addEventListener('click', () => handleAIChat(aiInput, aiOutput, aiBtn));
+            aiInput?.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiBtn.click(); } });
+            
+            const globalFab = document.getElementById('global-ai-fab');
+            const globalInput = document.getElementById('global-ai-input');
+            const globalBtn = document.getElementById('global-ai-send');
+            const globalOutput = document.getElementById('global-ai-output');
+
+            globalFab?.addEventListener('click', () => {
+                if(window.openAIGlobalModal) window.openAIGlobalModal();
+                setTimeout(() => globalInput.focus(), 300);
+            });
+
+            globalBtn?.addEventListener('click', () => handleAIChat(globalInput, globalOutput, globalBtn));
+            globalInput?.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); globalBtn.click(); } });
+
+            document.querySelectorAll('.ai-quick-action').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const prompt = this.getAttribute('data-prompt');
+                    if(window.openAIGlobalModal) window.openAIGlobalModal();
+                    
+                    setTimeout(() => {
+                        globalInput.value = prompt;
+                        globalBtn.click();
+                    }, 400);
+                });
+            });
+
             const refineBtn = document.getElementById('refine-message-btn');
             const explainCodeBtn = document.getElementById('explain-code-btn');
-            
-            aiBtn?.addEventListener('click', () => {
-                const text = aiInput.value.trim(); if (!text) return;
-                const navCommands = { 'contact': 'contact', 'about': 'overview', 'skills': 'skills', 'projects': 'projects', 'blog': 'blog', 'journey': 'experience', 'hardware': 'hardware-hud', 'terminal': 'terminal-section' };
-                const lowerText = text.toLowerCase();
-                let navigated = false;
-                
-                for (const [cmd, section] of Object.entries(navCommands)) {
-                    if (lowerText.includes('go to ' + cmd) || lowerText.includes('navigate to ' + cmd) || lowerText.includes('open ' + cmd) || lowerText === cmd) {
-                        aiOutput.innerHTML += `<div class="flex justify-end mt-2"><div class="bg-white/10 text-white py-2 px-3 sm:px-4 rounded-2xl rounded-tr-none max-w-[90%] sm:max-w-[85%] border border-white/20">${text}</div></div>`;
-                        aiOutput.innerHTML += `<div class="flex justify-start mt-2"><div class="bg-cyan-500/10 text-slate-300 py-2 px-3 sm:px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20"><span class="text-cyan-400 block mb-1 text-[8px] sm:text-[9px] uppercase font-bold">AURA:</span>Establishing uplink to ${cmd.toUpperCase()} sector...</div></div>`;
-                        setTimeout(() => scrollToSection(section), 500); navigated = true; break;
-                    }
-                }
-                
-                if (!navigated) {
-                    aiOutput.innerHTML += `<div class="flex justify-end mt-2"><div class="bg-white/10 text-white py-2 px-3 sm:px-4 rounded-2xl rounded-tr-none max-w-[90%] sm:max-w-[85%] border border-white/20">${text}</div></div>`;
-                    callAI(`Act as AURA AI assistant for Afnad. User says: "${text}"`, aiOutput, aiBtn);
-                }
-                aiInput.value = ''; aiOutput.scrollTop = aiOutput.scrollHeight;
-            });
-            
-            aiInput?.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiBtn.click(); } });
             
             refineBtn?.addEventListener('click', () => {
                 const msg = document.getElementById('contact-message').value;
@@ -1613,7 +1791,7 @@ Memory: 32GB DDR5`,
 
         function setupToTopButton() {
             const btn = document.getElementById('to-top-btn');
-            window.addEventListener('scroll', () => { window.scrollY > 400 ? btn.classList.remove('opacity-0', 'invisible', 'scale-90') : btn.classList.add('opacity-0', 'invisible', 'scale-90'); });
+            window.addEventListener('scroll', () => { window.scrollY > 400 ? btn.classList.remove('opacity-0', 'invisible', 'scale-90') : btn.classList.add('opacity-0', 'invisible', 'scale-90'); }, {passive: true});
             btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         }
     </script>
