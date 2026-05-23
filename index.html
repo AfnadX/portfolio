@@ -55,9 +55,9 @@
                         'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
                     },
                     keyframes: {
-                        marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+                        marquee: { '0%': { transform: 'translate3d(0, 0, 0)' }, '100%': { transform: 'translate3d(-50%, 0, 0)' } },
                         breathe: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.03)' } },
-                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-20px)' } },
+                        float: { '0%, 100%': { transform: 'translate3d(0, 0px, 0)' }, '50%': { transform: 'translate3d(0, -20px, 0)' } },
                         pulseGlow: { 
                             '0%': { boxShadow: '0 0 20px rgba(34,211,238,0.2), inset 0 0 20px rgba(34,211,238,0.2)' }, 
                             '100%': { boxShadow: '0 0 50px rgba(34,211,238,0.6), inset 0 0 40px rgba(34,211,238,0.4)' } 
@@ -82,8 +82,12 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Performance Optimizations - Removed content-visibility constraint to fix scroll load issues */
+        /* Hardware Acceleration and Performance Optimization */
         .will-change-transform { will-change: transform; }
+        .hardware-accelerated { transform: translateZ(0); backface-visibility: hidden; perspective: 1000px; }
+        
+        /* Content Visibility helps the browser skip rendering off-screen sections perfectly */
+        .optimized-section { content-visibility: auto; contain-intrinsic-size: 1000px; contain: paint; }
 
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -101,14 +105,98 @@
             overflow: hidden;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform: translateZ(0); /* Force GPU */
         }
         @media (hover: hover) {
-            .glass-card:hover { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 10px 40px rgba(34, 211, 238, 0.15); transform: translateY(-4px); }
+            .glass-card:hover { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 10px 40px rgba(34, 211, 238, 0.15); transform: translateY(-4px) translateZ(0); }
         }
 
-        /* CSS Scroll Reveal (Intersection Observer Handles this efficiently) */
-        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
-        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+        /* Highly Optimized 60FPS Button Hover Animation */
+        .btn-hover {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            will-change: transform, box-shadow;
+            transform: translateZ(0);
+        }
+        @media (hover: hover) {
+            .btn-hover:hover {
+                transform: translateY(-3px) scale(1.03) translateZ(0);
+                box-shadow: 0 12px 25px -8px rgba(34, 211, 238, 0.5);
+            }
+        }
+        .btn-hover:active {
+            transform: translateY(1px) scale(0.97) translateZ(0);
+            transition: transform 0.1s ease;
+        }
+
+        /* Home Section Zero-Cutoff layout */
+        #home {
+            height: 100vh;
+            height: 100dvh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Prevent clipping on shorter viewports */
+        @media (max-height: 900px) {
+            #home { padding-top: 5rem; padding-bottom: 2rem; }
+            #home h1 { font-size: clamp(2.5rem, 6.5vw, 5.5rem) !important; }
+            #home h2 { font-size: clamp(1.2rem, 2.5vw, 2rem) !important; }
+            #home p { margin-bottom: 1.25rem !important; }
+            #hero-stats { margin-top: 1.25rem !important; }
+        }
+
+        @media (max-height: 768px) {
+            #home { padding-top: 4.5rem; padding-bottom: 1.5rem; }
+            #home h1 { font-size: clamp(2.2rem, 5.5vw, 4.2rem) !important; }
+            #home h2 { font-size: clamp(1.1rem, 2.2vw, 1.5rem) !important; }
+            #home p { font-size: 0.875rem !important; margin-bottom: 1rem !important; }
+            #hero-stats { margin-top: 1rem !important; gap: 1rem !important; }
+            #home .animate-float { transform: scale(0.8) rotateX(10deg) rotateY(-15deg) !important; }
+        }
+
+        @media (max-height: 640px) {
+            #home { padding-top: 4rem; padding-bottom: 1rem; }
+            #home h1 { font-size: clamp(2rem, 5vw, 3.5rem) !important; }
+            #home h2 { font-size: clamp(1rem, 2vw, 1.3rem) !important; margin-bottom: 0.5rem !important; }
+            #home p { font-size: 0.8rem !important; margin-bottom: 0.75rem !important; }
+            #hero-stats { display: none !important; }
+            #home .animate-float { transform: scale(0.7) rotateX(10deg) rotateY(-15deg) !important; }
+        }
+
+        @media (min-width: 1921px) { html { font-size: 110%; } }
+        @media (min-width: 2560px) { html { font-size: 125%; } }
+        @media (min-width: 3840px) { html { font-size: 150%; } }
+
+        /* Mobile Displays Height Adaptation */
+        @media (max-width: 1023px) {
+            #home { height: 100vh; height: 100dvh; flex-direction: column; padding-top: 4.5rem; padding-bottom: 1.5rem; }
+            #home .max-w-7xl { flex-direction: column; justify-content: space-between; height: 100%; gap: 1rem; }
+            #home .flex-1 { flex: 1 1 auto; min-height: 0; justify-content: center; }
+            #home h1 { font-size: clamp(2.2rem, 7.5vw, 4rem) !important; margin-bottom: 0.25rem !important; }
+            #home h2 { font-size: clamp(1.1rem, 3vw, 1.6rem) !important; margin-bottom: 0.5rem !important; }
+            #home p { font-size: 0.85rem !important; line-height: 1.4 !important; margin-bottom: 0.75rem !important; }
+            #home .ai-quick-action, #home a[href="#projects"] { padding: 0.7rem 1.4rem !important; font-size: 0.8rem !important; }
+            #hero-stats { margin-top: 0.5rem !important; gap: 0.5rem !important; }
+            #hero-stats > div { padding-left: 0.5rem !important; }
+            #hero-stats .text-2xl { font-size: 1.1rem !important; }
+            #home .flex-1.w-full.flex.items-center.justify-center.relative { max-height: 25vh; margin-top: auto; margin-bottom: auto; }
+            #home .animate-float { transform: scale(0.65) rotateX(10deg) rotateY(-15deg) !important; }
+        }
+
+        /* Butter-smooth hardware accelerated transitions */
+        .scroll-reveal { 
+            opacity: 0; 
+            transform: translate3d(0, 30px, 0); 
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+            will-change: transform, opacity; 
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        .scroll-reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
         
         .cursor-blink { display: inline-block; width: 8px; height: 1.2em; background-color: #22d3ee; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 4px; }
         @keyframes blink { 50% { opacity: 0; } }
@@ -124,10 +212,10 @@
         input:focus, textarea:focus { border-color: #22d3ee !important; box-shadow: 0 0 15px rgba(34, 211, 238, 0.1) !important; background: rgba(255, 255, 255, 0.08) !important; }
 
         .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, rgba(34,211,238,0.5), rgba(168,85,247,0.5), transparent); }
-        .skill-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
-        .skill-fill { height: 100%; background: linear-gradient(90deg, #22d3ee, #a855f7); transition: width 1.2s ease; width: 0; }
+        .skill-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; transform: translateZ(0); }
+        .skill-fill { height: 100%; background: linear-gradient(90deg, #22d3ee, #a855f7); transition: width 1.2s ease; width: 0; will-change: width; }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; mix-blend-mode: screen; }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; }
         
         .faq-answer { max-height: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0, 1, 0, 1); opacity: 0.5; }
         .faq-item.open .faq-answer { max-height: 500px; opacity: 1; padding-bottom: 1.5rem; }
@@ -140,6 +228,14 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .parallax-bg {
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -153,7 +249,7 @@
         <!-- Command Palette -->
         <div id="command-palette" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-200">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-xl" id="command-backdrop"></div>
-            <div class="relative w-[95%] max-w-2xl mx-auto mt-[10vh] sm:mt-[15vh] p-0 sm:p-4">
+            <div class="relative w-[95%] max-w-2xl mx-auto mt-[10vh] sm:mt-[15vh] p-0 sm:p-4 hardware-accelerated">
                 <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                     <div class="flex items-center gap-4 p-4 border-b border-white/5">
                         <i class="fas fa-search text-slate-400"></i>
@@ -166,7 +262,7 @@
         </div>
 
         <!-- Header / Navbar -->
-        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-4 sm:py-6 bg-transparent">
+        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-4 sm:py-6 bg-transparent hardware-accelerated">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between relative">
                 <a href="#home" class="flex items-center gap-2 cursor-pointer group">
                     <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.2)]">
@@ -187,31 +283,32 @@
                     <button id="command-palette-btn" class="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2">
                         <i class="fas fa-search"></i> Ctrl K
                     </button>
-                    <a href="#contact" class="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-slate-200 transition-colors hover:scale-105 transform">
+                    <a href="#contact" class="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-slate-200 btn-hover hardware-accelerated">
                         Contact
                     </a>
                 </div>
 
-                <button id="mobile-menu-btn" class="lg:hidden text-white w-10 h-10 flex items-center justify-end"><i class="fas fa-bars text-xl"></i></button>
+                <button id="mobile-menu-btn" class="lg:hidden text-white hover:text-cyan-400 transition-colors w-10 h-10 flex items-center justify-end" aria-label="Toggle Menu"><i class="fas fa-bars text-xl"></i></button>
             </div>
 
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="absolute top-full left-0 w-full p-4 bg-black/95 backdrop-blur-xl border-b border-white/10 flex-col gap-2 transform -translate-y-4 opacity-0 pointer-events-none transition-all duration-300 origin-top flex z-40 shadow-2xl">
-                <a href="#overview" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/5 text-center text-sm font-medium text-slate-300">Architecture</a>
-                <a href="#hardware-hud" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/5 text-center text-sm font-medium text-slate-300">Specs</a>
-                <a href="#experience" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/5 text-center text-sm font-medium text-slate-300">Timeline</a>
-                <a href="#projects" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/5 text-center text-sm font-medium text-slate-300">Projects</a>
-                <a href="#blog" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/5 text-center text-sm font-medium text-slate-300">Blog</a>
-                <a href="#contact" class="mobile-nav-item block p-4 rounded-xl bg-white text-black font-bold tracking-wider text-center mt-2 uppercase">Contact</a>
+                <a href="#overview" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/10 hover:text-white transition-all text-center text-sm font-medium text-slate-300">Architecture</a>
+                <a href="#hardware-hud" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/10 hover:text-white transition-all text-center text-sm font-medium text-slate-300">Specs</a>
+                <a href="#experience" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/10 hover:text-white transition-all text-center text-sm font-medium text-slate-300">Timeline</a>
+                <a href="#projects" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/10 hover:text-white transition-all text-center text-sm font-medium text-slate-300">Projects</a>
+                <a href="#blog" class="mobile-nav-item block p-4 rounded-xl hover:bg-white/10 hover:text-white transition-all text-center text-sm font-medium text-slate-300">Blog</a>
+                <a href="#contact" class="mobile-nav-item block p-4 rounded-xl bg-white text-black font-bold tracking-wider text-center mt-2 uppercase hover:bg-slate-200 transition-colors">Contact</a>
             </div>
         </nav>
 
         <main>
             <!-- Hero Section -->
-            <section id="home" class="relative min-h-screen flex items-center justify-center pt-32 pb-16 overflow-hidden">
+            <section id="home">
                 <div class="absolute inset-0 z-0 pointer-events-none">
-                    <div class="absolute top-1/4 left-1/4 w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-cyan-500/15 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen parallax-bg" data-speed="0.5"></div>
-                    <div class="absolute bottom-1/4 right-1/4 w-[70vw] md:w-[50vw] h-[70vw] md:h-[50vw] bg-purple-600/15 rounded-full blur-[100px] md:blur-[150px] mix-blend-screen parallax-bg" data-speed="-0.3"></div>
+                    <!-- Optimized Radial Gradients instead of performance-heavy blur() -->
+                    <div class="absolute top-1/4 left-1/4 w-[60vw] md:w-[40vw] h-[60vw] md:h-[40vw] bg-[radial-gradient(circle,rgba(34,211,238,0.15)_0%,transparent_60%)] rounded-full mix-blend-screen parallax-bg" data-speed="0.5"></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-[70vw] md:w-[50vw] h-[70vw] md:h-[50vw] bg-[radial-gradient(circle,rgba(168,85,247,0.15)_0%,transparent_60%)] rounded-full mix-blend-screen parallax-bg" data-speed="-0.3"></div>
                 </div>
 
                 <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
@@ -237,10 +334,10 @@
                         </p>
 
                         <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4 sm:px-0">
-                            <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-bold text-sm sm:text-base hover:bg-slate-200 hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                            <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-bold text-sm sm:text-base btn-hover flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)] hardware-accelerated">
                                 Explore Work <i class="fas fa-chevron-right text-xs sm:text-sm"></i>
                             </a>
-                            <button class="ai-quick-action w-full sm:w-auto px-8 py-4 rounded-full bg-zinc-900 text-white font-bold text-sm sm:text-base border border-purple-500/30 hover:border-cyan-400 hover:bg-white/5 transition-all flex items-center justify-center gap-2 group" data-prompt="Give me a 2 sentence summary of Afnad's expertise and what he is currently looking for.">
+                            <button class="ai-quick-action w-full sm:w-auto px-8 py-4 rounded-full bg-zinc-900 text-white font-bold text-sm sm:text-base border border-purple-500/30 hover:border-cyan-400 hover:bg-white/5 btn-hover flex items-center justify-center gap-2 group hardware-accelerated" data-prompt="Give me a 2 sentence summary of Afnad's expertise and what he is currently looking for.">
                                 <i class="fas fa-robot text-cyan-400 group-hover:text-purple-400 transition-colors"></i> Ask AURA
                             </button>
                         </div>
@@ -268,13 +365,13 @@
 
                     <!-- Futuristic 3D Glass Dashboard Visual -->
                     <div class="flex-1 w-full flex items-center justify-center relative scroll-reveal crisp-text py-10" style="perspective: 1200px;">
-                        <div class="relative w-full max-w-sm lg:max-w-md animate-float flex justify-center items-center will-change-transform" style="transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-15deg);">
+                        <div class="relative w-full max-w-sm lg:max-w-md animate-float flex justify-center items-center will-change-transform hardware-accelerated" style="transform-style: preserve-3d; transform: rotateX(10deg) rotateY(-15deg);">
                             
-                            <!-- Background Glow -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-[80px] rounded-full -z-10"></div>
+                            <!-- Background Glow (Optimized from blur to radial gradient) -->
+                            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.2)_0%,rgba(168,85,247,0.2)_50%,transparent_70%)] rounded-full -z-10"></div>
 
                             <!-- Main Interface Panel -->
-                            <div class="w-full bg-[#0a0a0c]/85 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden relative" style="transform: translateZ(20px);">
+                            <div class="w-full bg-[#0a0a0c]/90 border border-white/15 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1)] overflow-hidden relative hardware-accelerated" style="transform: translateZ(20px);">
                                 <!-- Top Bar -->
                                 <div class="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
                                     <div class="flex items-center gap-2">
@@ -286,22 +383,22 @@
                                 </div>
                                 
                                 <!-- Editor / Terminal Content -->
-                                <div class="p-5 sm:p-6 font-mono text-[11px] sm:text-sm text-slate-200 text-left" style="text-shadow: 0 0 2px rgba(255,255,255,0.1);">
+                                <div class="p-5 sm:p-6 font-mono font-medium text-[11px] sm:text-sm text-slate-200 text-left">
                                     <div class="flex gap-2 mb-1.5">
-                                        <span class="text-pink-400 font-semibold drop-shadow-sm">import</span>
-                                        <span class="text-cyan-300 font-semibold">torch</span>
+                                        <span class="text-pink-400 font-bold">import</span>
+                                        <span class="text-cyan-300 font-bold">torch</span>
                                     </div>
                                     <div class="flex gap-2 mb-3">
-                                        <span class="text-pink-400 font-semibold drop-shadow-sm">import</span>
-                                        <span class="text-cyan-300 font-semibold">neural_networks</span>
+                                        <span class="text-pink-400 font-bold">import</span>
+                                        <span class="text-cyan-300 font-bold">neural_networks</span>
                                     </div>
                                     <div class="mb-1.5">
-                                        <span class="text-purple-400 font-semibold drop-shadow-sm">class</span>
+                                        <span class="text-purple-400 font-bold">class</span>
                                         <span class="text-yellow-300 font-bold tracking-wide">AuraIntelligence</span><span class="text-slate-300">(Model):</span>
                                     </div>
                                     <div class="pl-4 mb-1.5">
-                                        <span class="text-purple-400 font-semibold drop-shadow-sm">def</span>
-                                        <span class="text-blue-300 font-semibold">__init__</span><span class="text-slate-300">(self):</span>
+                                        <span class="text-purple-400 font-bold">def</span>
+                                        <span class="text-blue-300 font-bold">__init__</span><span class="text-slate-300">(self):</span>
                                     </div>
                                     <div class="pl-8 mb-1.5">
                                         <span class="text-slate-300">self.intent =</span>
@@ -333,7 +430,7 @@
                             </div>
 
                             <!-- Floating Element 1: Graph -->
-                            <div class="absolute -right-4 sm:-right-12 top-10 w-24 sm:w-32 bg-[#18181b]/95 backdrop-blur-xl border border-white/10 rounded-xl p-3 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float" style="transform: translateZ(40px); animation-delay: 1.5s;">
+                            <div class="absolute -right-4 sm:-right-12 top-10 w-24 sm:w-32 bg-[#18181b] border border-white/10 rounded-xl p-3 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float hardware-accelerated" style="transform: translateZ(40px); animation-delay: 1.5s;">
                                 <div class="flex items-center gap-2 mb-2">
                                     <i class="fas fa-chart-bar text-purple-400 text-xs drop-shadow-[0_0_5px_#c084fc]"></i>
                                     <span class="text-[8px] font-mono text-slate-300 uppercase font-bold">Load Stats</span>
@@ -347,7 +444,7 @@
                             </div>
 
                             <!-- Floating Element 2: AI Node -->
-                            <div class="absolute -left-2 sm:-left-10 bottom-12 w-auto bg-[#18181b]/95 backdrop-blur-xl border border-cyan-500/40 rounded-full px-4 py-2 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center gap-3" style="transform: translateZ(30px); animation-delay: 0.7s;">
+                            <div class="absolute -left-2 sm:-left-10 bottom-12 w-auto bg-[#18181b] border border-cyan-500/40 rounded-full px-4 py-2 shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center gap-3 hardware-accelerated" style="transform: translateZ(30px); animation-delay: 0.7s;">
                                 <div class="relative flex h-3 w-3">
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                                     <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
@@ -356,7 +453,7 @@
                             </div>
 
                             <!-- Floating Element 3: Database -->
-                            <div class="absolute left-10 -top-8 w-12 h-12 bg-[#18181b]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center justify-center" style="transform: translateZ(10px); animation-delay: 2.2s;">
+                            <div class="absolute left-10 -top-8 w-12 h-12 bg-[#18181b] border border-white/10 rounded-xl shadow-[0_15px_30px_rgba(0,0,0,0.5)] animate-float flex items-center justify-center hardware-accelerated" style="transform: translateZ(10px); animation-delay: 2.2s;">
                                 <i class="fas fa-database text-lg text-slate-200"></i>
                             </div>
                         </div>
@@ -370,21 +467,11 @@
             </section>
 
             <!-- Marquee Section -->
-            <div class="py-8 sm:py-12 bg-white/[0.02] border-y border-white/5 overflow-hidden flex relative rotate-1 scale-105 z-0 mb-20 sm:mb-32 w-full max-w-full">
+            <div class="py-8 sm:py-12 bg-white/[0.02] border-y border-white/5 overflow-hidden flex relative rotate-1 scale-105 z-0 mb-20 sm:mb-32 w-full max-w-full hardware-accelerated">
                 <div class="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
                 <div class="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
                 
-                <div class="flex whitespace-nowrap animate-marquee">
-                    <div class="flex items-center gap-8 sm:gap-12 px-4 sm:px-6">
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">AI DEVELOPER</span>
-                        <i class="fas fa-sparkles text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">FULL-STACK</span>
-                        <i class="fas fa-layer-group text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">MACHINE LEARNING</span>
-                        <i class="fas fa-brain text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
-                        <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">SOFTWARE ENGINEER</span>
-                        <i class="fas fa-code text-purple-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#c084fc]"></i>
-                    </div>
+                <div class="flex whitespace-nowrap animate-marquee will-change-transform" id="marquee-container">
                     <div class="flex items-center gap-8 sm:gap-12 px-4 sm:px-6">
                         <span class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 uppercase tracking-widest drop-shadow-sm">AI DEVELOPER</span>
                         <i class="fas fa-sparkles text-cyan-500/40 text-xl sm:text-2xl drop-shadow-[0_0_5px_#22d3ee]"></i>
@@ -401,7 +488,7 @@
             <div class="px-4 sm:px-6 max-w-7xl mx-auto space-y-24 sm:space-y-32">
                 
                 <!-- About Section (Bento Grid) -->
-                <section id="overview" class="scroll-reveal bento-grid">
+                <section id="overview" class="scroll-reveal bento-grid optimized-section">
                     <div class="mb-10 sm:mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
                         <div>
                             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
@@ -410,7 +497,7 @@
                             </h2>
                             <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto md:mx-0">A closer look at the architecture of my digital identity and toolsets.</p>
                         </div>
-                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 font-mono text-xs uppercase tracking-widest transition-all hidden md:flex items-center gap-2" data-prompt="Analyze Afnad's architecture stack and provide a brief professional opinion on how market-ready it is.">
+                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 font-mono text-xs uppercase tracking-widest btn-hover hidden md:flex items-center gap-2" data-prompt="Analyze Afnad's architecture stack and provide a brief professional opinion on how market-ready it is.">
                             <i class="fas fa-brain"></i> AI Analysis
                         </button>
                     </div>
@@ -419,14 +506,14 @@
                         <!-- Main Bio -->
                         <div class="md:col-span-2 md:row-span-2 group glass-card p-6 sm:p-8 flex flex-col justify-end">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10"></div>
-                            <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,rgba(168,85,247,0.15),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                            <div class="absolute top-10 right-10 z-0 opacity-10 group-hover:opacity-30 transition-all duration-700 transform group-hover:scale-110">
+                            <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,rgba(168,85,247,0.15),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                            <div class="absolute top-10 right-10 z-0 opacity-10 group-hover:opacity-30 transition-all duration-700 transform group-hover:scale-110 hardware-accelerated pointer-events-none">
                                 <i class="fas fa-fingerprint text-7xl sm:text-9xl text-white"></i>
                             </div>
                             
-                            <div class="relative z-20 transform md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 mt-16 md:mt-0">
+                            <div class="relative z-20 transform md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 mt-16 md:mt-0 hardware-accelerated">
                                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 mb-6">
-                                    <img src="about.png" alt="Afnad Alam Nidul" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white/20 shadow-xl" onerror="this.onerror=null;this.src='https://placehold.co/100x100/222/FFF?text=A';">
+                                    <img src="about.png" alt="Afnad Alam Nidul" width="80" height="80" loading="lazy" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white/20 shadow-xl" onerror="this.onerror=null;this.src='https://placehold.co/100x100/222/FFF?text=A';">
                                     <div>
                                         <h3 class="text-2xl sm:text-3xl font-bold text-white mb-1">Afnad Alam Nidul</h3>
                                         <span class="text-purple-400 font-mono tracking-wider text-[10px] sm:text-xs uppercase">CSE Student @ East West University</span>
@@ -443,9 +530,9 @@
 
                         <!-- Location Map -->
                         <div class="group glass-card p-0 flex flex-col justify-between overflow-hidden relative min-h-[200px] md:min-h-0">
-                            <iframe title="Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.27919584056214!3d23.780573258035957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1647516684884!5m2!1sen!2sbd" width="100%" height="100%" class="absolute inset-0 border-0 opacity-40 grayscale invert contrast-125 group-hover:opacity-60 transition-opacity" loading="lazy"></iframe>
+                            <iframe title="Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.27919584056214!3d23.780573258035957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1647516684884!5m2!1sen!2sbd" width="100%" height="100%" class="absolute inset-0 border-0 opacity-40 grayscale invert contrast-125 group-hover:opacity-60 transition-opacity pointer-events-none" loading="lazy"></iframe>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></div>
-                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 pointer-events-none">
                                 <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-map-marker-alt text-cyan-400 animate-bounce"></i> Dhaka, BD</h3>
                                 <p class="text-slate-400 text-[10px] sm:text-xs font-mono uppercase tracking-widest mt-1">Operating Globally</p>
                             </div>
@@ -453,13 +540,13 @@
 
                         <!-- Connect Links -->
                         <div class="group glass-card p-6 sm:p-8 flex flex-col justify-center items-center relative overflow-hidden min-h-[200px] md:min-h-0">
-                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.1),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.1),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <h3 class="text-[10px] sm:text-xs font-mono tracking-widest text-slate-500 uppercase mb-4 sm:mb-6 relative z-20">Network Links</h3>
                             <div class="relative z-20 flex flex-wrap gap-3 sm:gap-4 justify-center">
-                                <a href="https://github.com/afnad" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black transition-all border border-white/10 hover:scale-110"><i class="fab fa-github text-base sm:text-lg"></i></a>
-                                <a href="https://www.linkedin.com/in/afnadnidul/" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] transition-all border border-white/10 hover:scale-110"><i class="fab fa-linkedin text-base sm:text-lg"></i></a>
-                                <a href="mailto:2024-3-60-229@std.ewubd.edu" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:border-cyan-500 transition-all border border-white/10 hover:scale-110"><i class="fas fa-envelope text-base sm:text-lg"></i></a>
-                                <a href="https://www.facebook.com/afnadverse" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all border border-white/10 hover:scale-110"><i class="fab fa-facebook text-base sm:text-lg"></i></a>
+                                <a href="https://github.com/afnad" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-black btn-hover border border-white/10 hardware-accelerated"><i class="fab fa-github text-base sm:text-lg"></i></a>
+                                <a href="https://www.linkedin.com/in/afnadnidul/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] btn-hover border border-white/10 hardware-accelerated"><i class="fab fa-linkedin text-base sm:text-lg"></i></a>
+                                <a href="mailto:2024-3-60-229@std.ewubd.edu" aria-label="Email Me" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:border-cyan-500 btn-hover border border-white/10 hardware-accelerated"><i class="fas fa-envelope text-base sm:text-lg"></i></a>
+                                <a href="https://www.facebook.com/afnadverse" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] btn-hover border border-white/10 hardware-accelerated"><i class="fab fa-facebook text-base sm:text-lg"></i></a>
                             </div>
                         </div>
 
@@ -468,29 +555,30 @@
                             <div class="absolute left-0 bottom-0 w-full h-[120%] z-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 bg-gradient-to-t from-purple-500/40 to-transparent pointer-events-none"></div>
                             <h3 class="text-xs sm:text-sm font-mono tracking-widest text-slate-400 uppercase mb-6 sm:mb-8 relative z-20 text-center">Core Architecture Stack</h3>
                             <div class="grid grid-cols-4 sm:grid-cols-8 gap-4 sm:gap-6 text-center relative z-20">
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-python text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#3776AB] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#3776AB]">Python</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-js text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#F7DF1E] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#F7DF1E]">JavaScript</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-react text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#61DAFB] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#61DAFB]">React</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-node text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#339933] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#339933]">Node.js</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-java text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#007396] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#007396]">Java</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><span class="text-2xl sm:text-3xl font-bold text-slate-500 group-hover/icon:text-[#00599C] group-hover/icon:scale-110 transition-all">C++</span><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#00599C]">C++</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fas fa-database text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#4479A1] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#4479A1]">SQL</span></div>
-                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-git-alt text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#F05032] group-hover/icon:scale-110 transition-all"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#F05032]">Git</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-python text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#3776AB] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#3776AB] transition-colors">Python</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-js text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#F7DF1E] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#F7DF1E] transition-colors">JavaScript</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-react text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#61DAFB] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#61DAFB] transition-colors">React</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-node text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#339933] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#339933] transition-colors">Node.js</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-java text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#007396] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#007396] transition-colors">Java</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><span class="text-2xl sm:text-3xl font-bold text-slate-500 group-hover/icon:text-[#00599C] group-hover/icon:scale-110 transition-all hardware-accelerated">C++</span><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#00599C] transition-colors">C++</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fas fa-database text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#4479A1] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#4479A1] transition-colors">SQL</span></div>
+                                <div class="flex flex-col items-center gap-2 sm:gap-3 group/icon"><i class="fab fa-git-alt text-3xl sm:text-4xl text-slate-500 group-hover/icon:text-[#F05032] group-hover/icon:scale-110 transition-all hardware-accelerated"></i><span class="text-[9px] sm:text-[10px] font-mono uppercase text-slate-500 group-hover/icon:text-[#F05032] transition-colors">Git</span></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Hardware Specs -->
-                <section id="hardware-hud" class="scroll-reveal relative pt-8 sm:pt-12">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] bg-cyan-900/10 blur-[150px] -z-10 pointer-events-none hidden sm:block"></div>
+                <section id="hardware-hud" class="scroll-reveal relative pt-8 sm:pt-12 optimized-section">
+                    <!-- Optimized blur implementation -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] bg-[radial-gradient(circle,rgba(22,78,99,0.2)_0%,transparent_60%)] -z-10 pointer-events-none hidden sm:block"></div>
                     
                     <div class="text-center mb-10 sm:mb-16 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div class="md:text-left">
                             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Hardware Config.</h2>
                             <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Development Workstation Metrics</p>
                         </div>
-                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 font-mono text-xs uppercase tracking-widest transition-all hidden md:flex items-center gap-2" data-prompt="Review Afnad's hardware specs (RX 7600, RTX 5050, Ryzen 7, 32GB RAM). Tell me how good this rig is for running local AI models and heavy Full Stack workloads.">
+                        <button class="ai-quick-action px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-purple-400 hover:bg-purple-500/10 text-purple-400 font-mono text-xs uppercase tracking-widest btn-hover hidden md:flex items-center gap-2" data-prompt="Review Afnad's hardware specs (RX 7600, RTX 5050, Ryzen 7, 32GB RAM). Tell me how good this rig is for running local AI models and heavy Full Stack workloads.">
                             <i class="fas fa-microchip"></i> AI Rig Check
                         </button>
                     </div>
@@ -562,7 +650,7 @@
                 </section>
 
                 <!-- Status Dashboards -->
-                <section id="system-status" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="system-status" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="text-center mb-10 sm:mb-12">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Dashboards.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Real-time Analytics</p>
@@ -573,25 +661,25 @@
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-chart-line text-cyan-400"></i> Coding Activity
                             </h3>
-                            <div class="h-40 sm:h-48 relative w-full"><canvas id="activityChart"></canvas></div>
+                            <div class="h-40 sm:h-48 relative w-full hardware-accelerated"><canvas id="activityChart"></canvas></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6">
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-code text-purple-400"></i> Language Breakdown
                             </h3>
-                            <div class="h-40 sm:h-48 relative w-full"><canvas id="languageChart"></canvas></div>
+                            <div class="h-40 sm:h-48 relative w-full hardware-accelerated"><canvas id="languageChart"></canvas></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6">
                             <h3 class="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-2">
                                 <i class="fas fa-heartbeat text-red-400"></i> Project Health
                             </h3>
-                            <div class="h-40 sm:h-48 relative w-full"><canvas id="healthChart"></canvas></div>
+                            <div class="h-40 sm:h-48 relative w-full hardware-accelerated"><canvas id="healthChart"></canvas></div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Skills Breakdown -->
-                <section id="skills" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="skills" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                         <div class="glass-card p-6 sm:p-8">
                             <h3 class="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 flex items-center gap-3">
@@ -645,22 +733,22 @@
                     <div class="glass-card p-6 sm:p-8">
                         <h3 class="text-xs sm:text-sm font-mono text-slate-500 uppercase tracking-widest mb-6 sm:mb-8 text-center">Additional Capabilities</h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-cyan-500/50 transition-all group">
+                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-cyan-500/50 transition-all group hardware-accelerated">
                                 <i class="fas fa-brain text-2xl sm:text-3xl text-cyan-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="font-bold text-xs sm:text-sm text-white mb-1 sm:mb-2">AI/ML</h4>
                                 <p class="text-[9px] sm:text-[10px] uppercase font-mono text-slate-500">PyTorch, TensorFlow</p>
                             </div>
-                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-purple-500/50 transition-all group">
+                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-purple-500/50 transition-all group hardware-accelerated">
                                 <i class="fas fa-database text-2xl sm:text-3xl text-purple-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="font-bold text-xs sm:text-sm text-white mb-1 sm:mb-2">Databases</h4>
                                 <p class="text-[9px] sm:text-[10px] uppercase font-mono text-slate-500">MySQL, MongoDB</p>
                             </div>
-                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-blue-500/50 transition-all group">
+                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-blue-500/50 transition-all group hardware-accelerated">
                                 <i class="fas fa-mobile-alt text-2xl sm:text-3xl text-blue-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="font-bold text-xs sm:text-sm text-white mb-1 sm:mb-2">Responsive</h4>
                                 <p class="text-[9px] sm:text-[10px] uppercase font-mono text-slate-500">Mobile-first Design</p>
                             </div>
-                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-green-500/50 transition-all group">
+                            <div class="text-center p-4 sm:p-6 bg-white/5 rounded-2xl border border-white/5 hover:border-green-500/50 transition-all group hardware-accelerated">
                                 <i class="fas fa-project-diagram text-2xl sm:text-3xl text-green-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform"></i>
                                 <h4 class="font-bold text-xs sm:text-sm text-white mb-1 sm:mb-2">Agile</h4>
                                 <p class="text-[9px] sm:text-[10px] uppercase font-mono text-slate-500">Scrum / Kanban</p>
@@ -670,7 +758,7 @@
                 </section>
                 
                 <!-- Experience / Journey -->
-                <section id="experience" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="experience" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="text-center mb-10 sm:mb-16">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Journey Timeline.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Milestones & Growth</p>
@@ -730,14 +818,14 @@
                 </section>
 
                 <!-- Services Protocols -->
-                <section id="services" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="services" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="text-center mb-10 sm:mb-16">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Service Protocols.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Available deployment capabilities</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2">
+                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2 hardware-accelerated">
                             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-5 sm:mb-6 border border-cyan-500/20 group-hover:scale-110 transition-transform">
                                 <i class="fas fa-laptop-code text-xl sm:text-2xl text-cyan-400"></i>
                             </div>
@@ -745,7 +833,7 @@
                             <p class="text-slate-400 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed">Full-stack web application development using React, Node.js, and modern frameworks. Concept to deployment.</p>
                         </div>
                         
-                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2">
+                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2 hardware-accelerated">
                             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-5 sm:mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform">
                                 <i class="fas fa-brain text-xl sm:text-2xl text-purple-400"></i>
                             </div>
@@ -753,7 +841,7 @@
                             <p class="text-slate-400 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed">Embedding artificial intelligence into applications. Chatbots, recommendation systems, and intelligent automation.</p>
                         </div>
 
-                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2">
+                        <div class="glass-card p-6 sm:p-8 group hover:-translate-y-2 hardware-accelerated">
                             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5 sm:mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform">
                                 <i class="fas fa-layer-group text-xl sm:text-2xl text-blue-400"></i>
                             </div>
@@ -764,7 +852,7 @@
                 </section>
         
                 <!-- Projects -->
-                <section id="projects" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="projects" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="text-center mb-10 sm:mb-16">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Project Database.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Featured deployments and experiments</p>
@@ -773,14 +861,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="projects-grid"></div>
                     
                     <div class="text-center mt-10 sm:mt-12">
-                        <button id="load-more-projects" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 text-white font-semibold text-xs sm:text-sm border border-white/10 hover:bg-white hover:text-black transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] uppercase tracking-wider">
+                        <button id="load-more-projects" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 text-white font-semibold text-xs sm:text-sm border border-white/10 btn-hover uppercase tracking-wider hardware-accelerated">
                             Load More Projects
                         </button>
                     </div>
                 </section>
         
                 <!-- System Interface (Browser + Terminal + AI) Upgraded Layout -->
-                <section id="terminal-section" class="scroll-reveal pt-8 sm:pt-12 relative">
+                <section id="terminal-section" class="scroll-reveal pt-8 sm:pt-12 relative optimized-section">
                     <div class="text-center mb-10 sm:mb-16 flex flex-col md:flex-row justify-between items-center gap-4">
                         <div class="md:text-left">
                             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">System Interface.</h2>
@@ -792,7 +880,7 @@
                         <!-- Left Stack: Browser / Terminal (7 columns) -->
                         <div class="xl:col-span-7 flex flex-col gap-4 sm:gap-6">
                             <!-- Embedded Browser (Enhanced styling) -->
-                            <div class="glass-card flex flex-col h-[400px] sm:h-[500px] border border-cyan-500/20 shadow-2xl">
+                            <div class="glass-card flex flex-col h-[400px] sm:h-[500px] border border-cyan-500/20 shadow-2xl hardware-accelerated">
                                 <!-- Safari/Chrome style top bar -->
                                 <div class="bg-[#18181b] px-3 sm:px-4 py-3 flex items-center gap-3 sm:gap-4 border-b border-white/10">
                                     <div class="flex gap-1.5 hidden sm:flex">
@@ -818,13 +906,13 @@
                                             <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Connecting...</span>
                                         </div>
                                     </div>
-                                    <!-- Google Iframe -->
-                                    <iframe id="browser-iframe" title="Embedded Web Browser" loading="lazy" class="absolute inset-0 w-full h-full border-none z-10 rounded-b-[1.5rem]" src="https://www.google.com/webhp?igu=1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                                    <!-- Google Iframe (src applied dynamically to prevent auto-scrolling on load) -->
+                                    <iframe id="browser-iframe" title="Embedded Web Browser" loading="lazy" class="absolute inset-0 w-full h-full border-none z-10 rounded-b-[1.5rem]" data-src="https://www.google.com/webhp?igu=1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
                                 </div>
                             </div>
 
                             <!-- Terminal -->
-                            <div class="terminal-container flex flex-col flex-1 min-h-[250px] sm:min-h-[300px] shadow-2xl">
+                            <div class="terminal-container flex flex-col flex-1 min-h-[250px] sm:min-h-[300px] shadow-2xl hardware-accelerated">
                                 <div class="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-[#18181b] border-b border-white/5 rounded-t-[1.5rem]">
                                     <span class="font-mono text-[10px] sm:text-xs text-slate-400 flex items-center"><i class="fas fa-terminal mr-2 text-cyan-400"></i> user@aura-system: ~</span>
                                 </div>
@@ -841,7 +929,7 @@
 
                         <!-- Right Stack: AI Interface (5 columns) -->
                         <div class="xl:col-span-5">
-                            <div id="playground" class="glass-card flex flex-col h-[500px] sm:h-[600px] xl:h-full border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.1)]">
+                            <div id="playground" class="glass-card flex flex-col h-[500px] sm:h-[600px] xl:h-full border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.1)] hardware-accelerated">
                                 <div class="p-4 sm:p-5 border-b border-white/10 flex items-center gap-4 bg-[#18181b]">
                                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0 shadow-lg">
                                         <i class="fas fa-robot text-purple-400 text-lg sm:text-xl"></i>
@@ -865,7 +953,7 @@
                                 <div class="p-4 border-t border-white/10 bg-[#18181b]">
                                     <div class="flex items-center gap-2 bg-[#050505] p-1.5 rounded-xl border border-white/10 shadow-inner">
                                         <textarea id="ai-chat-input" rows="1" class="flex-1 bg-transparent border-none outline-none px-3 py-2 text-xs sm:text-sm font-mono text-white placeholder-slate-500 resize-none" placeholder="Message AURA..."></textarea>
-                                        <button id="ai-chat-btn" class="w-10 h-10 shrink-0 rounded-lg bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-400 transition-colors shadow-lg">
+                                        <button id="ai-chat-btn" aria-label="Send AI Chat" class="w-10 h-10 shrink-0 rounded-lg bg-cyan-500 text-white flex items-center justify-center btn-hover shadow-lg">
                                             <i class="fas fa-paper-plane text-sm"></i>
                                         </button>
                                     </div>
@@ -876,28 +964,24 @@
                 </section>
 
                 <!-- Blog Section -->
-                <section id="blog" class="scroll-reveal pt-8 sm:pt-12">
+                <section id="blog" class="scroll-reveal pt-8 sm:pt-12 optimized-section">
                     <div class="text-center mb-10 sm:mb-16">
                         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2 sm:mb-4">Thought Log.</h2>
                         <p class="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase">Technical writings and insights</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="blog-list"></div>
                     <div class="text-center mt-10 sm:mt-12">
-                        <button id="load-more-blog" class="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent text-slate-300 font-semibold text-xs sm:text-sm border border-white/20 hover:bg-white/10 transition-all uppercase tracking-wider">
+                        <button id="load-more-blog" class="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent text-slate-300 font-semibold text-xs sm:text-sm border border-white/20 btn-hover uppercase tracking-wider hardware-accelerated">
                             Load More Posts
                         </button>
                     </div>
                 </section>
 
-                <!-- Testimonials & FAQ Section -->
-                <section class="scroll-reveal pt-8 sm:pt-12 pb-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12">
-                        <div id="testimonials">
-                            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6 sm:mb-8">Endorsements.</h2>
-                            <div class="grid gap-4 sm:gap-6" id="testimonials-grid"></div>
-                        </div>
+                <!-- FAQ Section -->
+                <section class="scroll-reveal pt-8 sm:pt-12 pb-12 optimized-section">
+                    <div class="max-w-4xl mx-auto w-full">
                         <div id="faq">
-                            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6 sm:mb-8">System Queries (FAQ).</h2>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6 sm:mb-8 text-center">System Queries (FAQ).</h2>
                             <div class="grid gap-3 sm:gap-4" id="faq-container"></div>
                         </div>
                     </div>
@@ -907,8 +991,8 @@
         </main>
 
         <!-- Footer / Contact -->
-        <footer id="contact" class="relative pt-20 sm:pt-32 pb-10 sm:pb-12 mt-12 border-t border-white/10 bg-[#050505] overflow-hidden">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full sm:w-[80%] h-[300px] bg-cyan-500/10 blur-[100px] sm:blur-[150px] pointer-events-none"></div>
+        <footer id="contact" class="relative pt-20 sm:pt-32 pb-10 sm:pb-12 mt-12 border-t border-white/10 bg-[#050505] overflow-hidden optimized-section">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full sm:w-[80%] h-[300px] bg-[radial-gradient(circle,rgba(34,211,238,0.15)_0%,transparent_60%)] pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-16 mb-16 sm:mb-24">
@@ -919,15 +1003,15 @@
                         <p class="text-slate-400 mb-8 sm:mb-10 max-w-sm text-sm sm:text-lg">Ready to build the impossible? Let's engineer intelligent solutions for tomorrow.</p>
                         
                         <div class="space-y-3 sm:space-y-4">
-                            <a href="mailto:2024-3-60-229@std.ewubd.edu" class="flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border border-white/5 hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all group">
-                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform border border-cyan-500/20"><i class="fas fa-envelope"></i></div>
+                            <a href="mailto:2024-3-60-229@std.ewubd.edu" class="flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border border-white/5 hover:border-cyan-500/30 hover:bg-cyan-500/5 group btn-hover hardware-accelerated">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-500/20"><i class="fas fa-envelope"></i></div>
                                 <div class="min-w-0">
                                     <div class="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-0.5 sm:mb-1">Secure Email</div>
                                     <span class="font-mono text-xs sm:text-sm text-cyan-100 truncate block">2024-3-60-229@std.ewubd.edu</span>
                                 </div>
                             </a>
-                            <a href="tel:+8801883423390" class="flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all group">
-                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform border border-purple-500/20"><i class="fas fa-phone"></i></div>
+                            <a href="tel:+8801883423390" class="flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/5 group btn-hover hardware-accelerated">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20"><i class="fas fa-phone"></i></div>
                                 <div>
                                     <div class="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-0.5 sm:mb-1">Direct Comms</div>
                                     <span class="font-mono text-xs sm:text-sm text-purple-100">+880 1883 423 390</span>
@@ -948,17 +1032,17 @@
                         <form id="contact-form" name="contact" method="POST" data-netlify="true" class="space-y-4 sm:space-y-5">
                             <input type="hidden" name="form-name" value="contact" />
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                                <input type="text" name="name" placeholder="Name" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
-                                <input type="email" name="email" placeholder="Email" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
+                                <input type="text" name="name" aria-label="Name" placeholder="Name" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
+                                <input type="email" name="email" aria-label="Email" placeholder="Email" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
                             </div>
-                            <input type="text" name="subject" placeholder="Subject" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
-                            <textarea name="message" id="contact-message" rows="4" placeholder="Message content..." required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono resize-none placeholder-slate-500"></textarea>
+                            <input type="text" name="subject" aria-label="Subject" placeholder="Subject" required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono placeholder-slate-500">
+                            <textarea name="message" id="contact-message" aria-label="Message content" rows="4" placeholder="Message content..." required class="w-full bg-white/5 rounded-xl px-4 sm:px-5 py-3 sm:py-4 outline-none text-xs sm:text-sm font-mono resize-none placeholder-slate-500"></textarea>
                             
                             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-                                <button type="submit" class="flex-1 bg-white text-black font-bold uppercase tracking-wider py-3 sm:py-4 px-6 rounded-xl hover:bg-slate-200 transition-all text-xs sm:text-sm shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                                <button type="submit" class="flex-1 bg-white text-black font-bold uppercase tracking-wider py-3 sm:py-4 px-6 rounded-xl btn-hover text-xs sm:text-sm hardware-accelerated">
                                     Send Message <i class="fas fa-paper-plane ml-2"></i>
                                 </button>
-                                <button type="button" id="refine-message-btn" class="px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                                <button type="button" id="refine-message-btn" class="px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-white/20 text-white btn-hover text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hardware-accelerated">
                                     <i class="fas fa-sparkles text-cyan-400"></i> AI Refine
                                 </button>
                             </div>
@@ -988,9 +1072,9 @@
                     </p>
 
                     <div class="flex gap-4 sm:gap-6">
-                        <a href="https://github.com/afnad" class="text-slate-500 hover:text-white transition-colors hover:scale-125 transform"><i class="fab fa-github text-lg sm:text-xl"></i></a>
-                        <a href="https://www.linkedin.com/in/afnadnidul/" class="text-slate-500 hover:text-[#0077b5] transition-colors hover:scale-125 transform"><i class="fab fa-linkedin text-lg sm:text-xl"></i></a>
-                        <a href="https://www.facebook.com/afnadverse" class="text-slate-500 hover:text-[#1877F2] transition-colors hover:scale-125 transform"><i class="fab fa-facebook text-lg sm:text-xl"></i></a>
+                        <a href="https://github.com/afnad" aria-label="GitHub" class="text-slate-500 hover:text-white transition-colors hover:scale-125 transform hardware-accelerated"><i class="fab fa-github text-lg sm:text-xl"></i></a>
+                        <a href="https://www.linkedin.com/in/afnadnidul/" aria-label="LinkedIn" class="text-slate-500 hover:text-[#0077b5] transition-colors hover:scale-125 transform hardware-accelerated"><i class="fab fa-linkedin text-lg sm:text-xl"></i></a>
+                        <a href="https://www.facebook.com/afnadverse" aria-label="Facebook" class="text-slate-500 hover:text-[#1877F2] transition-colors hover:scale-125 transform hardware-accelerated"><i class="fab fa-facebook text-lg sm:text-xl"></i></a>
                     </div>
                 </div>
             </div>
@@ -999,12 +1083,12 @@
     </div> <!-- End strict overflow wrapper -->
 
     <!-- Global Floating AI Button -->
-    <button id="global-ai-fab" aria-label="Open Global AI Assistant" class="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.4)] transition-transform duration-300 z-40 hover:scale-110">
+    <button id="global-ai-fab" aria-label="Open Global AI Assistant" class="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white flex items-center justify-center z-40 btn-hover hardware-accelerated">
         <i class="fas fa-robot text-lg sm:text-xl"></i>
     </button>
 
     <!-- To Top Button -->
-    <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white text-black flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-500 opacity-0 invisible scale-90 z-40 hover:scale-110">
+    <button id="to-top-btn" aria-label="Go to top" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white text-black flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-500 opacity-0 invisible scale-90 z-40 btn-hover hardware-accelerated">
         <i class="fas fa-arrow-up text-sm sm:text-lg"></i>
     </button>
     
@@ -1012,13 +1096,13 @@
     <!-- Global AI Modal -->
     <div id="ai-global-modal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm close-modal transition-opacity duration-300"></div>
-        <div class="absolute bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-[500px] h-[85vh] sm:h-[600px] bg-[#09090b] border border-cyan-500/30 sm:rounded-2xl shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col transform scale-95 opacity-0 transition-all duration-300 modal-content">
+        <div class="absolute bottom-0 sm:bottom-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-[500px] h-[85vh] sm:h-[600px] bg-[#09090b] border border-cyan-500/30 sm:rounded-2xl shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col transform scale-95 opacity-0 transition-all duration-300 modal-content hardware-accelerated">
             <div class="p-4 border-b border-white/10 flex justify-between items-center bg-[#18181b] sm:rounded-t-2xl">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-robot text-cyan-400 text-xl"></i>
                     <span class="font-bold text-white font-mono uppercase tracking-wider text-sm">AURA // Global Net</span>
                 </div>
-                <button class="close-modal text-slate-400 hover:text-white"><i class="fas fa-times text-lg"></i></button>
+                <button class="close-modal text-slate-400 hover:text-white" aria-label="Close AI Chat"><i class="fas fa-times text-lg"></i></button>
             </div>
             <div id="global-ai-output" class="flex-1 p-4 overflow-y-auto space-y-4 font-mono text-xs sm:text-sm bg-[#050505]">
                 <div class="flex justify-start">
@@ -1031,7 +1115,7 @@
             <div class="p-4 border-t border-white/10 bg-[#18181b] sm:rounded-b-2xl">
                 <div class="flex gap-2 bg-[#050505] p-1.5 rounded-xl border border-white/10 shadow-inner">
                     <input type="text" id="global-ai-input" class="flex-1 bg-transparent border-none rounded-xl px-3 py-2 text-white font-mono text-xs sm:text-sm outline-none placeholder-slate-500" placeholder="Query AURA...">
-                    <button id="global-ai-send" class="w-10 h-10 rounded-lg bg-cyan-500 text-white flex items-center justify-center hover:bg-cyan-400 transition-colors shadow-lg"><i class="fas fa-paper-plane text-sm"></i></button>
+                    <button id="global-ai-send" aria-label="Send Query" class="w-10 h-10 rounded-lg bg-cyan-500 text-white flex items-center justify-center btn-hover shadow-lg"><i class="fas fa-paper-plane text-sm"></i></button>
                 </div>
             </div>
         </div>
@@ -1040,10 +1124,10 @@
     <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 z-[70] hidden" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-xl close-modal transition-opacity duration-300"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl transform scale-95 opacity-0 transition-all duration-500 modal-content p-0">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl transform scale-95 opacity-0 transition-all duration-500 modal-content p-0 hardware-accelerated">
             <div class="relative">
-                <button class="close-modal absolute top-4 sm:top-6 right-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors z-10 flex items-center justify-center backdrop-blur-md border border-white/10"><i class="fas fa-times text-lg sm:text-xl"></i></button>
-                <img id="project-modal-image" src="" alt="Project" class="w-full h-48 sm:h-64 lg:h-80 object-cover opacity-80">
+                <button aria-label="Close Project Modal" class="close-modal absolute top-4 sm:top-6 right-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors z-10 flex items-center justify-center backdrop-blur-md border border-white/10"><i class="fas fa-times text-lg sm:text-xl"></i></button>
+                <img id="project-modal-image" src="" alt="Project" class="w-full h-48 sm:h-64 lg:h-80 object-cover opacity-80" loading="lazy">
                 <div class="absolute bottom-0 left-0 w-full h-24 sm:h-32 bg-gradient-to-t from-zinc-900 to-transparent"></div>
                 <div class="p-6 sm:p-8 md:p-12 relative z-10 -mt-6 sm:-mt-10">
                     <h2 id="project-modal-title" class="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 text-white tracking-tight"></h2>
@@ -1051,7 +1135,7 @@
                     <div class="bg-black/50 border border-white/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                             <h4 class="font-bold flex items-center gap-2 text-white text-xs sm:text-sm uppercase tracking-widest font-mono"><i class="fas fa-code text-cyan-400"></i> Source Code</h4>
-                            <button id="explain-code-btn" class="text-[10px] sm:text-xs bg-white text-black px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto rounded-full hover:bg-slate-200 transition-all font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                            <button id="explain-code-btn" class="text-[10px] sm:text-xs bg-white text-black px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto rounded-full btn-hover font-bold uppercase tracking-wider hardware-accelerated">
                                 <i class="fas fa-sparkles mr-2 text-purple-600"></i> Analyze with AI
                             </button>
                         </div>
@@ -1062,10 +1146,11 @@
         </div>
     </div>
     
+    <!-- Blog Modal -->
     <div id="blog-modal" class="fixed inset-0 z-[70] hidden" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-xl close-modal"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-3xl max-h-[85vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl p-6 sm:p-8 md:p-12 transform scale-95 opacity-0 transition-all duration-500 modal-content">
-            <button class="close-modal absolute top-4 sm:top-6 right-4 sm:right-6 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"><i class="fas fa-times text-sm sm:text-base"></i></button>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-3xl max-h-[85vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl p-6 sm:p-8 md:p-12 transform scale-95 opacity-0 transition-all duration-500 modal-content hardware-accelerated">
+            <button class="close-modal absolute top-4 sm:top-6 right-4 sm:right-6 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors" aria-label="Close Blog Modal"><i class="fas fa-times text-sm sm:text-base"></i></button>
             <h2 id="blog-modal-title" class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-white tracking-tight pr-10"></h2>
             <div id="blog-modal-meta" class="text-[9px] sm:text-[10px] text-cyan-400 font-mono uppercase tracking-widest mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6"></div>
             <div id="blog-modal-content" class="prose prose-invert prose-slate max-w-none text-slate-300 leading-relaxed text-sm sm:text-base"></div>
@@ -1099,12 +1184,6 @@
             { title: "University vs Real World: Bridging the Gap", date: "March 05, 2024", desc: "University teaches theory. The workplace needs practical skills.", content: `<p>One of the biggest shocks for new graduates is how different professional software development is from university projects. In school, projects are greenfield—you start from a blank slate with clear requirements.</p><p>In the workplace, you're part of a large team working on a codebase that's years old, with millions of lines of code, technical debt, and legacy systems. The challenge shifts from "can you build this?" to "can you understand this complex system and change it without breaking anything?"</p><p>How do you bridge this gap? Contribute to open source, do internships, build substantial projects you maintain over time. Learn about version control, testing, deployment, and monitoring.</p>`}
         ];
 
-        const testimonialsData = [
-            { name: "Dr. Mohammad Rahman", title: "Professor, CSE Dept", quote: "Afnad demonstrates exceptional problem-solving abilities and a genuine passion for computer science. His projects showcase both technical proficiency and creative thinking.", initial: "MR", color: "from-cyan-500 to-blue-500" },
-            { name: "Sarah Ahmed", title: "Senior Developer", quote: "Working with Afnad on our hackathon project was amazing. His knowledge of modern web technologies and clean code made collaboration seamless.", initial: "SA", color: "from-purple-500 to-pink-500" },
-            { name: "Karim Hassan", title: "Gaming Club Member", quote: "As president of the Gaming Club, Afnad has been instrumental in organizing events. His leadership and technical skills inspire all of us.", initial: "KH", color: "from-blue-500 to-cyan-400" }
-        ];
-
         const faqData = [
             { question: "What are you most passionate about in tech?", answer: "I'm most passionate about the intersection of AI and user-centric design. Building intelligent applications that solve real problems while being intuitive and enjoyable to use is what drives me." },
             { question: "What's your favorite tech stack?", answer: "Currently, I enjoy the MERN stack for full-stack web development. For AI projects, Python with PyTorch and LangChain is my go-to architecture. I believe in using the absolute best tool for the specific job." },
@@ -1130,7 +1209,6 @@
         const PROJECTS_PER_PAGE = 6;
         const BLOGS_PER_PAGE = 6;
 
-        // HIGHLY CONTEXTUAL AI PROMPT FOR PUTER.JS
         const AURA_SYSTEM_PROMPT = `You are AURA, an advanced AI assistant deeply integrated into the portfolio website of Afnad Alam Nidul. 
 Afnad is a Computer Science Engineering (CSE) student at East West University in Dhaka, Bangladesh, and an AI Developer. 
 He specializes in Python, JavaScript, React, Node.js, C++, AI/ML (PyTorch, TensorFlow), and scalable architectures. 
@@ -1140,15 +1218,13 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
 
         // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
-            // FIXED: Removed force "add visible" to let Intersection Observer handle scroll revealing efficiently
-            
             setupNavbar();
+            setupMarqueeClone(); // Fixed the repeating HTML node issue 
             setupThreeJS();
             setupGSAP();
             setupCharts();
             populateProjects(true);
             populateBlog(true);
-            populateTestimonials();
             populateFAQ();
             setupModals();
             setupTypingEffect();
@@ -1177,15 +1253,32 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
             }
         }
 
+        // Setup dynamic marquee clone to prevent code duplication in HTML
+        function setupMarqueeClone() {
+            const container = document.getElementById('marquee-container');
+            if (container && container.children.length === 1) {
+                const clone = container.children[0].cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                container.appendChild(clone);
+            }
+        }
+
         function setupNavbar() {
             const navbar = document.getElementById('navbar');
+            let ticking = false;
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5', 'py-3');
-                    navbar.classList.remove('py-4', 'sm:py-6', 'bg-transparent');
-                } else {
-                    navbar.classList.remove('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5', 'py-3');
-                    navbar.classList.add('py-4', 'sm:py-6', 'bg-transparent');
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        if (window.scrollY > 50) {
+                            navbar.classList.add('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5', 'py-3');
+                            navbar.classList.remove('py-4', 'sm:py-6', 'bg-transparent');
+                        } else {
+                            navbar.classList.remove('bg-black/80', 'backdrop-blur-xl', 'border-b', 'border-white/5', 'py-3');
+                            navbar.classList.add('py-4', 'sm:py-6', 'bg-transparent');
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
             }, { passive: true });
         }
@@ -1199,11 +1292,9 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 gsap.to(bg, {
                     y: () => (ScrollTrigger.maxScroll(window) * speed),
                     ease: "none",
-                    scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }
+                    scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true }
                 });
             });
-
-            // FIXED: Removed conflicting GSAP targeting of .scroll-reveal here
         }
 
         function setupCharts() {
@@ -1254,9 +1345,12 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
                 
+                // Set pixel ratio for crisp rendering, capped to 2x for performance
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                
                 const count = window.innerWidth < 768 ? 80 : 150; 
                 const posArray = new Float32Array(count * 3);
                 
@@ -1272,19 +1366,29 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 
                 let mouseY = 0;
                 let isScrolling = false;
+                
                 window.addEventListener('scroll', () => { 
                     if (!isScrolling) {
+                        isScrolling = true;
                         window.requestAnimationFrame(() => {
-                            mouseY = window.scrollY / document.body.scrollHeight; 
+                            mouseY = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight || 1); 
                             isScrolling = false;
                         });
-                        isScrolling = true;
                     }
-                }, {passive: true});
+                }, { passive: true });
                 
+                // Intersection Observer bounds rendering to Hero Section only
+                let isCanvasVisible = true;
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        isCanvasVisible = entries[0].isIntersecting;
+                    });
+                    observer.observe(document.getElementById('home'));
+                }
+
                 const animate = () => {
                     requestAnimationFrame(animate);
-                    if (window.scrollY < window.innerHeight * 1.5) {
+                    if (isCanvasVisible) {
                         particlesMesh.rotation.y += 0.0005;
                         particlesMesh.position.y = mouseY * 3 - 1.5;
                         renderer.render(scene, camera);
@@ -1292,10 +1396,14 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 };
                 animate();
                 
+                let resizeTimeout;
                 window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        camera.aspect = window.innerWidth / window.innerHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                    }, 150);
                 });
             } catch (e) { console.error("ThreeJS Setup Error", e); }
         }
@@ -1308,7 +1416,7 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
             
             projectsToLoad.forEach((p, index) => {
                 const card = document.createElement('div');
-                card.className = 'glass-card p-0 group cursor-pointer flex flex-col h-full project-trigger border border-white/5';
+                card.className = 'glass-card p-0 group cursor-pointer flex flex-col h-full project-trigger border border-white/5 hardware-accelerated';
                 if (!initialLoad) {
                     card.style.opacity = '0'; card.style.transform = 'translateY(20px)';
                     setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, index * 100);
@@ -1317,9 +1425,9 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 const escapedCode = p.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 card.innerHTML = `
                     <div class="relative overflow-hidden h-40 sm:h-52">
-                        <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-60" loading="lazy">
+                        <img src="${p.img}" alt="${p.alt}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 opacity-60 hardware-accelerated" loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#18181b] via-transparent to-transparent"></div>
-                        <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                        <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm hardware-accelerated">
                             <span class="bg-white text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-lg">View Case Study</span>
                         </div>
                     </div>
@@ -1345,7 +1453,7 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
             
             blogsToLoad.forEach((b, index) => {
                 const item = document.createElement('article');
-                item.className = 'glass-card p-6 sm:p-8 group cursor-pointer blog-trigger flex flex-col h-full hover:border-cyan-500/30';
+                item.className = 'glass-card p-6 sm:p-8 group cursor-pointer blog-trigger flex flex-col h-full hover:border-cyan-500/30 hardware-accelerated';
                 if (!initialLoad) {
                     item.style.opacity = '0'; item.style.transform = 'translateY(20px)';
                     setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, index * 100);
@@ -1370,24 +1478,6 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
             if (displayedBlogs >= blogData.length && loadButton) loadButton.style.display = 'none';
         }
 
-        function populateTestimonials() {
-            const container = document.getElementById('testimonials-grid');
-            if (!container) return;
-            testimonialsData.forEach(t => {
-                const card = document.createElement('div');
-                card.className = 'glass-card p-5 sm:p-6 flex flex-col border border-white/5';
-                card.innerHTML = `
-                    <div class="flex items-center gap-3 sm:gap-4 mb-4 border-b border-white/5 pb-4">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-lg sm:text-xl font-mono shadow-lg">${t.initial}</div>
-                        <div><h4 class="font-bold text-white uppercase tracking-wide text-xs sm:text-sm">${t.name}</h4><p class="text-[9px] sm:text-[10px] text-slate-500 font-mono uppercase mt-0.5">${t.title}</p></div>
-                    </div>
-                    <p class="text-slate-300 italic flex-grow text-xs sm:text-sm leading-relaxed mb-4">"${t.quote}"</p>
-                    <div class="flex gap-1 text-[10px]">${Array(5).fill('<i class="fas fa-star text-yellow-500"></i>').join('')}</div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
         function populateFAQ() {
             const container = document.getElementById('faq-container');
             if (!container) return;
@@ -1397,9 +1487,9 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
                 faqItem.innerHTML = `
                     <button class="faq-question w-full flex justify-between items-center text-left p-4 sm:p-6 hover:bg-white/5 transition-colors">
                         <span class="font-bold text-white tracking-wide text-xs sm:text-sm">${item.question}</span>
-                        <i class="fas fa-chevron-down faq-icon text-cyan-400 shrink-0 ml-4 transition-transform text-sm"></i>
+                        <i class="fas fa-chevron-down faq-icon text-cyan-400 shrink-0 ml-4 transition-transform text-sm hardware-accelerated"></i>
                     </button>
-                    <div class="faq-answer"><p class="p-4 sm:p-6 pt-0 text-slate-400 leading-relaxed text-xs sm:text-sm border-l-2 border-cyan-500/30 ml-4 sm:ml-6 pl-4">${item.answer}</p></div>
+                    <div class="faq-answer hardware-accelerated"><p class="p-4 sm:p-6 pt-0 text-slate-400 leading-relaxed text-xs sm:text-sm border-l-2 border-cyan-500/30 ml-4 sm:ml-6 pl-4">${item.answer}</p></div>
                 `;
                 container.appendChild(faqItem);
             });
@@ -1422,7 +1512,7 @@ Your goal is to answer questions about Afnad intelligently, concisely, and profe
             const renderCommands = (filter = '') => {
                 const filtered = commands.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()) || c.shortcut.toLowerCase().includes(filter.toLowerCase()));
                 results.innerHTML = filtered.map((c, i) => `
-                    <button class="w-full flex items-center gap-3 sm:gap-4 p-3 rounded-xl hover:bg-white/10 transition-colors text-left text-xs sm:text-sm text-slate-300 hover:text-white group" onclick="document.getElementById('command-palette').classList.add('opacity-0'); setTimeout(() => document.getElementById('command-palette').classList.add('hidden'), 200); ${c.action.toString()};">
+                    <button class="w-full flex items-center gap-3 sm:gap-4 p-3 rounded-xl hover:bg-white/10 transition-colors text-left text-xs sm:text-sm text-slate-300 hover:text-white group hardware-accelerated" onclick="document.getElementById('command-palette').classList.add('opacity-0'); setTimeout(() => document.getElementById('command-palette').classList.add('hidden'), 200); ${c.action.toString()};">
                         <i class="fas ${c.icon} w-6 text-center text-cyan-400 text-sm sm:text-base"></i> 
                         <span class="flex-1">${c.name}</span>
                         <span class="text-[9px] sm:text-[10px] text-slate-500 font-mono uppercase tracking-wider group-hover:text-cyan-400">${c.shortcut}</span>
@@ -1514,7 +1604,7 @@ Memory: 32GB DDR5`,
                     const descContainer = document.getElementById('project-modal-description');
                     descContainer.innerHTML = projectTrigger.querySelector('.project-full-details').innerHTML + 
                         `<div class="mt-6 sm:mt-8 bg-[#050505] p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-white/10 overflow-x-auto shadow-inner w-full max-w-full">
-                            <pre class="text-[10px] sm:text-xs font-mono w-full"><code class="language-${projectTrigger.querySelector('.project-lang').innerText}">${projectTrigger.querySelector('.project-code').innerHTML}</code></pre>
+                            <pre class="text-[10px] sm:text-xs font-mono w-full hardware-accelerated"><code class="language-${projectTrigger.querySelector('.project-lang').innerText}">${projectTrigger.querySelector('.project-code').innerHTML}</code></pre>
                         </div>`;
                     if (typeof Prism !== 'undefined') setTimeout(() => Prism.highlightAllUnder(descContainer), 0);
                     currentCodeForAI = projectTrigger.querySelector('.project-code').innerText;
@@ -1552,26 +1642,52 @@ Memory: 32GB DDR5`,
             iframe.onload = () => loadingOverlay.classList.add('invisible', 'opacity-0');
             goBtn.addEventListener('click', () => navigateTo(input.value));
             input.addEventListener('keypress', e => { if (e.key === 'Enter') navigateTo(input.value); });
+
+            // Fix for auto-scroll: load Google only when the iframe is actually visible
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        iframe.src = iframe.getAttribute('data-src');
+                        observer.disconnect();
+                    }
+                }, { threshold: 0.1 });
+                observer.observe(iframe);
+            } else {
+                iframe.src = iframe.getAttribute('data-src');
+            }
         }
         
+        // Optimized Typing effect with requestAnimationFrame
         function setupTypingEffect() {
             const typeText = document.querySelector('.typing-text');
             if (!typeText) return;
             const phrases = ["AI_INTEGRATION", "FULL_STACK_DEV", "ALGORITHMIC_DESIGN", "SPATIAL_COMPUTING"];
             let pIndex = 0, cIndex = 0, isDeleting = false;
-            const type = () => {
+            let lastTime = performance.now();
+            
+            const type = (currentTime) => {
                 const currentPhrase = phrases[pIndex];
-                let text = isDeleting ? currentPhrase.substring(0, cIndex--) : currentPhrase.substring(0, ++cIndex);
-                typeText.textContent = text;
                 let typeSpeed = isDeleting ? 30 : 70;
-                if (!isDeleting && cIndex === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; } 
-                else if (isDeleting && cIndex === 0) { isDeleting = false; pIndex = (pIndex + 1) % phrases.length; typeSpeed = 400; }
-                setTimeout(type, typeSpeed);
+                
+                if (currentTime - lastTime >= typeSpeed) {
+                    lastTime = currentTime;
+                    let text = isDeleting ? currentPhrase.substring(0, cIndex--) : currentPhrase.substring(0, ++cIndex);
+                    typeText.textContent = text;
+                    
+                    if (!isDeleting && cIndex === currentPhrase.length) { 
+                        isDeleting = true; 
+                        lastTime = currentTime + 2000; // Pause
+                    } else if (isDeleting && cIndex === 0) { 
+                        isDeleting = false; 
+                        pIndex = (pIndex + 1) % phrases.length; 
+                        lastTime = currentTime + 400; // Pause 
+                    }
+                }
+                requestAnimationFrame(type);
             };
-            type();
+            requestAnimationFrame(type);
         }
 
-        // FIXED: Rebuilt observer logic so items seamlessly trigger when scrolled into view
         function setupScrollAnimations() {
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries) => {
@@ -1582,7 +1698,6 @@ Memory: 32GB DDR5`,
                                 observer.unobserve(e.target);
                             }
                             if (e.target.id === 'hero-stats') {
-                                // Apply proper Tailwind classes to reveal stats
                                 e.target.classList.remove('opacity-0', 'translate-y-5');
                                 e.target.classList.add('opacity-100', 'translate-y-0');
                                 animateCounters(e.target);
@@ -1595,17 +1710,29 @@ Memory: 32GB DDR5`,
             }
         }
         
+        // Optimized Counter Animation with requestAnimationFrame
         function animateCounters(container) {
             container.querySelectorAll('[data-target]').forEach(counter => {
                 const target = +counter.dataset.target;
                 if (isNaN(target) || counter.dataset.animated) return;
                 counter.dataset.animated = 'true';
-                let current = 0; const increment = target / 75;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) { clearInterval(timer); counter.innerText = target.toLocaleString() + '+'; } 
-                    else { counter.innerText = Math.ceil(current).toLocaleString(); }
-                }, 20);
+                
+                const duration = 1500; 
+                const start = performance.now();
+
+                const step = (timestamp) => {
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+                    const current = target * easeProgress;
+                    
+                    if (progress < 1) {
+                        counter.innerText = Math.ceil(current).toLocaleString();
+                        requestAnimationFrame(step);
+                    } else {
+                        counter.innerText = target.toLocaleString() + '+';
+                    }
+                };
+                requestAnimationFrame(step);
             });
         }
         
@@ -1658,7 +1785,6 @@ Memory: 32GB DDR5`,
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             try {
                 let text = ""; 
-                // FIXED: Explicitly specify Gemini model for Puter.js and handle response safely
                 if (typeof puter !== 'undefined' && puter.ai) {
                     try {
                         const fullPrompt = `${AURA_SYSTEM_PROMPT}\n\nUser Question/Command: ${prompt}`;
@@ -1672,7 +1798,10 @@ Memory: 32GB DDR5`,
                     text = getMockAIResponse(prompt); 
                 }
                 
-                const formatted = text.replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code class="text-cyan-400 bg-white/10 px-1 rounded font-mono text-[10px]">$1</code>');
+                const formatted = text
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white font-bold">$1</strong>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/`([^`]+)`/g, '<code class="text-cyan-400 bg-white/10 px-1 rounded font-mono text-[10px]">$1</code>');
                 
                 if (outputElement.id === 'ai-chat-output' || outputElement.id === 'global-ai-output') {
                     outputElement.innerHTML += `<div class="flex justify-start mt-3"><div class="bg-cyan-500/10 text-slate-300 py-3 px-4 rounded-2xl rounded-tl-none max-w-[90%] sm:max-w-[85%] border border-cyan-500/20 shadow-sm leading-relaxed"><span class="text-cyan-400 block mb-1.5 text-[9px] uppercase tracking-widest font-bold">AURA:</span>${formatted}</div></div>`;
@@ -1791,7 +1920,16 @@ Memory: 32GB DDR5`,
 
         function setupToTopButton() {
             const btn = document.getElementById('to-top-btn');
-            window.addEventListener('scroll', () => { window.scrollY > 400 ? btn.classList.remove('opacity-0', 'invisible', 'scale-90') : btn.classList.add('opacity-0', 'invisible', 'scale-90'); }, {passive: true});
+            let ticking = false;
+            window.addEventListener('scroll', () => { 
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        window.scrollY > 400 ? btn.classList.remove('opacity-0', 'invisible', 'scale-90') : btn.classList.add('opacity-0', 'invisible', 'scale-90'); 
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, {passive: true});
             btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         }
     </script>
