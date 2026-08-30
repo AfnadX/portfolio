@@ -127,8 +127,8 @@ html.lenis, html.lenis body{height:auto}
   background:radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,.5) 100%);
 }
 .hero-glow{
-  position:absolute; left:50%; top:38%; width:min(90vw,1100px); aspect-ratio:1; transform:translate(-50%,-50%);
-  background:radial-gradient(circle, rgba(255,77,0,.03), rgba(255,77,0,.008) 42%, transparent 68%);
+  position:absolute; left:50%; top:50%; width:min(95vw,1200px); aspect-ratio:1; transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(255,77,0,.04), rgba(255,77,0,.01) 45%, transparent 70%);
   pointer-events:none; z-index:0;
 }
 
@@ -150,6 +150,7 @@ html.lenis, html.lenis body{height:auto}
 .w-wrap{display:inline-block; overflow:hidden; vertical-align:top}
 .w{display:inline-block; will-change:transform}
 .hero-line{overflow:hidden; display:block}
+.hero-zoom-container{transform-origin:center center; will-change:transform, opacity, filter}
 
 /* ============================================================
    NAV
@@ -412,35 +413,41 @@ html.lenis, html.lenis body{height:auto}
 <main>
 
 <!-- ================= HERO ================= -->
-<section id="hero" class="relative flex items-end min-h-[100svh] overflow-hidden" style="min-height:100vh">
-  <div id="hero-scene" class="absolute inset-0 z-0" aria-hidden="true">
+<section id="hero" class="relative flex items-center justify-center min-h-[100svh] overflow-hidden" style="min-height:100vh">
+  <div id="hero-scene" class="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
     <canvas id="hero-canvas" class="block w-full h-full"></canvas>
   </div>
   <div class="hero-glow" aria-hidden="true"></div>
 
-  <div class="hero-inner relative z-10 w-full px-5 md:px-10 pb-28 md:pb-24 pt-32">
-    <div class="hero-meta flex items-center justify-between font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-muted mb-8 md:mb-12">
+  <div class="hero-inner relative z-10 w-full max-w-5xl px-5 md:px-10 py-28 flex flex-col items-center justify-center text-center">
+    
+    <!-- Hero Meta Top -->
+    <div class="hero-meta flex items-center justify-center gap-4 md:gap-6 font-mono text-[9px] md:text-[10px] tracking-[0.34em] text-muted mb-8 md:mb-12">
       <span>PORTFOLIO — v4.0 // CSE·AI</span>
-      <span class="hidden sm:block">23.8103° N — 90.4125° E</span>
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span>
+      <span class="hidden sm:inline">23.8103° N — 90.4125° E</span>
     </div>
 
-    <h1 class="font-display font-semibold tracking-[-0.03em] text-paper">
-      <span class="hero-line text-[clamp(3.2rem,13.5vw,11rem)] leading-[0.95]">
-        <span class="split-me">AFNAD</span>
-      </span>
-      <span class="hero-line text-[clamp(1.9rem,7vw,6.4rem)] leading-[1.02] mt-1 md:mt-2">
-        <em class="serif-it split-me" style="color:var(--accent)">ALAM</em><span class="split-me">&nbsp;NIDUL</span>
-      </span>
-    </h1>
+    <!-- Scalable / Zooming Centered Title -->
+    <div id="hero-zoom-target" class="hero-zoom-container flex flex-col items-center">
+      <h1 class="font-display font-semibold tracking-[-0.035em] text-paper">
+        <span class="hero-line text-[clamp(3.5rem,14vw,11.5rem)] leading-[0.9] block">
+          <span class="split-me">AFNAD</span>
+        </span>
+        <span class="hero-line text-[clamp(2.2rem,8.2vw,7.2rem)] leading-[1.02] mt-2 md:mt-4 block">
+          <em class="serif-it split-me" style="color:var(--accent)">ALAM</em><span class="split-me">&nbsp;NIDUL</span>
+        </span>
+      </h1>
+    </div>
 
-    <div class="mt-10 md:mt-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
-      <div class="max-w-xl">
-        <p class="text-muted text-[15px] md:text-base leading-relaxed">
-          CSE student & independent builder. Architecting resilient AI ecosystems and full-stack applications
-          with a focus on scalable engineering and precise logic.
-        </p>
-      </div>
-      <div class="hero-cta-row flex items-center gap-3 font-mono text-[11px] tracking-[0.3em] md:pb-1">
+    <!-- Hero Subtitle & Role details -->
+    <div class="hero-sub mt-8 md:mt-12 flex flex-col items-center gap-7 max-w-2xl mx-auto">
+      <p class="text-muted text-[15px] md:text-[17px] leading-relaxed max-w-xl mx-auto">
+        CSE student & independent builder. Architecting resilient AI ecosystems and full-stack applications
+        with a focus on scalable engineering and precise logic.
+      </p>
+
+      <div class="hero-cta-row flex items-center justify-center gap-3 font-mono text-[11px] tracking-[0.3em]">
         <span class="text-faint">[</span>
         <span id="role" class="text-paper">AI ENGINEER</span>
         <span class="text-faint">]</span>
@@ -1042,7 +1049,7 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
       .fromTo('.hero-line .char', { yPercent: 130, rotate: 6 }, { yPercent: 0, rotate: 0, duration: 1.25, stagger: 0.032, ease: 'power4.out' }, 0.05)
       .fromTo('.hero-meta', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out' }, 0.45)
       .fromTo('#role', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.85)
-      .fromTo('.hero-inner .max-w-xl', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.7)
+      .fromTo('.hero-sub p', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.7)
       .fromTo('.hero-cta-row', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.95);
 
     var state = { v: 0 };
@@ -1116,9 +1123,42 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
     });
   }
 
-  /* ---------- scroll reveals + parallax ---------- */
+  /* ---------- scroll reveals + parallax + zoom-fade ---------- */
   function initScrollFX() {
     if (!hasGSAP) return;
+
+    /* Hero Name Zoom-In and Fade-Out on Scroll */
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.4
+      }
+    })
+    .to('#hero-zoom-target', {
+      scale: 2.8,
+      opacity: 0,
+      filter: 'blur(12px)',
+      yPercent: -12,
+      ease: 'power1.inOut'
+    }, 0)
+    .to('.hero-sub', {
+      opacity: 0,
+      yPercent: -20,
+      filter: 'blur(8px)',
+      ease: 'power1.inOut'
+    }, 0)
+    .to('.hero-meta', {
+      opacity: 0,
+      ease: 'power1.inOut'
+    }, 0)
+    .to('#hero-scene', {
+      opacity: 0.15,
+      scale: 1.25,
+      ease: 'none'
+    }, 0);
+
     gsap.utils.toArray('[data-reveal]').forEach(function (el) {
       var d = parseFloat(el.getAttribute('data-delay') || 0);
       gsap.fromTo(el, { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 1.15, ease: 'power3.out', delay: d,
@@ -1294,7 +1334,7 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
     step();
   }
 
-  /* ---------- THREE.js hero (darker & subtle) ---------- */
+  /* ---------- THREE.js hero (ambient background dust only, center sphere removed) ---------- */
   function initThree() {
     var canvas = document.getElementById('hero-canvas');
     if (!canvas || typeof window.THREE === 'undefined') return;
@@ -1353,37 +1393,17 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
       transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
     });
 
-    /* Darker, subtle core sphere */
-    var coreGeo = new THREE.IcosahedronGeometry(isMobile ? 2.4 : 3.2, isMobile ? 12 : 16);
-    var pos = coreGeo.attributes.position.array;
-    var count = pos.length / 3;
-    var scales = new Float32Array(count);
-    var colors = new Float32Array(count * 3);
-    var base = new THREE.Color('#38180c'); // darker ember
-    var hi = new THREE.Color('#5c2914');   // deep muted bronze
-    var tmp = new THREE.Color();
-    for (var i = 0; i < count; i++) {
-      scales[i] = 0.2 + Math.random() * 0.5;
-      var y = pos[i * 3 + 1];
-      tmp.copy(base).lerp(hi, (Math.sin(y * 2.0) + 1.0) * 0.5 * Math.random());
-      colors[i * 3] = tmp.r; colors[i * 3 + 1] = tmp.g; colors[i * 3 + 2] = tmp.b;
-    }
-    coreGeo.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
-    coreGeo.setAttribute('aColor', new THREE.BufferAttribute(colors, 3));
-    var core = new THREE.Points(coreGeo, mat);
-    group.add(core);
-
-    /* ambient dust */
+    /* ambient floating star dust */
     var dustCount = isMobile ? 500 : 1200;
     var dp = new Float32Array(dustCount * 3), ds = new Float32Array(dustCount), dc = new Float32Array(dustCount * 3);
-    var c2 = new THREE.Color('#2e2822');
+    var c2 = new THREE.Color('#38281e');
     for (var d = 0; d < dustCount; d++) {
-      var r = 5 + Math.random() * 7;
+      var r = 4 + Math.random() * 9;
       var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
       dp[d * 3] = r * Math.sin(ph) * Math.cos(th);
-      dp[d * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.6;
+      dp[d * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.7;
       dp[d * 3 + 2] = r * Math.cos(ph);
-      ds[d] = 0.2 + Math.random() * 0.45;
+      ds[d] = 0.2 + Math.random() * 0.5;
       dc[d * 3] = c2.r; dc[d * 3 + 1] = c2.g; dc[d * 3 + 2] = c2.b;
     }
     var dg = new THREE.BufferGeometry();
@@ -1403,8 +1423,8 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
       var g = new THREE.BufferGeometry().setFromPoints(pts);
       return new THREE.Line(g, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: opacity }));
     }
-    var ring1 = makeRing(4.6, 0x552211, 0.08); ring1.rotation.x = 1.35; group.add(ring1);
-    var ring2 = makeRing(6.2, 0x333338, 0.03); ring2.rotation.x = 1.6; ring2.rotation.z = 0.4; group.add(ring2);
+    var ring1 = makeRing(5.2, 0x552211, 0.07); ring1.rotation.x = 1.35; group.add(ring1);
+    var ring2 = makeRing(7.0, 0x333338, 0.025); ring2.rotation.x = 1.6; ring2.rotation.z = 0.4; group.add(ring2);
 
     /* interaction */
     var mouse = { x: 0, y: 0 };
@@ -1413,17 +1433,6 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
       mouse.y = (e.clientY / H) * 2 - 1;
     }, { passive: true });
 
-    var scrollV = { v: 0 };
-    if (hasGSAP) {
-      gsap.to(scrollV, { v: 1, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true,
-          onUpdate: function (self) { scrollV.v = self.progress; } } });
-      gsap.to('#hero-scene', { opacity: 0.12, yPercent: 16, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-      gsap.to('.hero-inner', { yPercent: -14, opacity: 0.25, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-    }
-
     var clock = new THREE.Clock();
     var running = true;
     function tick() {
@@ -1431,14 +1440,11 @@ window.__CSE_FALLBACK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent
       requestAnimationFrame(tick);
       var t = clock.getElapsedTime();
       if (mat.uniforms) mat.uniforms.uTime.value = t;
-      core.rotation.y = t * 0.035;
-      core.rotation.x = Math.sin(t * 0.08) * 0.08;
-      dust.rotation.y = -t * 0.01;
-      ring1.rotation.z = t * 0.04;
-      ring2.rotation.z = -t * 0.03;
-      camera.position.x += (mouse.x * 0.6 - camera.position.x) * 0.035;
-      camera.position.y += (-mouse.y * 0.4 - camera.position.y) * 0.035;
-      camera.position.z = 10.5 - scrollV.v * 7;
+      dust.rotation.y = -t * 0.015;
+      ring1.rotation.z = t * 0.035;
+      ring2.rotation.z = -t * 0.025;
+      camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.035;
+      camera.position.y += (-mouse.y * 0.35 - camera.position.y) * 0.035;
       camera.lookAt(0, 0, 0);
       renderer.render(scene, camera);
     }
