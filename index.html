@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CSS -->
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -64,7 +64,7 @@
 
   <style>
     :root{ --ease: cubic-bezier(.22,1,.36,1); }
-    html{ background:#050505; }
+    html{ background:#050505; -webkit-tap-highlight-color: transparent; }
     html.lenis, html.lenis body{ height:auto; }
     .lenis.lenis-smooth{ scroll-behavior:auto !important; }
     .lenis.lenis-stopped{ overflow:hidden; }
@@ -78,60 +78,86 @@
     .mono{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; }
     ::selection{ background:#fff; color:#050505; }
     :focus-visible{ outline:1px solid rgba(255,255,255,.55); outline-offset:3px; border-radius:4px; }
+    
+    /* Smooth Scrollbar */
     ::-webkit-scrollbar{ width:5px; }
     ::-webkit-scrollbar-track{ background:transparent; }
-    ::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.22); border-radius:99px; }
-    html{ scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.22) transparent; }
+    ::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:99px; }
+    html{ scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.2) transparent; }
 
-    /* hide native cursor only once custom cursor is alive */
-    html.has-cursor, html.has-cursor *{ cursor:none !important; }
+    /* Interactive Elements */
+    a, button{ cursor: pointer; }
 
     /* ============ LIQUID GLASS ============ */
     .glass{
       position:relative;
-      background:linear-gradient(135deg, rgba(255,255,255,.085) 0%, rgba(255,255,255,.028) 52%, rgba(255,255,255,.05) 100%);
-      border:1px solid rgba(255,255,255,.12);
-      -webkit-backdrop-filter:blur(24px) saturate(1.4);
-      backdrop-filter:blur(24px) saturate(1.4);
+      background:linear-gradient(135deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.02) 52%, rgba(255,255,255,.045) 100%);
+      border:1px solid rgba(255,255,255,.1);
+      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(14px);
       border-radius:1.35rem;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
     .glass::before{
       content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-      background:radial-gradient(170px 110px at 12% 0%, rgba(255,255,255,.16), transparent 70%);
-      opacity:.85;
+      background:radial-gradient(160px 100px at 12% 0%, rgba(255,255,255,.12), transparent 70%);
+      opacity:.8;
+    }
+    @media (max-width: 768px) {
+      .glass {
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+      }
     }
     .glass-pill{ border-radius:9999px; }
-    .glass-xl{ border-radius:2.1rem; }
-    .glass-2xl{ border-radius:2.6rem; }
-    .glass-hover{ transition:border-color .7s var(--ease), background .7s var(--ease); }
-    .glass-hover:hover{ border-color:rgba(255,255,255,.28); background:linear-gradient(135deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.045) 55%, rgba(255,255,255,.075) 100%); }
+    .glass-xl{ border-radius:2rem; }
+    .glass-2xl{ border-radius:2.5rem; }
+    .glass-hover{ transition:border-color .4s var(--ease), background .4s var(--ease), transform .4s var(--ease); }
+    @media (hover: hover) {
+      .glass-hover:hover{ 
+        border-color:rgba(255,255,255,.25); 
+        background:linear-gradient(135deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.035) 55%, rgba(255,255,255,.065) 100%); 
+      }
+    }
 
-    /* cinematic legibility halo for type that sits directly over raw video */
-    .cinema{ text-shadow:0 0 28px rgba(0,0,0,.32), 0 0 4px rgba(0,0,0,.22); }
+    /* Crisp text readability halo over live video */
+    .cinema{ text-shadow:0 0 28px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.5); }
 
     /* ============ FILM GRAIN ============ */
     .grain{
-      position:fixed; left:-50%; top:-50%; width:200%; height:200%;
-      z-index:120; pointer-events:none; opacity:.05;
+      position:fixed; inset:0; width:100%; height:100%;
+      z-index:120; pointer-events:none; opacity:.03;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size:180px 180px;
-      animation:grainShift 1.4s steps(3) infinite;
     }
-    @keyframes grainShift{
-      0%{ transform:translate(0,0); } 33%{ transform:translate(1.2%,-0.8%); }
-      66%{ transform:translate(-0.9%,1.1%); } 100%{ transform:translate(0,0); }
+    @media (min-width: 1024px) {
+      .grain{
+        left:-50%; top:-50%; width:200%; height:200%;
+        animation:grainShift 2.5s steps(2) infinite;
+        opacity:.04;
+      }
+      @keyframes grainShift{
+        0%{ transform:translate(0,0); }
+        50%{ transform:translate(1%,-1%); }
+        100%{ transform:translate(0,0); }
+      }
     }
 
     /* ============ VIDEO STAGE ============ */
-    .video-layer{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; }
+    .video-layer{ 
+      position:absolute; inset:0; width:100%; height:100%; 
+      object-fit:cover; opacity:0; 
+      will-change:opacity;
+    }
     #videoStage{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
     #content{ position:relative; z-index:10; }
 
-    /* ============ NAV ============ */
+    /* ============ NAVBAR ============ */
     #siteNav{
       position:fixed; inset-inline:0; top:0; z-index:100; pointer-events:none;
       padding-inline:5.2%; padding-top:clamp(14px,1.6vw,26px);
-      transition:transform .8s var(--ease);
+      transition:transform .5s var(--ease);
     }
     #siteNav > *{ pointer-events:auto; }
     #siteNav.nav-hidden{ transform:translateY(-165%); }
@@ -139,28 +165,28 @@
     .linku::after{
       content:""; position:absolute; left:0; bottom:-5px; height:1px; width:100%;
       background:currentColor; transform:scaleX(0); transform-origin:right;
-      transition:transform .55s var(--ease);
+      transition:transform .4s var(--ease);
     }
     .linku:hover::after{ transform:scaleX(1); transform-origin:left; }
 
-    /* burger */
+    /* Burger */
     #menuBtn span{
       position:absolute; left:50%; top:50%; width:16px; height:1.5px; background:#fff;
-      transform:translate(-50%,-50%); transition:transform .55s var(--ease);
+      transform:translate(-50%,-50%); transition:transform .4s var(--ease);
     }
     #menuBtn span:nth-child(1){ transform:translate(-50%, calc(-50% - 4px)); }
     #menuBtn span:nth-child(2){ transform:translate(-50%, calc(-50% + 4px)); }
     body.menu-open #menuBtn span:nth-child(1){ transform:translate(-50%,-50%) rotate(45deg); }
     body.menu-open #menuBtn span:nth-child(2){ transform:translate(-50%,-50%) rotate(-45deg); }
 
-    .mmenu{ visibility:hidden; opacity:0; pointer-events:none; transition:opacity .7s var(--ease), visibility .7s; }
+    .mmenu{ visibility:hidden; opacity:0; pointer-events:none; transition:opacity .4s var(--ease), visibility .4s; }
     .mmenu.open{ visibility:visible; opacity:1; pointer-events:auto; }
 
-    /* ============ TEXT REVEAL MASKS ============ */
-    .maskline{ display:block; overflow:hidden; padding-bottom:.07em; margin-bottom:-.07em; }
+    /* ============ TEXT MASKS ============ */
+    .maskline{ display:block; overflow:hidden; padding-bottom:.06em; margin-bottom:-.06em; }
     .maskline-in{ display:block; will-change:transform; }
 
-    /* ============ SCROLL PILL ============ */
+    /* ============ ANIMATIONS ============ */
     #scrollPill{ position:relative; overflow:hidden; }
     #scrollDot{
       position:absolute; top:50%; left:14px; width:5px; height:5px; border-radius:99px; background:#fff;
@@ -173,7 +199,6 @@
       100%{ transform:translateX(78px); opacity:0; }
     }
 
-    /* pulse dot */
     .pulse-dot{ position:relative; width:7px; height:7px; border-radius:99px; background:#fff; }
     .pulse-dot::after{
       content:""; position:absolute; inset:-4px; border-radius:99px;
@@ -185,41 +210,26 @@
       75%,100%{ transform:scale(1.55); opacity:0; }
     }
 
-    /* slow spin for emblem geometry */
-    .spin-slow{ animation:spinSlow 52s linear infinite; transform-box:fill-box; transform-origin:center; }
+    .spin-slow{ animation:spinSlow 45s linear infinite; transform-box:fill-box; transform-origin:center; }
     @keyframes spinSlow{ to{ transform:rotate(360deg); } }
     .emblem-node{ animation:nodePulse 4.5s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
     @keyframes nodePulse{ 0%,100%{ opacity:.25; } 50%{ opacity:.85; } }
 
-    /* ============ CONTACT ROWS ============ */
-    .ci{ transition:transform .8s var(--ease); }
-    .ci-icon{ transition:transform .8s var(--ease), border-color .8s var(--ease); }
-    .ci-arrow{ transition:transform .8s var(--ease), opacity .8s var(--ease); opacity:.35; }
-    .contact-row:hover .ci{ transform:translateX(clamp(6px,.7vw,14px)); }
-    .contact-row:hover .ci-icon{ transform:rotate(-6deg) scale(1.06); border-color:rgba(255,255,255,.3); }
-    .contact-row:hover .ci-arrow{ transform:translate(4px,-4px); opacity:1; }
-    .contact-row{ transition:background .6s var(--ease); }
+    /* Contact link interactions */
+    .ci{ transition:transform .4s var(--ease); }
+    .ci-icon{ transition:transform .4s var(--ease), border-color .4s var(--ease); }
+    .ci-arrow{ transition:transform .4s var(--ease), opacity .4s var(--ease); opacity:.35; }
+    .contact-row:hover .ci{ transform:translateX(8px); }
+    .contact-row:hover .ci-icon{ transform:rotate(-5deg) scale(1.04); border-color:rgba(255,255,255,.3); }
+    .contact-row:hover .ci-arrow{ transform:translate(3px,-3px); opacity:1; }
+    .contact-row{ transition:background .3s var(--ease); }
 
-    .tilt-wrap{ transform-style:preserve-3d; }
-
-    /* ============ CURSOR ============ */
-    #cursorDot,#cursorRing{ position:fixed; top:0; left:0; z-index:140; pointer-events:none; border-radius:99px; }
-    #cursorDot{ width:6px; height:6px; background:#fff; margin:-3px 0 0 -3px; }
-    #cursorRing{
-      width:38px; height:38px; margin:-19px 0 0 -19px;
-      border:1px solid rgba(255,255,255,.55);
-      mix-blend-mode:difference;
-    }
-
-    /* ============ LOADER ============ */
-    #loader{ transition:background .3s; }
+    /* Loader */
     #loadBarWrap{ overflow:hidden; }
     #loadBar{ transform-origin:left center; transform:scaleX(0); }
 
-    .vignette-text{ opacity:.5; }
-
     @media (prefers-reduced-motion: reduce){
-      .grain{ animation:none; }
+      .grain, .spin-slow, .emblem-node{ animation:none !important; }
       #scrollDot{ animation-duration:6s; }
     }
   </style>
@@ -227,7 +237,7 @@
 
 <body class="bg-[#050505] text-white antialiased">
 
-  <!-- ================= ICON SPRITE (Lucide-based, inline) ================= -->
+  <!-- ================= ICON SPRITE ================= -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
     <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
@@ -261,10 +271,10 @@
 
   <!-- ================= LOADER ================= -->
   <div id="loader" class="fixed inset-0 z-[200] bg-[#050505] flex items-center justify-center">
-    <div class="relative flex flex-col items-center gap-[2.6vh] px-[7%]">
-      <div id="loaderMeta" class="mono text-white/35 tracking-[0.42em] uppercase" style="font-size:clamp(9px,.65vw,12px)">Portfolio — 2024</div>
+    <div class="relative flex flex-col items-center gap-[2.4vh] px-[7%]">
+      <div id="loaderMeta" class="mono text-white/35 tracking-[0.42em] uppercase" style="font-size:clamp(9px,.65vw,12px)">Portfolio</div>
       <div class="overflow-hidden">
-        <div id="loaderName" class="cinema font-extrabold text-white text-center tracking-[-0.03em] whitespace-nowrap" style="font-size:clamp(30px,5.6vw,76px)">Afnad&nbsp;Alam&nbsp;Nidul</div>
+        <div id="loaderName" class="cinema font-extrabold text-white text-center tracking-[-0.03em] whitespace-nowrap" style="font-size:clamp(28px,5.4vw,72px)">Afnad&nbsp;Alam&nbsp;Nidul</div>
       </div>
       <div id="loadBarWrap" class="w-[clamp(120px,14vw,220px)] h-px bg-white/15 relative">
         <div id="loadBar" class="absolute inset-0 bg-white"></div>
@@ -273,30 +283,32 @@
     </div>
   </div>
 
-  <!-- ================= CINEMATIC VIDEO STAGE (HLS cycle) ================= -->
+  <!-- ================= CINEMATIC BACKGROUND STAGE (Balanced Brightness & Colors) ================= -->
   <div id="videoStage" aria-hidden="true">
     <video id="bgV0" class="video-layer" muted autoplay playsinline preload="auto" disablepictureinpicture disableremoteplayback style="opacity:0"></video>
     <video id="bgV1" class="video-layer" muted autoplay playsinline preload="auto" disablepictureinpicture disableremoteplayback style="opacity:0"></video>
+    <!-- Perfectly balanced contrast scrim: keeps rich colors & natural vibrancy while maintaining text clarity -->
+    <div class="absolute inset-0 bg-[#050505]/35 pointer-events-none z-[1]"></div>
   </div>
 
-  <!-- film grain -->
+  <!-- Film Grain Overlay -->
   <div class="grain" aria-hidden="true"></div>
 
   <!-- ================= NAVBAR ================= -->
   <nav id="siteNav" aria-label="Primary">
     <div class="glass glass-pill flex items-center justify-between px-[clamp(18px,1.8vw,32px)] py-[clamp(10px,1vw,15px)]">
       <a href="#hero" data-scroll class="flex items-baseline gap-[8px] group">
-        <span class="font-extrabold tracking-[-0.03em] transition-opacity duration-500 group-hover:opacity-70" style="font-size:clamp(16px,1.3vw,22px)">Afnad</span>
+        <span class="font-extrabold tracking-[-0.03em] transition-opacity duration-300 group-hover:opacity-70" style="font-size:clamp(16px,1.3vw,22px)">Afnad</span>
         <span class="inline-block w-[5px] h-[5px] rounded-full bg-white/80 mb-[1px]"></span>
         <span class="mono text-white/35 tracking-[0.22em] uppercase hidden sm:inline" style="font-size:clamp(8px,.55vw,10.5px)">CSE · EWU</span>
       </a>
       <div class="flex items-center gap-[clamp(18px,2.6vw,44px)]">
         <span id="feedIdx" class="mono text-white/25 tracking-[0.3em] hidden xl:inline" style="font-size:clamp(8px,.6vw,11px)">FEED 01/05</span>
         <div class="hidden md:flex items-center gap-[clamp(18px,2.4vw,40px)]">
-          <a href="#about" data-scroll data-magnetic="0.18" class="linku text-white/70 hover:text-white transition-colors duration-500 font-medium" style="font-size:clamp(12px,.95vw,15px)">About</a>
-          <a href="#stack" data-scroll data-magnetic="0.18" class="linku text-white/70 hover:text-white transition-colors duration-500 font-medium" style="font-size:clamp(12px,.95vw,15px)">Stack</a>
-          <a href="#philosophy" data-scroll data-magnetic="0.18" class="linku text-white/70 hover:text-white transition-colors duration-500 font-medium" style="font-size:clamp(12px,.95vw,15px)">Philosophy</a>
-          <a href="#contact" data-scroll data-magnetic="0.18" class="linku text-white/70 hover:text-white transition-colors duration-500 font-medium" style="font-size:clamp(12px,.95vw,15px)">Contact</a>
+          <a href="#about" data-scroll class="linku text-white/70 hover:text-white transition-colors duration-300 font-medium" style="font-size:clamp(12px,.95vw,15px)">About</a>
+          <a href="#stack" data-scroll class="linku text-white/70 hover:text-white transition-colors duration-300 font-medium" style="font-size:clamp(12px,.95vw,15px)">Stack</a>
+          <a href="#philosophy" data-scroll class="linku text-white/70 hover:text-white transition-colors duration-300 font-medium" style="font-size:clamp(12px,.95vw,15px)">Philosophy</a>
+          <a href="#contact" data-scroll class="linku text-white/70 hover:text-white transition-colors duration-300 font-medium" style="font-size:clamp(12px,.95vw,15px)">Contact</a>
         </div>
         <button id="menuBtn" class="md:hidden relative w-[42px] h-[42px] rounded-full glass glass-pill" aria-label="Toggle menu" aria-expanded="false">
           <span></span><span></span>
@@ -305,95 +317,94 @@
     </div>
   </nav>
 
-  <!-- ================= MOBILE MENU ================= -->
-  <div id="mobileMenu" class="mmenu fixed inset-0 z-[95] bg-[rgba(5,5,5,.62)]" style="-webkit-backdrop-filter:blur(38px) saturate(1.3);backdrop-filter:blur(38px) saturate(1.3);">
-    <div class="h-full flex flex-col justify-center px-[8%] gap-[1.4vh]">
-      <div class="mono text-white/35 tracking-[0.35em] uppercase mb-[3vh]" style="font-size:clamp(9px,.7vw,12px)">Index — 2024</div>
-      <a href="#about" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(36px,8vw,64px)"><span class="mono text-white/30 font-normal" style="font-size:clamp(11px,1vw,15px)">01</span>About</a>
-      <a href="#stack" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(36px,8vw,64px)"><span class="mono text-white/30 font-normal" style="font-size:clamp(11px,1vw,15px)">02</span>Stack</a>
-      <a href="#philosophy" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(36px,8vw,64px)"><span class="mono text-white/30 font-normal" style="font-size:clamp(11px,1vw,15px)">03</span>Philosophy</a>
-      <a href="#contact" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(36px,8vw,64px)"><span class="mono text-white/30 font-normal" style="font-size:clamp(11px,1vw,15px)">04</span>Contact</a>
-      <div class="mono text-white/40 mt-[6vh] tracking-[0.2em]" style="font-size:clamp(10px,.8vw,13px)">2024-3-60-229@std.ewubd.edu</div>
+  <!-- ================= MOBILE DRAWER MENU ================= -->
+  <div id="mobileMenu" class="mmenu fixed inset-0 z-[95] bg-[rgba(5,5,5,.85)]" style="-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);">
+    <div class="h-full flex flex-col justify-center px-[8%] gap-[1.5vh]">
+      <div class="mono text-white/35 tracking-[0.35em] uppercase mb-[2.5vh]" style="font-size:clamp(9px,.7vw,12px)">Index</div>
+      <a href="#about" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(32px,7.5vw,56px)"><span class="mono text-white/30 font-normal text-sm">01</span>About</a>
+      <a href="#stack" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(32px,7.5vw,56px)"><span class="mono text-white/30 font-normal text-sm">02</span>Stack</a>
+      <a href="#philosophy" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(32px,7.5vw,56px)"><span class="mono text-white/30 font-normal text-sm">03</span>Philosophy</a>
+      <a href="#contact" data-scroll class="m-link font-extrabold text-white tracking-[-0.02em] flex items-baseline gap-[14px]" style="font-size:clamp(32px,7.5vw,56px)"><span class="mono text-white/30 font-normal text-sm">04</span>Contact</a>
+      <div class="mono text-white/40 mt-[5vh] tracking-[0.16em]" style="font-size:clamp(11px,.8vw,13px)">2024-3-60-229@std.ewubd.edu</div>
     </div>
   </div>
 
-  <!-- ================= CONTENT ================= -->
+  <!-- ================= MAIN CONTENT ================= -->
   <main id="content">
 
     <!-- ========== 01 · HERO ========== -->
     <section id="hero" class="relative min-h-[100svh] flex flex-col justify-center px-[5.2%]">
       <div id="heroInner" class="relative text-center">
-        <div data-hero-fade class="inline-flex items-center gap-[12px] glass glass-pill px-[clamp(16px,1.4vw,24px)] py-[clamp(8px,.7vw,11px)] mb-[clamp(18px,3vh,40px)]">
+        <div data-hero-fade class="inline-flex items-center gap-[12px] glass glass-pill px-[clamp(16px,1.4vw,24px)] py-[clamp(8px,.7vw,11px)] mb-[clamp(18px,3vh,36px)]">
           <span class="pulse-dot"></span>
-          <span class="mono text-white/75 tracking-[0.28em] uppercase" style="font-size:clamp(9px,.7vw,12.5px)">Open to opportunities — 2024</span>
+          <span class="mono text-white/85 tracking-[0.26em] uppercase" style="font-size:clamp(9px,.7vw,12px)">Open to Opportunities</span>
         </div>
 
-        <h1 id="heroTitle" data-split aria-label="Afnad Alam Nidul" class="cinema font-extrabold text-white tracking-[-0.02em] leading-[1.02]" style="font-size:clamp(32px,7.6vw,96px)">Afnad Alam Nidul</h1>
+        <h1 id="heroTitle" data-split aria-label="Afnad Alam Nidul" class="cinema font-extrabold text-white tracking-[-0.02em] leading-[1.04]" style="font-size:clamp(34px,7.4vw,94px)">Afnad Alam Nidul</h1>
 
-        <p data-hero-fade class="cinema text-white/85 font-light mt-[1.5%]" style="font-size:clamp(20px,3.4vw,48px); letter-spacing:-0.01em">
-          CSE Student &amp; AI/Full-Stack Developer
+        <p data-hero-fade class="cinema text-white/90 font-light mt-[1.8%]" style="font-size:clamp(18px,3.2vw,44px); letter-spacing:-0.01em">
+          CSE Student &amp; AI / Full-Stack Developer
         </p>
       </div>
 
-      <!-- hero footer -->
+      <!-- Hero Footer Bar -->
       <div class="absolute inset-x-[5.2%] bottom-[3.4vh] flex items-end justify-between">
-        <div data-hero-fade class="mono opacity-60 tracking-[0.26em] uppercase" style="font-size:clamp(10px,.8vw,13px)">Dhaka, BD&nbsp;&nbsp;|&nbsp;&nbsp;2024</div>
+        <div data-hero-fade class="mono text-white/65 cinema tracking-[0.24em] uppercase" style="font-size:clamp(10px,.8vw,12.5px)">Dhaka, BD</div>
         <button data-hero-fade id="scrollPill" data-scroll="#about" aria-label="Scroll to next section"
-          class="glass glass-pill w-[clamp(96px,8vw,122px)] h-[clamp(32px,3vw,42px)] hover:border-white/30 transition-colors duration-700 relative">
+          class="glass glass-pill w-[clamp(90px,8vw,116px)] h-[clamp(32px,3vw,40px)] hover:border-white/30 transition-colors duration-400 relative">
           <span id="scrollDot"></span>
         </button>
-        <div data-hero-fade class="mono text-white/25 tracking-[0.2em] hidden lg:block" style="font-size:clamp(9px,.7vw,12px)">23.81°N — 90.41°E</div>
+        <div data-hero-fade class="mono text-white/50 cinema tracking-[0.2em] hidden lg:block" style="font-size:clamp(9px,.7vw,12px)">23.81°N — 90.41°E</div>
       </div>
     </section>
 
     <!-- ========== 02 · IDENTITY & BIO ========== -->
-    <section id="about" class="relative min-h-[100vh] flex flex-col justify-center px-[5.2%] py-[12vh]">
-      <div data-reveal class="flex items-center gap-[2.2%] mono text-white/35 tracking-[0.34em] uppercase mb-[3.5vh]" style="font-size:clamp(10px,.78vw,13px)">
+    <section id="about" class="relative min-h-[100vh] flex flex-col justify-center px-[5.2%] py-[10vh] lg:py-[14vh]">
+      <div data-reveal class="flex items-center gap-[2.2%] mono text-white/45 tracking-[0.34em] uppercase mb-[3.5vh]" style="font-size:clamp(10px,.78vw,13px)">
         <span class="text-white/80">01</span>
         <span class="h-px flex-1" style="background:linear-gradient(90deg,rgba(255,255,255,.28),transparent)"></span>
         <span>Identity &amp; Bio</span>
       </div>
 
-      <div class="py-wrap" data-py="70">
-        <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.05] cinema" style="font-size:clamp(28px,4.9vw,64px)">
+      <div class="py-wrap">
+        <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.08] cinema" style="font-size:clamp(28px,4.6vw,60px)">
           <span class="maskline"><span class="maskline-in">Architecting Resilient</span></span>
-          <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2.4vw,40px)">AI Ecosystems</span></span>
+          <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2.4vw,36px)">AI Ecosystems</span></span>
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-[22fr_38fr_20fr] gap-[4vh] lg:gap-[2.4vw] mt-[6vh] lg:mt-[7vh] items-start max-w-[1500px]">
-        <!-- col 1 · stat -->
+      <div class="grid grid-cols-1 lg:grid-cols-[22fr_38fr_20fr] gap-[3.5vh] lg:gap-[2.2vw] mt-[5vh] lg:mt-[7vh] items-start max-w-[1500px]">
+        <!-- Col 1 · Origin -->
         <div class="glass glass-xl glass-hover p-[clamp(22px,3vw,44px)]" data-reveal>
-          <div class="mono text-white/35 tracking-[0.3em] uppercase" style="font-size:clamp(9px,.7vw,12px)">Since</div>
-          <div class="font-extrabold text-white tracking-[-0.03em] mt-[2vh]" style="font-size:clamp(44px,5.4vw,92px); line-height:1">2021</div>
-          <div class="h-px w-full bg-white/12 my-[2.6vh]"></div>
-          <p class="font-medium text-white/85" style="font-size:clamp(13px,1.05vw,17px)">Started Dev Journey</p>
-          <p class="mono text-white/30 tracking-[0.22em] uppercase mt-[1.6vh]" style="font-size:clamp(8.5px,.62vw,11px)">The origin point</p>
+          <div class="mono text-white/40 tracking-[0.3em] uppercase" style="font-size:clamp(9px,.7vw,12px)">Since</div>
+          <div class="font-extrabold text-white tracking-[-0.03em] mt-[1.8vh]" style="font-size:clamp(44px,5.2vw,88px); line-height:1">2021</div>
+          <div class="h-px w-full bg-white/10 my-[2.4vh]"></div>
+          <p class="font-medium text-white/90" style="font-size:clamp(13px,1.05vw,17px)">Started Dev Journey</p>
+          <p class="mono text-white/40 tracking-[0.22em] uppercase mt-[1.4vh]" style="font-size:clamp(8.5px,.62vw,11px)">The origin point</p>
         </div>
 
-        <!-- col 2 · bio -->
-        <div class="glass glass-xl glass-hover p-[clamp(24px,3.4vw,52px)] lg:mt-[5vh]" data-reveal data-delay="0.08">
-          <div class="mono text-white/35 tracking-[0.3em] uppercase mb-[3.4vh]" style="font-size:clamp(9px,.7vw,12px)">BIO / 00</div>
-          <p class="text-white/85 font-light leading-[1.65]" style="font-size:clamp(14px,1.12vw,19px)">
+        <!-- Col 2 · Bio Narrative -->
+        <div class="glass glass-xl glass-hover p-[clamp(24px,3.4vw,50px)] lg:mt-[4vh]" data-reveal data-delay="0.08">
+          <div class="mono text-white/40 tracking-[0.3em] uppercase mb-[3vh]" style="font-size:clamp(9px,.7vw,12px)">BIO / 00</div>
+          <p class="text-white/90 font-light leading-[1.68]" style="font-size:clamp(14px,1.12vw,18.5px)">
             Architecting resilient AI ecosystems and full-stack applications with a focus on scalable engineering and precise logic.
             Currently pursuing a B.Sc. in CSE at East West University.
           </p>
-          <p class="text-white/55 font-light leading-[1.7] mt-[2.6vh]" style="font-size:clamp(13px,1vw,17px)">
-            Every system is a composition — infrastructure, models and interface resolving into one quiet, coherent whole.
+          <p class="text-white/65 font-light leading-[1.7] mt-[2.4vh]" style="font-size:clamp(13px,1vw,16.5px)">
+            Every system is a composition — infrastructure, models, and interfaces resolving into one quiet, coherent whole.
           </p>
-          <div class="flex flex-wrap gap-[10px] mt-[3.4vh]">
-            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/60 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">EWU — CSE</span>
-            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/60 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">Dhaka, BD</span>
-            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/60 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">Batch 2024</span>
+          <div class="flex flex-wrap gap-[10px] mt-[3.2vh]">
+            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/70 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">EWU — CSE</span>
+            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/70 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">Dhaka, BD</span>
+            <span class="glass glass-pill px-[14px] py-[7px] mono text-white/70 tracking-[0.16em] uppercase" style="font-size:clamp(8.5px,.62vw,11px)">Undergraduate</span>
           </div>
         </div>
 
-        <!-- col 3 · floating emblem -->
-        <div class="lg:mt-[9vh]" data-reveal data-delay="0.16">
-          <div class="glass glass-xl p-[clamp(16px,1.8vw,28px)] rotate-[2.6deg] transition-colors duration-700 hover:border-white/25 relative overflow-hidden">
-            <!-- decorative emblem, visible behind the png / when png is absent -->
+        <!-- Col 3 · Technical Emblem -->
+        <div class="lg:mt-[8vh]" data-reveal data-delay="0.16">
+          <div class="glass glass-xl p-[clamp(16px,1.8vw,28px)] rotate-[2.4deg] transition-colors duration-400 hover:border-white/25 relative overflow-hidden">
             <div class="absolute inset-0 flex items-center justify-center opacity-80 pointer-events-none" aria-hidden="true">
-              <svg viewBox="0 0 400 400" class="w-[86%] h-auto text-white/60">
+              <svg viewBox="0 0 400 400" class="w-[86%] h-auto text-white/70">
                 <g class="spin-slow">
                   <circle cx="200" cy="200" r="186" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-dasharray="3 9" stroke-width="1"/>
                   <circle cx="200" cy="200" r="120" fill="none" stroke="currentColor" stroke-opacity=".14" stroke-width="1"/>
@@ -413,202 +424,275 @@
                 class="relative z-10 w-full h-full object-contain rounded-[clamp(10px,1.2vw,20px)]" />
             </figure>
           </div>
-          <div class="mono text-white/35 tracking-[0.3em] uppercase text-center mt-[2vh]" style="font-size:clamp(8.5px,.62vw,11px)">Fig.01 — Technical Emblem</div>
+          <div class="mono text-white/40 tracking-[0.3em] uppercase text-center mt-[1.8vh]" style="font-size:clamp(8.5px,.62vw,11px)">Fig.01 — Technical Emblem</div>
         </div>
       </div>
     </section>
 
     <!-- ========== 03 · TECH STACK ========== -->
-    <section id="stack" class="relative min-h-[100vh] flex flex-col justify-center px-[5.2%] py-[12vh]">
-      <div data-reveal class="flex items-center gap-[2.2%] mono text-white/35 tracking-[0.34em] uppercase mb-[3.5vh]" style="font-size:clamp(10px,.78vw,13px)">
+    <section id="stack" class="relative min-h-[100vh] flex flex-col justify-center px-[5.2%] py-[10vh] lg:py-[14vh]">
+      <div data-reveal class="flex items-center gap-[2.2%] mono text-white/45 tracking-[0.34em] uppercase mb-[3.5vh]" style="font-size:clamp(10px,.78vw,13px)">
         <span class="text-white/80">02</span>
         <span class="h-px flex-1" style="background:linear-gradient(90deg,rgba(255,255,255,.28),transparent)"></span>
         <span>Arsenal</span>
       </div>
 
-      <div class="py-wrap" data-py="90">
-        <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.05] cinema" style="font-size:clamp(28px,4.7vw,62px)">
+      <div class="py-wrap">
+        <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.08] cinema" style="font-size:clamp(28px,4.5vw,58px)">
           <span class="maskline"><span class="maskline-in">Core Competencies</span></span>
-          <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2.4vw,40px)">&amp; Technical Arsenal</span></span>
+          <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2.4vw,36px)">&amp; Technical Arsenal</span></span>
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-[1.6vw] mt-[6vh] lg:mt-[7.5vh] [perspective:1200px]">
-        <!-- card 1 -->
-        <article class="glass glass-xl glass-hover tilt-card p-[clamp(24px,3vw,46px)]" data-reveal>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-[1.6vw] mt-[5vh] lg:mt-[7vh]">
+        <!-- Module 01 -->
+        <article class="glass glass-xl glass-hover p-[clamp(24px,3vw,44px)]" data-reveal>
           <div class="flex items-start justify-between">
-            <div class="glass w-[clamp(44px,3.4vw,60px)] aspect-square rounded-2xl flex items-center justify-center text-white">
+            <div class="glass w-[clamp(44px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white">
               <svg class="w-[46%] h-[46%]" aria-hidden="true"><use href="#i-monitor"/></svg>
             </div>
-            <span class="mono text-white/25 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-01</span>
+            <span class="mono text-white/30 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-01</span>
           </div>
-          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,34px)]" style="font-size:clamp(18px,1.5vw,26px)">Full-Stack Dev</h3>
-          <p class="text-white/60 font-light leading-[1.7] mt-[1.6vh]" style="font-size:clamp(12px,1.02vw,17px)">React.js, Node.js, TailwindCSS</p>
-          <div class="mt-[clamp(22px,3vh,38px)]">
+          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,32px)]" style="font-size:clamp(18px,1.5vw,25px)">Full-Stack Dev</h3>
+          <p class="text-white/70 font-light leading-[1.68] mt-[1.4vh]" style="font-size:clamp(12px,1.02vw,16.5px)">React.js, Node.js, TailwindCSS</p>
+          <div class="mt-[clamp(20px,2.8vh,36px)]">
             <div class="h-px w-full bg-white/10"></div>
-            <div class="mono text-white/25 tracking-[0.2em] uppercase mt-[1.8vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Web — Product</div>
+            <div class="mono text-white/35 tracking-[0.2em] uppercase mt-[1.6vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Web — Product</div>
           </div>
         </article>
 
-        <!-- card 2 -->
-        <article class="glass glass-xl glass-hover tilt-card p-[clamp(24px,3vw,46px)] md:mt-[4vh]" data-reveal data-delay="0.1">
+        <!-- Module 02 -->
+        <article class="glass glass-xl glass-hover p-[clamp(24px,3vw,44px)] md:mt-[3.5vh]" data-reveal data-delay="0.08">
           <div class="flex items-start justify-between">
-            <div class="glass w-[clamp(44px,3.4vw,60px)] aspect-square rounded-2xl flex items-center justify-center text-white">
+            <div class="glass w-[clamp(44px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white">
               <svg class="w-[46%] h-[46%]" aria-hidden="true"><use href="#i-brain"/></svg>
             </div>
-            <span class="mono text-white/25 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-02</span>
+            <span class="mono text-white/30 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-02</span>
           </div>
-          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,34px)]" style="font-size:clamp(18px,1.5vw,26px)">AI &amp; Machine Learning</h3>
-          <p class="text-white/60 font-light leading-[1.7] mt-[1.6vh]" style="font-size:clamp(12px,1.02vw,17px)">PyTorch, TensorFlow, Predictive Analytics</p>
-          <div class="mt-[clamp(22px,3vh,38px)]">
+          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,32px)]" style="font-size:clamp(18px,1.5vw,25px)">AI &amp; Machine Learning</h3>
+          <p class="text-white/70 font-light leading-[1.68] mt-[1.4vh]" style="font-size:clamp(12px,1.02vw,16.5px)">PyTorch, TensorFlow, Predictive Analytics</p>
+          <div class="mt-[clamp(20px,2.8vh,36px)]">
             <div class="h-px w-full bg-white/10"></div>
-            <div class="mono text-white/25 tracking-[0.2em] uppercase mt-[1.8vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Intelligence — Systems</div>
+            <div class="mono text-white/35 tracking-[0.2em] uppercase mt-[1.6vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Intelligence — Systems</div>
           </div>
         </article>
 
-        <!-- card 3 -->
-        <article class="glass glass-xl glass-hover tilt-card p-[clamp(24px,3vw,46px)] md:mt-[8vh]" data-reveal data-delay="0.2">
+        <!-- Module 03 -->
+        <article class="glass glass-xl glass-hover p-[clamp(24px,3vw,44px)] md:mt-[7vh]" data-reveal data-delay="0.16">
           <div class="flex items-start justify-between">
-            <div class="glass w-[clamp(44px,3.4vw,60px)] aspect-square rounded-2xl flex items-center justify-center text-white">
+            <div class="glass w-[clamp(44px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white">
               <svg class="w-[46%] h-[46%]" aria-hidden="true"><use href="#i-terminal"/></svg>
             </div>
-            <span class="mono text-white/25 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-03</span>
+            <span class="mono text-white/30 tracking-[0.24em]" style="font-size:clamp(9px,.65vw,11px)">MOD-03</span>
           </div>
-          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,34px)]" style="font-size:clamp(18px,1.5vw,26px)">Core Engineering</h3>
-          <p class="text-white/60 font-light leading-[1.7] mt-[1.6vh]" style="font-size:clamp(12px,1.02vw,17px)">Python, Java, C++, Scalable Logic</p>
-          <div class="mt-[clamp(22px,3vh,38px)]">
+          <h3 class="font-bold text-white tracking-[-0.015em] mt-[clamp(20px,2.6vh,32px)]" style="font-size:clamp(18px,1.5vw,25px)">Core Engineering</h3>
+          <p class="text-white/70 font-light leading-[1.68] mt-[1.4vh]" style="font-size:clamp(12px,1.02vw,16.5px)">Python, Java, C++, Scalable Logic</p>
+          <div class="mt-[clamp(20px,2.8vh,36px)]">
             <div class="h-px w-full bg-white/10"></div>
-            <div class="mono text-white/25 tracking-[0.2em] uppercase mt-[1.8vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Foundation — Logic</div>
+            <div class="mono text-white/35 tracking-[0.2em] uppercase mt-[1.6vh]" style="font-size:clamp(8.5px,.6vw,10.5px)">Foundation — Logic</div>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- ========== 04 · PHILOSOPHY ========== -->
-    <section id="philosophy" class="relative min-h-[175vh]">
-      <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden px-[5.2%]">
-        <!-- ghost parallax word -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-          <span id="phGhost" class="font-extrabold text-white/[0.045] tracking-[-0.04em] whitespace-nowrap cinema" style="font-size:clamp(110px,21vw,320px)">LOGIC&nbsp;×&nbsp;DESIGN</span>
-        </div>
-
-        <div data-reveal class="relative flex items-center gap-[2.2%] mono text-white/35 tracking-[0.34em] uppercase mb-[4vh]" style="font-size:clamp(10px,.78vw,13px)">
+    <!-- ========== 04 · PHILOSOPHY (Clean, Perfectly Balanced & Glare-Free) ========== -->
+    <section id="philosophy" class="relative min-h-[85vh] lg:min-h-[95vh] flex flex-col justify-center px-[5.2%] py-[12vh]">
+      <div class="relative max-w-[1380px] w-full mx-auto">
+        <div data-reveal class="flex items-center gap-[2.2%] mono text-white/45 tracking-[0.34em] uppercase mb-[4vh]" style="font-size:clamp(10px,.78vw,13px)">
           <span class="text-white/80">03</span>
           <span class="h-px flex-1" style="background:linear-gradient(90deg,rgba(255,255,255,.28),transparent)"></span>
           <span>Belief System</span>
         </div>
 
-        <div id="phDrift" class="relative max-w-[92%]">
-          <div class="mono text-white/90 tracking-[0.34em] uppercase mb-[clamp(16px,2.4vh,30px)]" style="font-size:clamp(14px,1.05vw,20px)">Engineering Philosophy</div>
-          <p id="quoteText" class="cinema font-extrabold text-white tracking-[-0.02em] leading-[1.15]" style="font-size:clamp(28px,5vw,64px)">
-            Great software is built at the intersection of precise logic and flawless design.
-          </p>
-        </div>
+        <div class="space-y-6 lg:space-y-8">
+          <div class="mono text-white/55 tracking-[0.32em] uppercase text-xs sm:text-sm">Engineering Philosophy</div>
+          
+          <h2 class="cinema font-extrabold text-white tracking-[-0.025em] leading-[1.14]" style="font-size:clamp(30px,5vw,68px)">
+            <span class="maskline"><span class="maskline-in">Great software is built at</span></span>
+            <span class="maskline"><span class="maskline-in">the intersection of precise logic</span></span>
+            <span class="maskline"><span class="maskline-in text-white/65">&amp; flawless design.</span></span>
+          </h2>
 
-        <div class="relative flex items-center gap-[2.2%] mt-[clamp(24px,4.5vh,64px)]">
-          <div class="h-px w-[clamp(30px,4vw,70px)] bg-white/40"></div>
-          <span class="mono text-white/50 tracking-[0.26em] uppercase" style="font-size:clamp(10px,.78vw,13px)">Afnad Alam Nidul — 2024</span>
+          <p data-reveal data-delay="0.12" class="cinema text-white/80 font-light leading-[1.7] max-w-[62ch] text-[clamp(15px,1.2vw,19px)] pt-2">
+            Every system is a quiet composition — robust infrastructure, predictive intelligence, and subtle human interfaces resolving into one seamless experience.
+          </p>
+
+          <div data-reveal data-delay="0.18" class="flex items-center gap-4 pt-4">
+            <div class="h-px w-12 bg-white/40"></div>
+            <span class="mono text-white/60 tracking-[0.24em] uppercase text-xs">Afnad Alam Nidul</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== 05 · CONTACT & FOOTER ========== -->
-    <section id="contact" class="relative min-h-[100vh] flex flex-col px-[5.2%] pt-[10vh]">
-      <div data-reveal class="flex items-center gap-[2.2%] mono text-white/35 tracking-[0.34em] uppercase mb-[4vh]" style="font-size:clamp(10px,.78vw,13px)">
-        <span class="text-white/80">04</span>
-        <span class="h-px flex-1" style="background:linear-gradient(90deg,rgba(255,255,255,.28),transparent)"></span>
-        <span>Connection</span>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_.85fr] gap-[5vh] lg:gap-[4vw] flex-1 items-center max-w-[1500px]">
-        <!-- left panel -->
-        <div class="glass glass-2xl p-[clamp(24px,3.6vw,60px)]" data-reveal>
-          <div class="mono text-white/40 tracking-[0.3em] uppercase mb-[2.4vh]" style="font-size:clamp(9px,.7vw,12px)">Direct lines</div>
-          <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.06] cinema" style="font-size:clamp(28px,3.4vw,58px)">
-            <span class="maskline"><span class="maskline-in">Initiate Connection</span></span>
-            <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2vw,34px)">&amp; Open Collaborations</span></span>
-          </h2>
-
-          <div class="mt-[4.5vh] divide-y divide-white/10">
-            <a href="https://github.com/afnad" target="_blank" rel="noopener" class="contact-row group flex items-center gap-[clamp(16px,2vw,30px)] py-[clamp(18px,2.4vh,30px)] rounded-2xl px-[6px]">
-              <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white/85">
-                <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-github"/></svg>
-              </span>
-              <span class="ci flex flex-col gap-[6px] min-w-0">
-                <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,20px)">github.com/afnad</span>
-                <span class="mono text-white/35 tracking-[0.26em] uppercase" style="font-size:clamp(8px,.6vw,10.5px)">GitHub — Profile</span>
-              </span>
-              <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,22px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-            </a>
-
-            <a href="https://linkedin.com/in/afnadnidul" target="_blank" rel="noopener" class="contact-row group flex items-center gap-[clamp(16px,2vw,30px)] py-[clamp(18px,2.4vh,30px)] rounded-2xl px-[6px]">
-              <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white/85">
-                <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-linkedin"/></svg>
-              </span>
-              <span class="ci flex flex-col gap-[6px] min-w-0">
-                <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,20px)">linkedin.com/in/afnadnidul</span>
-                <span class="mono text-white/35 tracking-[0.26em] uppercase" style="font-size:clamp(8px,.6vw,10.5px)">LinkedIn — Network</span>
-              </span>
-              <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,22px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-            </a>
-
-            <a href="mailto:2024-3-60-229@std.ewubd.edu" class="contact-row group flex items-center gap-[clamp(16px,2vw,30px)] py-[clamp(18px,2.4vh,30px)] rounded-2xl px-[6px]">
-              <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,58px)] aspect-square rounded-2xl flex items-center justify-center text-white/85">
-                <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-mail"/></svg>
-              </span>
-              <span class="ci flex flex-col gap-[6px] min-w-0">
-                <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,20px)">2024-3-60-229@std.ewubd.edu</span>
-                <span class="mono text-white/35 tracking-[0.26em] uppercase" style="font-size:clamp(8px,.6vw,10.5px)">Mail — Academic</span>
-              </span>
-              <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,22px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
-            </a>
-          </div>
+    <!-- ========== 05 · CONTACT & REDESIGNED FOOTER ========== -->
+    <section id="contact" class="relative min-h-[100vh] flex flex-col justify-between px-[5.2%] pt-[10vh]">
+      <div>
+        <div data-reveal class="flex items-center gap-[2.2%] mono text-white/45 tracking-[0.34em] uppercase mb-[4vh]" style="font-size:clamp(10px,.78vw,13px)">
+          <span class="text-white/80">04</span>
+          <span class="h-px flex-1" style="background:linear-gradient(90deg,rgba(255,255,255,.28),transparent)"></span>
+          <span>Connection</span>
         </div>
 
-        <!-- right column -->
-        <div class="flex flex-col gap-[3vh] lg:items-start" data-reveal data-delay="0.12">
-          <div class="glass glass-xl glass-hover p-[clamp(24px,2.6vw,44px)] lg:ml-[3vw]">
-            <div class="mono text-white/35 tracking-[0.3em] uppercase mb-[2.2vh]" style="font-size:clamp(9px,.7vw,12px)">Availability — 2024</div>
-            <div class="flex items-center gap-[14px]">
-              <span class="pulse-dot shrink-0"></span>
-              <span class="font-bold text-white tracking-[-0.015em]" style="font-size:clamp(15px,1.25vw,21px)">Open to research &amp; collaborations</span>
+        <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_.85fr] gap-[4vh] lg:gap-[4vw] items-center max-w-[1500px]">
+          <!-- Left: Direct Channels -->
+          <div class="glass glass-2xl p-[clamp(24px,3.6vw,56px)]" data-reveal>
+            <div class="mono text-white/40 tracking-[0.3em] uppercase mb-[2vh]" style="font-size:clamp(9px,.7vw,12px)">Direct lines</div>
+            <h2 class="font-extrabold text-white tracking-[-0.02em] leading-[1.08] cinema" style="font-size:clamp(28px,3.4vw,56px)">
+              <span class="maskline"><span class="maskline-in">Initiate Connection</span></span>
+              <span class="maskline"><span class="maskline-in" style="padding-left:clamp(14px,2vw,32px)">&amp; Open Collaborations</span></span>
+            </h2>
+
+            <div class="mt-[4vh] divide-y divide-white/10">
+              <a href="https://github.com/afnad" target="_blank" rel="noopener" class="contact-row group flex items-center gap-[clamp(16px,2vw,28px)] py-[clamp(16px,2.2vh,28px)] rounded-2xl px-[6px]">
+                <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,56px)] aspect-square rounded-2xl flex items-center justify-center text-white/90">
+                  <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-github"/></svg>
+                </span>
+                <span class="ci flex flex-col gap-[4px] min-w-0">
+                  <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,19px)">github.com/afnad</span>
+                  <span class="mono text-white/40 tracking-[0.24em] uppercase" style="font-size:clamp(8px,.6vw,10px)">GitHub — Profile</span>
+                </span>
+                <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,20px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+              </a>
+
+              <a href="https://linkedin.com/in/afnadnidul" target="_blank" rel="noopener" class="contact-row group flex items-center gap-[clamp(16px,2vw,28px)] py-[clamp(16px,2.2vh,28px)] rounded-2xl px-[6px]">
+                <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,56px)] aspect-square rounded-2xl flex items-center justify-center text-white/90">
+                  <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                </span>
+                <span class="ci flex flex-col gap-[4px] min-w-0">
+                  <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,19px)">linkedin.com/in/afnadnidul</span>
+                  <span class="mono text-white/40 tracking-[0.24em] uppercase" style="font-size:clamp(8px,.6vw,10px)">LinkedIn — Network</span>
+                </span>
+                <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,20px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+              </a>
+
+              <a href="mailto:2024-3-60-229@std.ewubd.edu" class="contact-row group flex items-center gap-[clamp(16px,2vw,28px)] py-[clamp(16px,2.2vh,28px)] rounded-2xl px-[6px]">
+                <span class="ci-icon glass shrink-0 w-[clamp(42px,3.4vw,56px)] aspect-square rounded-2xl flex items-center justify-center text-white/90">
+                  <svg class="w-[44%] h-[44%]" aria-hidden="true"><use href="#i-mail"/></svg>
+                </span>
+                <span class="ci flex flex-col gap-[4px] min-w-0">
+                  <span class="font-medium text-white tracking-[-0.01em] truncate" style="font-size:clamp(13px,1.15vw,19px)">2024-3-60-229@std.ewubd.edu</span>
+                  <span class="mono text-white/40 tracking-[0.24em] uppercase" style="font-size:clamp(8px,.6vw,10px)">Mail — Academic</span>
+                </span>
+                <span class="ci-arrow ml-auto shrink-0 text-white"><svg class="w-[clamp(16px,1.2vw,20px)] h-auto" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span>
+              </a>
             </div>
-            <p class="text-white/55 font-light leading-[1.65] mt-[1.8vh]" style="font-size:clamp(12px,1vw,16px)">
-              Internships, ambitious builds and systems worth thinking about.
-            </p>
-            <div class="h-px w-full bg-white/10 my-[2.6vh]"></div>
-            <div class="mono text-white/45 tracking-[0.18em]" style="font-size:clamp(9px,.7vw,12px)">DHAKA&nbsp;&nbsp;<span id="bdClock" class="text-white/80">--:--:--</span>&nbsp;GMT+6</div>
           </div>
 
-          <div class="mono text-white/30 leading-[1.9] max-w-[44ch] lg:ml-[3vw] px-[2px]" style="font-size:clamp(10.5px,.8vw,13.5px)">
-            &gt; every interface hides a system.<br />
-            &gt; every system hides a decision.<br />
-            &gt; <span class="text-white/70">let's engineer the next one together.</span>
+          <!-- Right: Availability & System Note -->
+          <div class="flex flex-col gap-[2.8vh] lg:items-start" data-reveal data-delay="0.1">
+            <div class="glass glass-xl glass-hover p-[clamp(24px,2.6vw,42px)] lg:ml-[2.5vw] w-full">
+              <div class="mono text-white/40 tracking-[0.3em] uppercase mb-[2vh]" style="font-size:clamp(9px,.7vw,12px)">Status</div>
+              <div class="flex items-center gap-[12px]">
+                <span class="pulse-dot shrink-0"></span>
+                <span class="font-bold text-white tracking-[-0.015em]" style="font-size:clamp(15px,1.2vw,20px)">Open to research &amp; engineering roles</span>
+              </div>
+              <p class="text-white/65 font-light leading-[1.65] mt-[1.6vh]" style="font-size:clamp(12px,1vw,15.5px)">
+                Available for software engineering internships, AI systems research, and ambitious product builds.
+              </p>
+              <div class="h-px w-full bg-white/10 my-[2.4vh]"></div>
+              <div class="mono text-white/55 tracking-[0.18em]" style="font-size:clamp(9px,.7vw,12px)">
+                DHAKA &nbsp;<span id="bdClock" class="text-white/95 font-medium">--:--:--</span> &nbsp;GMT+6
+              </div>
+            </div>
+
+            <div class="mono text-white/40 cinema leading-[1.8] max-w-[42ch] lg:ml-[2.5vw] px-[4px]" style="font-size:clamp(10px,.8vw,13px)">
+              &gt; every interface hides a system.<br />
+              &gt; every system hides a decision.<br />
+              &gt; <span class="text-white/80">let's engineer the next one together.</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- footer -->
-      <footer class="relative mt-[8vh] border-t border-white/10 pt-[3.4vh] pb-[3.4vh] flex flex-wrap items-center justify-between gap-[2vh]">
-        <div class="mono text-white/40 tracking-[0.14em] uppercase" style="font-size:clamp(9px,.7vw,12px)">
-          © 2024 — Afnad Alam Nidul
+      <!-- ================= ARCHITECTURAL FOOTER ================= -->
+      <footer class="relative mt-[12vh] border-t border-white/10 pt-[5vh] pb-[4vh]">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+          
+          <!-- Col 1: Identity & EWU -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold tracking-tight text-lg text-white">Afnad Alam Nidul</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
+            </div>
+            <p class="text-white/60 text-xs sm:text-sm font-light leading-relaxed">
+              B.Sc. in Computer Science &amp; Engineering<br/>
+              East West University, Dhaka, Bangladesh.
+            </p>
+            <div class="mono text-white/40 text-[11px] tracking-wider uppercase">
+              Student ID: 2024-3-60-229
+            </div>
+          </div>
+
+          <!-- Col 2: Navigation -->
+          <div class="space-y-3">
+            <div class="mono text-white/45 text-xs tracking-widest uppercase">Navigation</div>
+            <ul class="space-y-2 text-sm text-white/70">
+              <li><a href="#hero" data-scroll class="hover:text-white transition-colors duration-200">00. Home</a></li>
+              <li><a href="#about" data-scroll class="hover:text-white transition-colors duration-200">01. Identity &amp; Bio</a></li>
+              <li><a href="#stack" data-scroll class="hover:text-white transition-colors duration-200">02. Tech Arsenal</a></li>
+              <li><a href="#philosophy" data-scroll class="hover:text-white transition-colors duration-200">03. Philosophy</a></li>
+              <li><a href="#contact" data-scroll class="hover:text-white transition-colors duration-200">04. Contact &amp; Connect</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Network -->
+          <div class="space-y-3">
+            <div class="mono text-white/45 text-xs tracking-widest uppercase">Network</div>
+            <ul class="space-y-2 text-sm text-white/70">
+              <li>
+                <a href="https://github.com/afnad" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-white transition-colors duration-200">
+                  GitHub <span class="text-xs text-white/40">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/afnadnidul" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-white transition-colors duration-200">
+                  LinkedIn <span class="text-xs text-white/40">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:2024-3-60-229@std.ewubd.edu" class="inline-flex items-center gap-1.5 hover:text-white transition-colors duration-200">
+                  Academic Mail <span class="text-xs text-white/40">↗</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 4: System Specs & Back to Top -->
+          <div class="space-y-3 flex flex-col justify-between">
+            <div>
+              <div class="mono text-white/45 text-xs tracking-widest uppercase mb-2">System</div>
+              <p class="text-xs text-white/50 leading-relaxed mono">
+                Engineered with GSAP, Lenis Smooth-Scroll &amp; Adaptive HLS Video Feeds.
+              </p>
+            </div>
+            
+            <div class="pt-2">
+              <button id="toTop" data-scroll="#hero" aria-label="Back to top"
+                class="glass glass-pill px-5 py-2.5 inline-flex items-center gap-2.5 text-xs mono text-white/80 hover:text-white hover:border-white/30 transition-all duration-300">
+                <span>BACK TO TOP</span>
+                <svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="mono text-white/25 tracking-[0.24em] uppercase hidden md:block" style="font-size:clamp(9px,.7vw,12px)">
-          Designed in the dark — Dhaka, BD
+
+        <!-- Sub-footer Bar -->
+        <div class="border-t border-white/[0.07] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 mono">
+          <div>
+            &copy; <span id="crYear">2026</span> Afnad Alam Nidul. All rights reserved.
+          </div>
+          <div class="flex items-center gap-3">
+            <span>23°48'N 90°25'E</span>
+            <span class="w-1 h-1 rounded-full bg-white/20"></span>
+            <span>Designed in the dark</span>
+          </div>
         </div>
-        <button id="toTop" data-scroll="#hero" data-magnetic="0.3" aria-label="Back to top"
-          class="glass glass-pill w-[clamp(44px,3.2vw,56px)] aspect-square flex items-center justify-center text-white/80 hover:text-white hover:border-white/30 transition-colors duration-700">
-          <svg class="w-[38%] h-[38%]" aria-hidden="true"><use href="#i-arrow-up"/></svg>
-        </button>
       </footer>
     </section>
   </main>
 
-  <!-- ================= CURSOR ================= -->
-  <div id="cursorDot" aria-hidden="true"></div>
-  <div id="cursorRing" aria-hidden="true"></div>
-
-  <!-- ================= APP ================= -->
+  <!-- ================= APPLICATION CODE ================= -->
   <script>
   (function(){
     'use strict';
@@ -616,7 +700,6 @@
     const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
     const sleep = ms => new Promise(r=>setTimeout(r,ms));
     const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const FINE = window.matchMedia('(pointer: fine)').matches;
 
     if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
     if (!window.gsap){
@@ -625,20 +708,33 @@
       document.documentElement.style.overflow = 'hidden';
     }
 
+    // Set Copyright Year
+    const yr = $('#crYear');
+    if (yr) yr.textContent = new Date().getFullYear();
+
     /* ============================================================
-       1 · LENIS — buttery smooth scroll
+       1 · BUTTERY SMOOTH SCROLL (Native on mobile, Lenis on Wheel)
     ============================================================ */
-    let lenis = null, lastY = 0, navInit = false;
+    let lenis = null, lastY = 0;
     function handleNav(y){
       const nav = $('#siteNav'); if(!nav) return;
       const dy = y - lastY;
-      if (y > 320 && dy > 2) nav.classList.add('nav-hidden');
-      else if (dy < -2 || y < 320) nav.classList.remove('nav-hidden');
+      if (y > 280 && dy > 2) nav.classList.add('nav-hidden');
+      else if (dy < -2 || y <= 280) nav.classList.remove('nav-hidden');
       lastY = y;
     }
+
     if (!REDUCED && window.Lenis){
-      lenis = new Lenis({ lerp:0.085, smoothWheel:true, wheelMultiplier:1 });
-      lenis.on('scroll', e => { ScrollTrigger.update(); handleNav(e.scroll ?? window.scrollY); });
+      lenis = new Lenis({ 
+        lerp: 0.1, 
+        smoothWheel: true, 
+        syncTouch: false, // Native touch momentum on mobile
+        wheelMultiplier: 1 
+      });
+      lenis.on('scroll', e => { 
+        ScrollTrigger.update(); 
+        handleNav(e.scroll ?? window.scrollY); 
+      });
       gsap.ticker.add(t => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
     } else {
@@ -647,7 +743,7 @@
     window.__lenis = lenis;
 
     /* ============================================================
-       2 · HLS CINEMATIC BACKGROUND — seamless 5-feed cycle
+       2 · CINEMATIC HLS BACKGROUND STREAMING
     ============================================================ */
     const FEEDS = [
       'https://stream.mux.com/JNJEOYI6B3EffB9f5ZhpGbuxzc6gSyJcXaCBbCgZKRg.m3u8',
@@ -667,9 +763,9 @@
     function setHls(i, src){
       return new Promise((resolve, reject) => {
         if (window.Hls && Hls.isSupported()){
-          const h = new Hls({ enableWorker:true, backBufferLength:45, maxBufferLength:30 });
+          const h = new Hls({ enableWorker:true, backBufferLength:30, maxBufferLength:20 });
           hlsObjs[i] = h;
-          const guard = setTimeout(()=>resolve(), 12000);
+          const guard = setTimeout(()=>resolve(), 10000);
           h.on(Hls.Events.MANIFEST_PARSED, () => { clearTimeout(guard); resolve(); });
           h.on(Hls.Events.ERROR, (ev, data) => {
             if (data && data.fatal){
@@ -705,7 +801,7 @@
     async function playEl(i){
       const el = vids[i];
       try{ el.muted = true; await el.play(); }
-      catch(e){ /* autoplay blocked — retried on first gesture */ }
+      catch(e){ /* Gesture autoplay recovery */ }
     }
     function fade(i, to, dur){
       return new Promise(res => gsap.to(vids[i], { opacity:to, duration:dur, ease:'power2.inOut', onComplete:res }));
@@ -720,7 +816,6 @@
         if (vids[to].dataset.src !== FEEDS[idx]){
           try{ await loadInto(to, FEEDS[idx]); }
           catch(e){
-            // fallback: retry once after a breath
             locked = false;
             setTimeout(advance, 2200);
             return;
@@ -728,9 +823,7 @@
         }
         vids[to].currentTime = 0;
         await playEl(to);
-        const p1 = fade(to, 1, 1.55);
-        const p2 = fade(from, 0, 1.55);
-        await Promise.all([p1, p2]);
+        await Promise.all([fade(to, 1, 1.4), fade(from, 0, 1.4)]);
         try{ vids[from].pause(); }catch(e){}
         active = to;
         vids[to].onended = advance;
@@ -746,22 +839,21 @@
       try{
         await loadInto(0, FEEDS[0]);
         await playEl(0);
-        fade(0, 1, 1.8);
+        fade(0, 1, 1.6);
         active = 0;
         vids[0].onended = advance;
         warm(1, FEEDS[1]);
         chip();
         resolve();
       }catch(e){
-        // native fallback
         try{
           vids[0].src = FEEDS[0];
           await new Promise(r => {
-            const t = setTimeout(r, 6000);
+            const t = setTimeout(r, 4000);
             vids[0].addEventListener('loadedmetadata', ()=> { clearTimeout(t); r(); }, { once:true });
           });
           await playEl(0);
-          fade(0, 1, 1.8);
+          fade(0, 1, 1.6);
           vids[0].onended = advance;
           warm(1, FEEDS[1]);
           resolve();
@@ -769,9 +861,9 @@
       }
     });
 
-    // resume / gesture recovery
+    // Gesture recovery for media
     const gestureResume = () => {
-      vids.forEach((v,i) => { if (v.paused && v.dataset.src){ v.play().catch(()=>{}); } });
+      vids.forEach((v) => { if (v && v.paused && v.dataset.src){ v.play().catch(()=>{}); } });
     };
     document.addEventListener('pointerdown', gestureResume, { once:true });
     document.addEventListener('keydown', gestureResume, { once:true });
@@ -780,7 +872,7 @@
     });
 
     /* ============================================================
-       3 · SPLIT-TEXT + INTRO CHOREOGRAPHY
+       3 · INTRO CHOREOGRAPHY
     ============================================================ */
     function splitLetters(el){
       const raw = el.textContent.replace(/\s+/g,' ').trim();
@@ -813,183 +905,85 @@
       document.documentElement.style.overflow = '';
     } else {
       const intro = gsap.timeline({ defaults:{ ease:'power3.out' } });
-      intro.from('#loaderMeta', { autoAlpha:0, y:14, duration:.7 }, 0.1)
-           .from('#loaderName', { yPercent:130, duration:.95, ease:'power4.out' }, 0.18)
-           .to('#loadBar', { scaleX:1, duration:1.05, ease:'power2.inOut' }, 0.3);
+      intro.from('#loaderMeta', { autoAlpha:0, y:12, duration:.6 }, 0.1)
+           .from('#loaderName', { yPercent:120, duration:.85, ease:'power4.out' }, 0.15)
+           .to('#loadBar', { scaleX:1, duration:.95, ease:'power2.inOut' }, 0.25);
 
-      // wait for the first video frame (capped) so the curtain lifts onto light,
-      // then run one master timeline: loader wipe → hero letters → hero fades
       const t0 = performance.now();
-      Promise.race([firstFrame, sleep(3000)]).then(async () => {
+      Promise.race([firstFrame, sleep(2200)]).then(async () => {
         const elapsed = (performance.now() - t0) / 1000;
-        const liftDelay = Math.min(2.15, Math.max(1.3, elapsed + 0.5));
+        const liftDelay = Math.min(1.8, Math.max(1.0, elapsed + 0.4));
         await sleep(liftDelay * 1000);
 
         const master = gsap.timeline();
-        master.to('#loader', { yPercent:-100, duration:1.1, ease:'power4.inOut' }, 0)
+        master.to('#loader', { yPercent:-100, duration:1.0, ease:'power4.inOut' }, 0)
           .add(()=>{
             const l = $('#loader'); if (l) l.remove();
             document.documentElement.style.overflow = '';
             ScrollTrigger.refresh();
-          }, 0.95)
+          }, 0.85)
           .from(heroLetters, {
-            yPercent: 122, duration: 1.5, ease:'power4.out',
-            stagger: { each: 0.024, from:'start' }
-          }, 0.32)
+            yPercent: 120, duration: 1.3, ease:'power4.out',
+            stagger: { each: 0.022, from:'start' }
+          }, 0.3)
           .from(heroFades, {
-            autoAlpha: 0, y: 26, duration: 1.1, ease:'power3.out',
-            stagger: 0.1
-          }, 1.12);
+            autoAlpha: 0, y: 22, duration: 1.0, ease:'power3.out',
+            stagger: 0.08
+          }, 1.0);
       });
     }
 
     /* ============================================================
-       4 · SCROLL NARRATIVE FX (ScrollTrigger)
+       4 · CLEAN SCROLL ANIMATIONS (ScrollTrigger)
     ============================================================ */
     if (!REDUCED && window.gsap && window.ScrollTrigger){
-      // section headings — fluid masked reveals
+      // Masked headlines
       $$('.maskline-in').forEach(el => {
         gsap.from(el, {
-          yPercent: 116, duration: 1.35, ease:'power4.out',
-          scrollTrigger: { trigger: el.parentElement, start:'top 88%', once:true }
+          yPercent: 114, duration: 1.2, ease:'power4.out',
+          scrollTrigger: { trigger: el.parentElement, start:'top 92%', once:true }
         });
       });
-      // generic fade / lift elements
+
+      // Data reveals
       $$('[data-reveal]').forEach(el => {
         gsap.from(el, {
-          y: 54, autoAlpha: 0, duration: 1.25, ease:'power3.out',
+          y: 35, autoAlpha: 0, duration: 1.1, ease:'power3.out',
           delay: parseFloat(el.dataset.delay || 0),
-          scrollTrigger: { trigger: el, start:'top 90%', once:true }
+          scrollTrigger: { trigger: el, start:'top 92%', once:true }
         });
       });
-      // parallax drift wrappers (slower-than-scroll travel)
-      $$('[data-py]').forEach(el => {
-        const n = parseFloat(el.dataset.py);
-        gsap.fromTo(el, { y:-n }, {
-          y:n, ease:'none',
-          scrollTrigger: { trigger: el.parentElement, start:'top bottom', end:'bottom top', scrub: 1.1 }
-        });
-      });
-      // hero exits with depth
+
+      // Gentle hero drift
       gsap.to('#heroInner', {
-        yPercent: -16, autoAlpha: 0.15, ease:'none',
+        yPercent: -12, autoAlpha: 0.25, ease:'none',
         scrollTrigger: { trigger:'#hero', start:'top top', end:'bottom 25%', scrub: true }
       });
 
-      // philosophy — sticky word-by-word ignition
-      const q = $('#quoteText');
-      if (q){
-        const sentence = q.textContent.replace(/\s+/g,' ').trim();
-        q.textContent = '';
-        sentence.split(' ').forEach((w, i) => {
-          const s = document.createElement('span');
-          s.className = 'inline-block phil-word will-change-transform';
-          s.textContent = w;
-          q.appendChild(s);
-          q.appendChild(document.createTextNode(' '));
-        });
-        gsap.fromTo($$('.phil-word'), {
-          opacity: 0.09, yPercent: 12
-        }, {
-          opacity: 1, yPercent: 0, stagger: 0.14, ease:'none',
-          scrollTrigger: { trigger:'#philosophy', start:'top top', end:'bottom bottom', scrub: 0.55 }
-        });
-        gsap.fromTo(q, { y: 56 }, {
-          y: -56, ease:'none',
-          scrollTrigger: { trigger:'#philosophy', start:'top top', end:'bottom bottom', scrub: 1 }
-        });
-      }
-      // ghost watermark moves opposite the quote
-      gsap.fromTo('#phGhost', { yPercent: 6 }, {
-        yPercent: -22, ease:'none',
-        scrollTrigger: { trigger:'#philosophy', start:'top bottom', end:'bottom top', scrub: 1 }
-      });
-
-      // about emblem — continuous slow 3D float
+      // Emblem float
       const fig = $('#aboutFigure');
       if (fig){
-        gsap.set(fig.parentElement, { perspective: 900 });
-        gsap.fromTo(fig, { rotation: 2.6, y: 0 }, {
-          rotation: -3.2, y: -16, duration: 3.4, ease:'sine.inOut',
+        gsap.fromTo(fig, { rotation: 2 }, {
+          rotation: -2, duration: 4.5, ease:'sine.inOut',
           yoyo: true, repeat: -1
-        });
-        gsap.fromTo(fig, { rotationY: -7 }, {
-          rotationY: 7, duration: 5.6, ease:'sine.inOut', yoyo: true, repeat: -1
         });
       }
     }
 
     /* ============================================================
-       5 · PHYSICS — magnetic elements
-    ============================================================ */
-    if (FINE && !REDUCED && window.gsap){
-      $$('[data-magnetic]').forEach(el => {
-        const s = parseFloat(el.dataset.magnetic || 0.25);
-        const xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease:'power3.out' });
-        const yTo = gsap.quickTo(el, 'y', { duration: 0.4, ease:'power3.out' });
-        el.addEventListener('pointermove', e => {
-          const r = el.getBoundingClientRect();
-          xTo((e.clientX - (r.left + r.width/2)) * s);
-          yTo((e.clientY - (r.top + r.height/2)) * s);
-        });
-        el.addEventListener('pointerleave', () => {
-          gsap.to(el, { x:0, y:0, duration:1.1, ease:'elastic.out(1, 0.32)' });
-        });
-      });
-
-      // stack cards — spatial tilt
-      $$('.tilt-card').forEach(card => {
-        card.addEventListener('pointermove', e => {
-          const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width - 0.5;
-          const py = (e.clientY - r.top) / r.height - 0.5;
-          gsap.to(card, {
-            rotationY: px * 7, rotationX: py * -6, transformPerspective: 1100,
-            duration: 0.7, ease:'power2.out'
-          });
-        });
-        card.addEventListener('pointerleave', () => {
-          gsap.to(card, { rotationY:0, rotationX:0, duration:1.2, ease:'elastic.out(1, 0.4)' });
-        });
-      });
-    }
-
-    /* ============================================================
-       6 · CUSTOM CURSOR
-    ============================================================ */
-    if (FINE && !REDUCED && window.gsap){
-      const dot = $('#cursorDot'), ring = $('#cursorRing');
-      document.documentElement.classList.add('has-cursor');
-      gsap.set([dot, ring], { xPercent:-50, yPercent:-50, x: innerWidth/2, y: innerHeight/2, opacity:0 });
-      const dx = gsap.quickTo(dot, 'x', { duration:0.12, ease:'power2.out' });
-      const dy = gsap.quickTo(dot, 'y', { duration:0.12, ease:'power2.out' });
-      const rx = gsap.quickTo(ring, 'x', { duration:0.42, ease:'power3.out' });
-      const ry = gsap.quickTo(ring, 'y', { duration:0.42, ease:'power3.out' });
-      let seen = false;
-      window.addEventListener('pointermove', e => {
-        if (!seen){ seen = true; gsap.to([dot, ring], { opacity:1, duration:.5 }); }
-        dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY);
-      }, { passive:true });
-      document.addEventListener('pointerover', e => {
-        const hot = e.target.closest('a, button, [data-cursor]');
-        gsap.to(ring, { scale: hot ? 2.1 : 1, borderColor: hot ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.55)', duration:0.45, ease:'power3.out' });
-        gsap.to(dot, { scale: hot ? 0.4 : 1, duration:0.45 });
-      });
-    }
-
-    /* ============================================================
-       7 · NAVIGATION — anchors, burger, clock
+       5 · NAVIGATION & CLOCK
     ============================================================ */
     function scrollToTarget(target, offset){
       const go = () => {
-        if (lenis) lenis.scrollTo(target, { offset: offset || 0, duration: 1.9, easing: t => 1 - Math.pow(1 - t, 4) });
+        if (lenis) lenis.scrollTo(target, { offset: offset || 0, duration: 1.6, easing: t => 1 - Math.pow(1 - t, 4) });
         else {
           const el = typeof target === 'string' ? $(target) : target;
           if (el) el.scrollIntoView({ behavior:'smooth' });
         }
       };
-      if (document.documentElement.style.overflow === 'hidden') setTimeout(go, 350); else go();
+      if (document.documentElement.style.overflow === 'hidden') setTimeout(go, 300); else go();
     }
+
     $$('a[data-scroll], [data-scroll="#about"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
@@ -997,14 +991,16 @@
         const target = (href || '#about').split('#')[1];
         closeMenu();
         const el = document.getElementById(target || 'about');
-        if (el) scrollToTarget(el, -40);
+        if (el) scrollToTarget(el, -30);
       });
     });
+
     $('#toTop')?.addEventListener('click', () => {
-      if (lenis) lenis.scrollTo(0, { duration: 2.1, easing: t => 1 - Math.pow(1 - t, 4) });
+      if (lenis) lenis.scrollTo(0, { duration: 1.8, easing: t => 1 - Math.pow(1 - t, 4) });
       else window.scrollTo({ top:0, behavior:'smooth' });
     });
 
+    // Mobile Drawer Menu
     const menuBtn = $('#menuBtn'), mobileMenu = $('#mobileMenu');
     let menuOpen = false;
     function openMenu(){
@@ -1013,8 +1009,8 @@
       mobileMenu.classList.add('open');
       if (lenis) lenis.stop();
       document.documentElement.style.overflow = 'hidden';
-      gsap.fromTo($$('#mobileMenu .m-link'), { y:64, autoAlpha:0 }, {
-        y:0, autoAlpha:1, duration:.9, ease:'power4.out', stagger:.07, delay:.05, overwrite:true
+      gsap.fromTo($$('#mobileMenu .m-link'), { y:40, autoAlpha:0 }, {
+        y:0, autoAlpha:1, duration:.55, ease:'power4.out', stagger:.06, overwrite:true
       });
     }
     function closeMenu(){
@@ -1029,7 +1025,7 @@
     menuBtn?.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
     $$('#mobileMenu a').forEach(a => a.addEventListener('click', closeMenu));
 
-    // Dhaka clock
+    // Dhaka Real-time Clock (GMT+6)
     const clock = $('#bdClock');
     if (clock){
       const fmt = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Dhaka', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true });
@@ -1037,22 +1033,20 @@
       tick(); setInterval(tick, 1000);
     }
 
-    /* ============================================================
-       8 · FINAL CALIBRATION
-    ============================================================ */
+    /* Calibration */
     const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener('load', () => setTimeout(refresh, 300));
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(refresh, 250));
+    window.addEventListener('load', () => setTimeout(refresh, 250));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(refresh, 200));
     setTimeout(() => { if (document.documentElement.style.overflow === 'hidden' && !$('#loader')) document.documentElement.style.overflow = ''; }, 4000);
   })();
   </script>
 
-  <!-- watchdog: guaranteed release of the intro veil even if a CDN failed -->
+  <!-- Watchdog fallback -->
   <script>
     setTimeout(function(){
       var l = document.getElementById('loader');
       if (l){ l.remove(); document.documentElement.style.overflow = ''; }
-    }, 7000);
+    }, 5500);
   </script>
 </body>
 </html>
